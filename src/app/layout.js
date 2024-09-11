@@ -16,7 +16,7 @@ export const metadata = {
   title: "Syntra Demo",
 };
 
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/common/navbar";
 
 export default function RootLayout({ children }) {
   return (

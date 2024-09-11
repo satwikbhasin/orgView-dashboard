@@ -9,12 +9,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: linear-gradient(0deg, #b7b4b0 0%, #ecebe6 100%);
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #ffffff;
   }
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }

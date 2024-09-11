@@ -1,8 +1,16 @@
+"use client";
+
+import React from "react";
+import { Box, Typography } from "@mui/joy";
+import PatientsTable from "@/components/patients/patientsTable";
+import SearchFilter from "@/components/patients/searchFilter";
+
 const Patients = () => {
     return (
-        <div>
-            <h1>Patients Page</h1>
-        </div>
+        <Box sx={{ height: "100vh", width: "100vw", padding: 5 }}>
+            <Typography fontSize={30} fontWeight={800} marginBottom={3}>Patients</Typography>
+            <PatientsTable />
+        </Box>
     );
 };
 
