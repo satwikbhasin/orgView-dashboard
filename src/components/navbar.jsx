@@ -178,10 +178,10 @@ const Navbar = () => {
           ref={sliderRef}
           sx={{
             position: "absolute",
-            bottom: 4,
-            height: "4px",
+            bottom: 6,
+            height: "2px",
             backgroundColor: "#ffffff",
-            transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
+            transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
           }}
         />
       </Box>
