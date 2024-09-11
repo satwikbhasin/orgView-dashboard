@@ -1,9 +1,14 @@
-import AppBar from "@/components/navbar";
+"use client";
 
-export default function Home() {
-  return (
-    <div className="">
-      <AppBar />
-    </div>
-  );
+import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
+export default function Main() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/home");
+  }, [router]);
+
+  return null;
 }
