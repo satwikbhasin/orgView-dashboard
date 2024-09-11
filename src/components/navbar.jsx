@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   ButtonGroup,
@@ -31,6 +31,8 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathName = usePathname();
   const [menuAnchor, setMenuAnchor] = useState(null);
+  const [activeTab, setActiveTab] = useState(null);
+  const sliderRef = useRef(null);
 
   const links = [
     { href: "/home", label: "Home", icon: <House size={20} /> },
@@ -54,6 +56,25 @@ const Navbar = () => {
       icon: <ChartNoAxesCombined size={20} />,
     },
   ];
+
+  useEffect(() => {
+    const currentTab = links.find((link) => link.href === pathName);
+    setActiveTab(currentTab);
+  }, [pathName]);
+
+  useEffect(() => {
+    if (activeTab && sliderRef.current) {
+      const activeButton = document.querySelector(
+        `a[href="${activeTab.href}"]`
+      );
+      if (activeButton) {
+        const buttonRect = activeButton.getBoundingClientRect();
+        const parentRect = activeButton.parentNode.getBoundingClientRect();
+        sliderRef.current.style.width = `${buttonRect.width}px`;
+        sliderRef.current.style.left = `${buttonRect.left - parentRect.left}px`;
+      }
+    }
+  }, [activeTab]);
 
   const handleMenuOpen = (event) => {
     setMenuAnchor(event.currentTarget);
@@ -107,6 +128,7 @@ const Navbar = () => {
           display: { xs: "none", md: "flex" },
           alignItems: "center",
           gap: 0.5,
+          position: "relative",
         }}
       >
         <ButtonGroup
@@ -114,9 +136,6 @@ const Navbar = () => {
           variant="plain"
           orientation="horizontal"
           spacing={3}
-          sx={{
-            overflow: "scroll",
-          }}
         >
           {links.map((link) => (
             <Link key={link.href} href={link.href}>
@@ -155,6 +174,16 @@ const Navbar = () => {
             </Link>
           ))}
         </ButtonGroup>
+        <Box
+          ref={sliderRef}
+          sx={{
+            position: "absolute",
+            bottom: 4,
+            height: "4px",
+            backgroundColor: "#ffffff",
+            transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
+          }}
+        />
       </Box>
       <Box
         sx={{
