@@ -14,7 +14,7 @@ import {
 } from "@mui/joy";
 import {
   House,
-  User,
+  Users,
   DollarSign,
   Package,
   Container,
@@ -36,7 +36,7 @@ const Navbar = () => {
 
   const links = [
     { href: "/home", label: "Home", icon: <House size={20} /> },
-    { href: "/patients", label: "Patients", icon: <User size={20} /> },
+    { href: "/patients", label: "Patients", icon: <Users size={20} /> },
     {
       href: "/financials",
       label: "Financials",
