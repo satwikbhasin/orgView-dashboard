@@ -9,15 +9,22 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ededed;
+    --background: linear-gradient(240deg, rgb(183, 180, 176) 0%, rgb(236, 235, 230) 100%);
     --foreground: #ededed;
   }
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 @layer utilities {
