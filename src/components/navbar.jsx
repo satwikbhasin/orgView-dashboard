@@ -103,7 +103,7 @@ const Navbar = () => {
         width: "100%",
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
         <IconButton
           onClick={() => window.location.replace("/")}
           sx={{
@@ -115,10 +115,10 @@ const Navbar = () => {
           <Image
             src="/syntra_logo.png"
             alt="Syntra Logo"
-            width={50}
-            height={50}
+            width={65}
+            height={65}
           />
-          <Typography variant="h1" sx={{ color: "#f2f0ef" }}>
+          <Typography sx={{ color: "#f2f0ef", fontSize: 22 }}>
             Syntra
           </Typography>
         </IconButton>
