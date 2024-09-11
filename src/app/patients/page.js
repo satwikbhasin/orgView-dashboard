@@ -7,7 +7,7 @@ import SearchFilter from "@/components/patients/searchFilter";
 
 const Patients = () => {
     return (
-        <Box sx={{ height: "100vh", width: "100vw", padding: 5 }}>
+        <Box sx={{ height: "h-screen", width: "100vw", padding: 5 }}>
             <Typography fontSize={30} fontWeight={800} marginBottom={3}>Patients</Typography>
             <PatientsTable />
         </Box>
