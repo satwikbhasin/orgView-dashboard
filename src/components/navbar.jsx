@@ -40,7 +40,7 @@ const Navbar = () => {
     {
       href: "/financials",
       label: "Financials",
-      icon: <DollarSign size={16} />,
+      icon: <DollarSign size={20} />,
     },
     { href: "/orders", label: "Orders", icon: <Package size={20} /> },
     { href: "/inventory", label: "Inventory", icon: <Container size={20} /> },
