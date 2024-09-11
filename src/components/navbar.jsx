@@ -35,25 +35,25 @@ const Navbar = () => {
   const sliderRef = useRef(null);
 
   const links = [
-    { href: "/home", label: "Home", icon: <House size={20} /> },
-    { href: "/patients", label: "Patients", icon: <Users size={20} /> },
+    { href: "/home", label: "Home", icon: <House size={22} /> },
+    { href: "/patients", label: "Patients", icon: <Users size={22} /> },
     {
       href: "/financials",
       label: "Financials",
-      icon: <DollarSign size={20} />,
+      icon: <DollarSign size={22} />,
     },
-    { href: "/orders", label: "Orders", icon: <Package size={20} /> },
-    { href: "/inventory", label: "Inventory", icon: <Container size={20} /> },
-    { href: "/mail", label: "Mail", icon: <Mail size={20} /> },
+    { href: "/orders", label: "Orders", icon: <Package size={22} /> },
+    { href: "/inventory", label: "Inventory", icon: <Container size={22} /> },
+    { href: "/mail", label: "Mail", icon: <Mail size={22} /> },
     {
       href: "/appointments",
       label: "Appointments",
-      icon: <Calendar size={20} />,
+      icon: <Calendar size={22} />,
     },
     {
       href: "/analytics",
       label: "Analytics",
-      icon: <ChartNoAxesCombined size={20} />,
+      icon: <ChartNoAxesCombined size={22} />,
     },
   ];
 
@@ -165,6 +165,7 @@ const Navbar = () => {
                         display: "inline",
                       },
                     },
+                    fontSize: { xs: 16, md: 16 },
                   }}
                 >
                   {link.icon}
