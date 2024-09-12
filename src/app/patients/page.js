@@ -1,19 +1,41 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography, IconButton } from "@mui/joy";
-import { ArrowDownToLine } from "lucide-react";
+import { ArrowDownToLine, Filter, FilterX } from "lucide-react";
+import { Slide } from "@mui/material";
+import FilterBar from "@/components/patients/filterBar";
 import PatientsTable from "@/components/patients/patientsTable";
 
 const Patients = () => {
+    const [isFilterVisible, setIsFilterVisible] = useState(false);
+    const [patientName, setPatientName] = useState("");
+    const [selectedPayer, setSelectedPayer] = useState("any");
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const toggleFilterVisibility = () => {
+        setIsFilterVisible(!isFilterVisible);
+    };
+
+    const handlePatientNameChange = (patientName) => {
+        console.log(patientName);
+        setPatientName(patientName);
+        setCurrentPage(1);
+    };
+
+    const handlePayerChange = (payer) => {
+        setSelectedPayer(payer);
+        setCurrentPage(1);
+    };
+
     return (
-        <Box sx={{ height: "85vh", width: "100vw", padding: 3 }}>
+        <Box sx={{ height: "94vh", width: "100vw", padding: 5 }}>
             <Box
                 sx={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    marginBottom: 3,
+                    marginBottom: 2,
                 }}
             >
                 <Typography
@@ -64,7 +86,56 @@ const Patients = () => {
                     </Box>
                 </IconButton>
             </Box>
-            <PatientsTable />
+            <Box sx={{ display: "flex", position: "relative", gap: 5 }}>
+                <Slide direction="right" in={isFilterVisible} mountOnEnter unmountOnExit timeout={0}>
+                    <Box sx={{ width: "20vw", height: "80vh" }}>
+                        <FilterBar
+                            onPatientNameChange={handlePatientNameChange}
+                            onPayerChange={handlePayerChange}
+                            toggleFilterVisibility={toggleFilterVisibility}
+                        />
+                    </Box>
+                </Slide>
+
+                <Box
+                    sx={{
+                        height: "80vh",
+                        width: isFilterVisible ? "80vw" : "100vw",
+                    }}
+                >
+                    {!isFilterVisible && (
+                        <IconButton
+                            onClick={toggleFilterVisibility}
+                            sx={{
+                                gap: 1,
+                                fontWeight: 600,
+                                fontSize: {
+                                    xs: 16,
+                                    sm: 18,
+                                },
+                                padding: 0,
+                                color: "#262F3C",
+                                visibility: isFilterVisible ? "hidden" : "visible",
+                                opacity: isFilterVisible ? 0 : 1,
+                                "&:hover": {
+                                    color: "#258bE6",
+                                    backgroundColor: "transparent",
+                                },
+                            }}
+                        >
+                            <FilterX size={24} />
+                            Filter
+                        </IconButton>
+                    )
+                    }
+                    <PatientsTable
+                        patientName={patientName}
+                        selectedPayer={selectedPayer}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                    />
+                </Box>
+            </Box>
         </Box>
     );
 };

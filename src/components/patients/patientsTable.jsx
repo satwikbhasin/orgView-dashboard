@@ -2,23 +2,18 @@
 
 import React, { useState } from "react";
 import { Table, Box, Button, IconButton } from "@mui/joy";
-import patientsData, { getPayerTypes } from "@/assets/patients";
+import patientsData from "@/assets/patients";
 import { Send, ClipboardPlus } from "lucide-react";
-import SearchFilter from "@/components/patients/searchFilter";
 
-export default function PatientsTable() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedPayer, setSelectedPayer] = useState("any");
+export default function PatientsTable({
+  patientName,
+  selectedPayer,
+  currentPage,
+  setCurrentPage,
+}) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
-  const handlePayerChange = (payer) => {
-    setSelectedPayer(payer);
-    setCurrentPage(1);
-  };
-
-  const patientsPerPage = 10;
-  const payerTypes = getPayerTypes();
+  const patientsPerPage = 15;
 
   const headerStyle = {
     height: "5vh",
@@ -34,7 +29,7 @@ export default function PatientsTable() {
   };
 
   const cellStyle = {
-    fontWeight: "400",
+    fontWeight: "500",
     height: "8vh",
     textAlign: "left",
     fontSize: {
@@ -42,11 +37,6 @@ export default function PatientsTable() {
       sm: 12,
       md: 13,
     },
-  };
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    setCurrentPage(1);
   };
 
   const handleSort = (key) => {
@@ -72,16 +62,14 @@ export default function PatientsTable() {
   });
 
   const filteredPatients = sortedPatients.filter((patient) => {
-    const lowerCaseQuery = searchQuery.toLowerCase();
+    const lowerCaseQuery = (patientName || "").toLowerCase();
     const matchesSearchQuery =
       patient.ptName.toLowerCase().includes(lowerCaseQuery) ||
       patient.payer.toLowerCase().includes(lowerCaseQuery) ||
       patient.procedures.toLowerCase().includes(lowerCaseQuery) ||
       patient.claimId.toLowerCase().includes(lowerCaseQuery);
-
     const matchesPayer =
       selectedPayer === "any" || patient.payer === selectedPayer;
-
     return matchesSearchQuery && matchesPayer;
   });
 
@@ -91,7 +79,6 @@ export default function PatientsTable() {
     indexOfFirstPatient,
     indexOfLastPatient
   );
-
   const totalPages = Math.ceil(filteredPatients.length / patientsPerPage);
 
   const handleNextPage = () => {
@@ -130,15 +117,10 @@ export default function PatientsTable() {
           xs: "column",
           md: "row",
         },
-        gap: 3,
-        height: "100%",
+        gap: 5,
+        height: "95%",
       }}
     >
-      <SearchFilter
-        onSearch={handleSearch}
-        payerTypes={payerTypes}
-        onPayerChange={handlePayerChange}
-      />
       <Box
         sx={{
           display: "flex",
