@@ -69,7 +69,8 @@ const Patients = () => {
                             gap: 1,
                             fontWeight: 600,
                             padding: 1,
-                            height: "3vh",
+                            height: "5vh",
+                            width: "fit-content",
                             color: "#ffffff",
                             backgroundColor: "#222b38",
                             fontSize: {
@@ -85,7 +86,7 @@ const Patients = () => {
                             },
                         }}
                     >
-                        <ArrowDownToLine size={"100%"} />
+                        <ArrowDownToLine />
                         <Box
                             sx={{
                                 display: {
@@ -94,7 +95,7 @@ const Patients = () => {
                                 },
                             }}
                         >
-                            Download
+                            Export
                         </Box>
                     </IconButton>
                     <Menu
@@ -102,12 +103,12 @@ const Patients = () => {
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
                         sx={{
-                            borderRadius: "10px",
                             marginTop: "3px",
                             "& .MuiPaper-root": {
                                 width: "200px",
                                 backgroundColor: "#222b38",
                                 color: "#ffffff",
+                                borderRadius: "5px",
                             },
                         }}
                     >
