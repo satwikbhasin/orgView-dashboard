@@ -10,8 +10,16 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/joy";
+import { Collapse } from "@mui/material";
 import { getPayerTypes } from "@/assets/patients";
-import { Search, Filter, ToggleLeft, ToggleRight } from "lucide-react";
+import {
+  Search,
+  Filter,
+  ToggleLeft,
+  ToggleRight,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 
 const FilterItem = ({ label, children, isEnabled, onToggle }) => (
   <Box
@@ -19,6 +27,11 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
       flex: 1,
       display: "flex",
       flexDirection: "column",
+      padding: 1.5,
+      "&:hover .toggle-button": {
+        visibility: "visible",
+        opacity: 1,
+      },
     }}
   >
     <Box
@@ -26,15 +39,27 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
         display: "flex",
         alignItems: "center",
         flexDirection: "row",
+        justifyContent: "start",
       }}
     >
-      <Typography sx={{ fontWeight: 600 }}>{label}</Typography>
+      <Typography
+        sx={{
+          fontWeight: 600,
+          cursor: "pointer",
+
+          color: isEnabled ? "black" : "grey",
+        }}
+        onClick={onToggle}
+      >
+        {label}
+      </Typography>
       <Tooltip title={isEnabled ? "Disable filter" : "Enable filter"}>
         <IconButton
           onClick={onToggle}
+          className="toggle-button"
           sx={{
+            visibility: "hidden",
             color: isEnabled ? "green" : "black",
-            transition: "color 0.3s ease",
             "&:hover": {
               color: isEnabled ? "green" : "black",
               backgroundColor: "transparent",
@@ -55,7 +80,6 @@ const FilterGroup = ({ children }) => (
       flex: 1,
       display: "flex",
       flexDirection: "column",
-      gap: 3,
       width: "100%",
     }}
   >
@@ -63,11 +87,8 @@ const FilterGroup = ({ children }) => (
   </Box>
 );
 
-export default function FilterBar({
-  onPatientNameChange,
-  onPayerChange,
-  toggleFilterVisibility,
-}) {
+export default function FilterBar({ onPatientNameChange, onPayerChange }) {
+  const [isFilterVisible, setIsFilterVisible] = useState(true);
   const [filterStates, setFilterStates] = useState({
     patientName: true,
     payer: true,
@@ -80,8 +101,12 @@ export default function FilterBar({
     patientName: "",
     payer: "any",
   });
-  const [allFiltersEnabled, setAllFiltersEnabled] = useState(true);
+  const [allFiltersDisabled, setAllFiltersDisabled] = useState(false);
   const payerTypes = getPayerTypes();
+
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible(!isFilterVisible);
+  };
 
   const toggleFilterEnabled = (filter) => {
     setFilterStates((prev) => ({
@@ -99,8 +124,8 @@ export default function FilterBar({
   };
 
   const toggleAllFilters = () => {
-    const newState = !allFiltersEnabled;
-    setAllFiltersEnabled(newState);
+    const newState = !allFiltersDisabled;
+    setAllFiltersDisabled(newState);
     setFilterStates({
       patientName: newState,
       payer: newState,
@@ -150,7 +175,7 @@ export default function FilterBar({
         <Box
           sx={{
             display: "flex",
-            justifyContent: "start",
+            justifyContent: "space-between",
             alignItems: "center",
           }}
         >
@@ -160,140 +185,173 @@ export default function FilterBar({
               gap: 1,
               fontSize: {
                 xs: 16,
-                sm: 18,
+                md: 20,
               },
               fontWeight: 600,
               padding: 0,
               color: "#258bE6",
               "&:hover": {
-                color: "#262F3C",
+                color: "#258bE6",
                 backgroundColor: "transparent",
               },
             }}
           >
             <Filter />
-            Filter
+            Filters
+            {isFilterVisible ? (
+              <ChevronUp size={20} />
+            ) : (
+              <ChevronDown size={20} />
+            )}
           </IconButton>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            overflow: "scroll",
-            flexDirection: "column",
-          }}
-        >
-          <Box sx={{ color: "black", display: "flex", alignItems: "center" }}>
-            <Typography sx={{ fontWeight: 600 }}>Toggle All</Typography>
-            <Tooltip
-              title={
-                allFiltersEnabled ? "Disable all filters" : "Enable all filters"
-              }
+          {isFilterVisible && (
+            <Box
+              sx={{
+                color: "black",
+                display: "flex",
+                alignItems: "center",
+              }}
             >
+              <Typography sx={{ fontWeight: 600 }}>
+                Disable All Filters
+              </Typography>
               <IconButton
                 onClick={toggleAllFilters}
                 sx={{
-                  color: allFiltersEnabled ? "green" : "black",
+                  color: allFiltersDisabled ? "black" : "green",
                   transition: "color 0.3s ease",
                   "&:hover": {
-                    color: allFiltersEnabled ? "green" : "black",
+                    color: allFiltersDisabled ? "black" : "green",
                     backgroundColor: "transparent",
                   },
                 }}
               >
-                {allFiltersEnabled ? (
-                  <ToggleRight size={24} />
-                ) : (
+                {allFiltersDisabled ? (
                   <ToggleLeft size={24} />
+                ) : (
+                  <ToggleRight size={24} />
                 )}
               </IconButton>
-            </Tooltip>
-          </Box>
-          <FilterGroup>
-            <FilterItem
-              label="Patient Name"
-              isEnabled={filterStates.patientName}
-              onToggle={() => toggleFilterEnabled("patientName")}
-            >
-              <Input
-                placeholder="Last, First"
-                value={filterValues.patientName}
-                onChange={(e) => handlePatientNameChange(e.target.value)}
-                startDecorator={<Search size={20} />}
-                sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                disabled={!filterStates.patientName}
-              />
-            </FilterItem>
-            <FilterItem
-              label="Bill Type"
-              isEnabled={filterStates.billType}
-              onToggle={() => toggleFilterEnabled("billType")}
-            >
-              <Select
-                defaultValue="any"
-                sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                disabled={!filterStates.billType}
-              >
-                <Option value="any">Any</Option>
-              </Select>
-            </FilterItem>
-            <FilterItem
-              label="Payer"
-              isEnabled={filterStates.payer}
-              onToggle={() => toggleFilterEnabled("payer")}
-            >
-              <Select
-                value={filterValues.payer}
-                onChange={(e, newValue) => handlePayerChange(newValue)}
-                sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                disabled={!filterStates.payer}
-              >
-                <Option value="any">Any</Option>
-                {payerTypes.map((payer) => (
-                  <Option key={payer} value={payer}>
-                    {payer}
-                  </Option>
-                ))}
-              </Select>
-            </FilterItem>
-            <FilterItem
-              label="CPT Code"
-              isEnabled={filterStates.cptCode}
-              onToggle={() => toggleFilterEnabled("cptCode")}
-            >
-              <Input
-                placeholder="Enter CPT Code"
-                startDecorator={<Search size={20} />}
-                sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                disabled={!filterStates.cptCode}
-              />
-            </FilterItem>
-            <FilterItem
-              label="Aging"
-              isEnabled={filterStates.aging}
-              onToggle={() => toggleFilterEnabled("aging")}
-            >
-              <Select
-                defaultValue="+0 days"
-                sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                disabled={!filterStates.aging}
-              >
-                <Option value="+0 days">+0 Days</Option>
-              </Select>
-            </FilterItem>
-            <FilterItem
-              label="Claim Number"
-              isEnabled={filterStates.claimNumber}
-              onToggle={() => toggleFilterEnabled("claimNumber")}
-            >
-              <Input
-                placeholder="Enter Claim Number"
-                startDecorator={<Search size={20} />}
-                sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                disabled={!filterStates.claimNumber}
-              />
-            </FilterItem>
-          </FilterGroup>
+            </Box>
+          )}
         </Box>
+        <Collapse in={isFilterVisible} timeout={400} unmountOnExit>
+          <Box
+            sx={{
+              display: "flex",
+              overflow: "scroll",
+              flexDirection: "column",
+              marginBottom: 1.5,
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                width: "100%",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  width: "100%",
+                }}
+              >
+                <FilterGroup>
+                  <FilterItem
+                    label="Patient Name"
+                    isEnabled={filterStates.patientName}
+                    onToggle={() => toggleFilterEnabled("patientName")}
+                  >
+                    <Input
+                      placeholder="Last, First"
+                      value={filterValues.patientName}
+                      onChange={(e) => handlePatientNameChange(e.target.value)}
+                      startDecorator={<Search size={20} />}
+                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
+                      disabled={!filterStates.patientName}
+                    />
+                  </FilterItem>
+                  <FilterItem
+                    label="Bill Type"
+                    isEnabled={filterStates.billType}
+                    onToggle={() => toggleFilterEnabled("billType")}
+                  >
+                    <Select
+                      defaultValue="any"
+                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
+                      disabled={!filterStates.billType}
+                    >
+                      <Option value="any">Any</Option>
+                    </Select>
+                  </FilterItem>
+                </FilterGroup>
+                <FilterGroup>
+                  <FilterItem
+                    label="Payer"
+                    isEnabled={filterStates.payer}
+                    onToggle={() => toggleFilterEnabled("payer")}
+                  >
+                    <Select
+                      value={filterValues.payer}
+                      onChange={(e, newValue) => handlePayerChange(newValue)}
+                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
+                      disabled={!filterStates.payer}
+                    >
+                      <Option value="any">Any</Option>
+                      {payerTypes.map((payer) => (
+                        <Option key={payer} value={payer}>
+                          {payer}
+                        </Option>
+                      ))}
+                    </Select>
+                  </FilterItem>
+                  <FilterItem
+                    label="CPT Code"
+                    isEnabled={filterStates.cptCode}
+                    onToggle={() => toggleFilterEnabled("cptCode")}
+                  >
+                    <Input
+                      placeholder="Enter CPT Code"
+                      startDecorator={<Search size={20} />}
+                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
+                      disabled={!filterStates.cptCode}
+                    />
+                  </FilterItem>
+                </FilterGroup>
+                <FilterGroup>
+                  <FilterItem
+                    label="Aging"
+                    isEnabled={filterStates.aging}
+                    onToggle={() => toggleFilterEnabled("aging")}
+                  >
+                    <Select
+                      defaultValue="+0 days"
+                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
+                      disabled={!filterStates.aging}
+                    >
+                      <Option value="+0 days">+0 Days</Option>
+                    </Select>
+                  </FilterItem>
+                  <FilterItem
+                    label="Claim Number"
+                    isEnabled={filterStates.claimNumber}
+                    onToggle={() => toggleFilterEnabled("claimNumber")}
+                  >
+                    <Input
+                      placeholder="Enter Claim Number"
+                      startDecorator={<Search size={20} />}
+                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
+                      disabled={!filterStates.claimNumber}
+                    />
+                  </FilterItem>
+                </FilterGroup>
+              </Box>
+            </Box>
+          </Box>
+        </Collapse>
       </Box>
     </Box>
   );

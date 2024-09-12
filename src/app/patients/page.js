@@ -2,20 +2,16 @@
 
 import React, { useState } from "react";
 import { Box, Typography, IconButton } from "@mui/joy";
-import { ArrowDownToLine, Filter, FilterX } from "lucide-react";
-import { Slide } from "@mui/material";
+import { ArrowDownToLine, Users } from "lucide-react";
 import FilterBar from "@/components/patients/filterBar";
 import PatientsTable from "@/components/patients/patientsTable";
+import { Menu, MenuItem } from "@mui/material";
 
 const Patients = () => {
-    const [isFilterVisible, setIsFilterVisible] = useState(false);
     const [patientName, setPatientName] = useState("");
     const [selectedPayer, setSelectedPayer] = useState("any");
     const [currentPage, setCurrentPage] = useState(1);
-
-    const toggleFilterVisibility = () => {
-        setIsFilterVisible(!isFilterVisible);
-    };
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handlePatientNameChange = (patientName) => {
         console.log(patientName);
@@ -28,113 +24,145 @@ const Patients = () => {
         setCurrentPage(1);
     };
 
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
-        <Box sx={{ height: "94vh", width: "100vw", padding: 5 }}>
+        <Box sx={{ height: "fit-content", width: "100vw", padding: 8, paddingBottom: 2, paddingTop: 3 }}>
             <Box
                 sx={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    marginBottom: 2,
+                    marginBottom: 5,
+                    padding: 0,
                 }}
             >
-                <Typography
-                    sx={{
-                        fontSize: {
-                            xs: 24,
-                            sm: 28,
-                            md: 32,
-                            lg: 38,
-                        },
-                        fontWeight: 800,
-                    }}
-                >
-                    Patients
-                </Typography>
-
-                <IconButton
-                    sx={{
-                        gap: 1,
-                        fontWeight: 600,
-                        padding: 1,
-                        height: "10%",
-                        color: "#ffffff",
-                        backgroundColor: "#222b38",
-                        fontSize: {
-                            xs: 12,
-                            sm: 14,
-                            md: 16,
-                            lg: 18,
-                        },
-                        display: "flex",
-                        "&:hover": {
-                            color: "#ffffff",
-                            backgroundColor: "#333e4c",
-                        },
-                    }}
-                >
-                    <ArrowDownToLine size={24} />
-                    <Box
+                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", fontWeight: "800", gap: 1 }}>
+                    <Users
+                        color="#222b38"
+                        size={"10%"}
+                    />
+                    <Typography
                         sx={{
-                            display: {
-                                xs: "none",
-                                md: "block",
+                            fontSize: {
+                                xs: 24,
+                                sm: 28,
+                                md: 32,
+                                lg: 38,
+                            },
+                            color: "#222b38",
+                        }}
+                    >
+                        Patients
+                    </Typography>
+                </Box>
+                <Box>
+                    <IconButton
+                        onClick={handleMenuOpen}
+                        sx={{
+                            gap: 1,
+                            fontWeight: 600,
+                            padding: 1,
+                            height: "3vh",
+                            color: "#ffffff",
+                            backgroundColor: "#222b38",
+                            fontSize: {
+                                xs: 12,
+                                sm: 14,
+                                md: 16,
+                                lg: 18,
+                            },
+                            display: "flex",
+                            "&:hover": {
+                                color: "#ffffff",
+                                backgroundColor: "#333e4c",
                             },
                         }}
                     >
-                        Download PDF
-                    </Box>
-                </IconButton>
-            </Box>
-            <Box sx={{ display: "flex", position: "relative", gap: 5 }}>
-                <Slide direction="right" in={isFilterVisible} mountOnEnter unmountOnExit timeout={0}>
-                    <Box sx={{ width: "20vw", height: "80vh" }}>
-                        <FilterBar
-                            onPatientNameChange={handlePatientNameChange}
-                            onPayerChange={handlePayerChange}
-                            toggleFilterVisibility={toggleFilterVisibility}
-                        />
-                    </Box>
-                </Slide>
-
-                <Box
-                    sx={{
-                        height: "80vh",
-                        width: isFilterVisible ? "80vw" : "100vw",
-                    }}
-                >
-                    {!isFilterVisible && (
-                        <IconButton
-                            onClick={toggleFilterVisibility}
+                        <ArrowDownToLine size={"100%"} />
+                        <Box
                             sx={{
-                                gap: 1,
-                                fontWeight: 600,
-                                fontSize: {
-                                    xs: 16,
-                                    sm: 18,
-                                },
-                                padding: 0,
-                                color: "#262F3C",
-                                visibility: isFilterVisible ? "hidden" : "visible",
-                                opacity: isFilterVisible ? 0 : 1,
-                                "&:hover": {
-                                    color: "#258bE6",
-                                    backgroundColor: "transparent",
+                                display: {
+                                    xs: "none",
+                                    md: "block",
                                 },
                             }}
                         >
-                            <FilterX size={24} />
-                            Filter
-                        </IconButton>
-                    )
-                    }
-                    <PatientsTable
-                        patientName={patientName}
-                        selectedPayer={selectedPayer}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                    />
+                            Download
+                        </Box>
+                    </IconButton>
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleMenuClose}
+                        sx={{
+                            borderRadius: "10px",
+                            marginTop: "3px",
+                            "& .MuiPaper-root": {
+                                width: "200px",
+                                backgroundColor: "#222b38",
+                                color: "#ffffff",
+                            },
+                        }}
+                    >
+                        <MenuItem
+                            onClick={handleMenuClose}
+                            sx={{
+                                "&:hover": {
+                                    backgroundColor: "#333e4c",
+                                },
+                            }}
+                        >
+                            PDF
+                        </MenuItem>
+                        <MenuItem
+                            onClick={handleMenuClose}
+                            sx={{
+                                "&:hover": {
+                                    backgroundColor: "#333e4c",
+                                },
+                            }}
+                        >
+                            Excel
+                        </MenuItem>
+                        <MenuItem
+                            onClick={handleMenuClose}
+                            sx={{
+                                "&:hover": {
+                                    backgroundColor: "#333e4c",
+                                },
+                            }}
+                        >
+                            CSV
+                        </MenuItem>
+                    </Menu>
                 </Box>
+            </Box>
+            <Box sx={{ height: "fit-content", marginBottom: 2 }}>
+                <FilterBar
+                    onPatientNameChange={handlePatientNameChange}
+                    onPayerChange={handlePayerChange}
+                />
+            </Box>
+            <Box
+                sx={{
+                    height: "fit-content",
+                    width: "100%",
+                    transition: "width 0.4s",
+                }}
+            >
+                <PatientsTable
+                    patientName={patientName}
+                    selectedPayer={selectedPayer}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
             </Box>
         </Box>
     );

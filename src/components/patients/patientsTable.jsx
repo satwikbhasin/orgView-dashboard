@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Table, Box, Button, IconButton } from "@mui/joy";
+import { Table, Box, Button, IconButton, Typography } from "@mui/joy";
 import patientsData from "@/assets/patients";
 import { Send, ClipboardPlus } from "lucide-react";
+import { useMediaQuery } from "@mui/material";
+import PatientsCardView from "@/components/patients/patientsCardView";
 
 export default function PatientsTable({
   patientName,
@@ -12,31 +14,31 @@ export default function PatientsTable({
   setCurrentPage,
 }) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const isSmallScreen = useMediaQuery("(max-width:960px)");
 
   const patientsPerPage = 15;
 
   const headerStyle = {
     height: "5vh",
     fontWeight: "700",
-    textAlign: "left",
+    textAlign: "center",
     backgroundColor: "#f0f4f8",
     position: "sticky",
     zIndex: 1,
     cursor: "pointer",
     whiteSpace: "normal",
     overflow: "hidden",
-    fontSize: "16px",
     fontSize: {
-      xs: 10,
-      sm: 12,
-      md: 13,
+      xs: "10px",
+      sm: "12px",
+      md: "13px",
     },
   };
 
   const cellStyle = {
     fontWeight: "500",
     height: "8vh",
-    textAlign: "left",
+    textAlign: "center",
     fontSize: {
       xs: 10,
       sm: 12,
@@ -123,7 +125,7 @@ export default function PatientsTable({
           md: "row",
         },
         gap: 5,
-        height: "95%",
+        height: "72vh",
       }}
     >
       <Box
@@ -135,124 +137,146 @@ export default function PatientsTable({
       >
         <Box
           sx={{
-            border: "1px solid #d3dce5",
+            border: "1px solid #e0e0e0",
             borderRadius: 10,
             overflow: "hidden",
             height: "100%",
+            width: "100%",  
             display: "flex",
             flexDirection: "column",
           }}
         >
-          <Table>
-            <thead>
-              <tr>
-                <th style={headerStyle} onClick={() => handleSort("dos")}>
-                  DOS
-                </th>
-                <th style={headerStyle} onClick={() => handleSort("ptName")}>
-                  Patient Name
-                </th>
-                <th
-                  style={headerStyle}
-                  onClick={() => handleSort("createDate")}
-                >
-                  Create Date
-                </th>
-                <th style={headerStyle} onClick={() => handleSort("payer")}>
-                  Payer
-                </th>
-                <th style={headerStyle} onClick={() => handleSort("provider")}>
-                  Provider
-                </th>
-                <th style={headerStyle} onClick={() => handleSort("claimId")}>
-                  Claim ID
-                </th>
-                <th
-                  style={headerStyle}
-                  onClick={() => handleSort("procedures")}
-                >
-                  Procedures
-                </th>
-                <th style={headerStyle} onClick={() => handleSort("status")}>
-                  Status
-                </th>
-                <th style={headerStyle} onClick={() => handleSort("charges")}>
-                  Charges
-                </th>
-              </tr>
-            </thead>
-          </Table>
-          <Box sx={{ overflow: "auto", flex: 1 }}>
-            <Table>
-              <tbody>
-                {currentPatients.map((patient) => (
-                  <tr
-                    key={patient.id}
-                    style={{
-                      textAlign: "center",
-                      backgroundColor: "#fbfcfe",
-                      transition: "background-color 0.3s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "#f0f4f8";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "#fbfcfe";
-                    }}
-                  >
-                    <td style={cellStyle}>{patient.dos}</td>
-                    <td style={cellStyle}>{patient.ptName}</td>
-                    <td style={cellStyle}>{patient.createDate}</td>
-                    <td style={cellStyle}>{patient.payer}</td>
-                    <td style={cellStyle}>{patient.provider}</td>
-                    <td style={cellStyle}>{patient.claimId}</td>
-                    <td style={cellStyle}>{patient.procedures}</td>
-                    <td
-                      style={{
-                        ...cellStyle,
-                        display: "flex",
-                        justifyContent: "left",
-                        alignItems: "center",
-                      }}
+          {!isSmallScreen ? (
+            <>
+              <Table>
+                <thead>
+                  <tr>
+                    <th style={headerStyle} onClick={() => handleSort("dos")}>
+                      DOS
+                    </th>
+                    <th
+                      style={headerStyle}
+                      onClick={() => handleSort("ptName")}
                     >
-                      <Box
-                        sx={{
-                          fontWeight: "500",
-                          color:
-                            patient.status === "Sent"
-                              ? "#104b0f"
-                              : patient.status === "Created"
-                              ? "#FF8300"
-                              : "inherit",
-                          backgroundColor:
-                            patient.status === "Sent"
-                              ? "#e2fbe3"
-                              : patient.status === "Created"
-                              ? "#f8f5e7"
-                              : "inherit",
-                          borderRadius: 10,
-                          width: "fit-content",
-                          padding: "5px",
-                          alignItems: "center",
-                          height: "fit-content",
-                          display: "flex",
-                          gap: "6px",
+                      Patient Name
+                    </th>
+                    <th
+                      style={headerStyle}
+                      onClick={() => handleSort("createDate")}
+                    >
+                      Create Date
+                    </th>
+                    <th style={headerStyle} onClick={() => handleSort("payer")}>
+                      Payer
+                    </th>
+                    <th
+                      style={headerStyle}
+                      onClick={() => handleSort("provider")}
+                    >
+                      Provider
+                    </th>
+                    <th
+                      style={headerStyle}
+                      onClick={() => handleSort("claimId")}
+                    >
+                      Claim ID
+                    </th>
+                    <th
+                      style={headerStyle}
+                      onClick={() => handleSort("procedures")}
+                    >
+                      Procedures
+                    </th>
+                    <th
+                      style={headerStyle}
+                      onClick={() => handleSort("status")}
+                    >
+                      Status
+                    </th>
+                    <th
+                      style={headerStyle}
+                      onClick={() => handleSort("charges")}
+                    >
+                      Charges
+                    </th>
+                  </tr>
+                </thead>
+              </Table>
+              <Box sx={{ overflow: "auto", flex: 1 }}>
+                <Table>
+                  <tbody>
+                    {currentPatients.map((patient) => (
+                      <tr
+                        key={patient.id}
+                        style={{
+                          textAlign: "center",
+                          backgroundColor: "#fbfcfe",
+                          transition: "background-color 0.3s",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "#f0f4f8";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "#fbfcfe";
                         }}
                       >
-                        {patient.status === "Sent" ? (
-                          <Send size={16} />
-                        ) : (
-                          <ClipboardPlus size={16} />
-                        )}
-                        {patient.status}
-                      </Box>
-                    </td>
-                    <td style={cellStyle}>{patient.charges}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Box>
+                        <td style={cellStyle}>{patient.dos}</td>
+                        <td style={cellStyle}>{patient.ptName}</td>
+                        <td style={cellStyle}>{patient.createDate}</td>
+                        <td style={cellStyle}>{patient.payer}</td>
+                        <td style={cellStyle}>{patient.provider}</td>
+                        <td style={cellStyle}>{patient.claimId}</td>
+                        <td style={cellStyle}>{patient.procedures}</td>
+                        <td
+                          style={{
+                            ...cellStyle,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              fontWeight: "500",
+                              color:
+                                patient.status === "Sent"
+                                  ? "#104b0f"
+                                  : patient.status === "Created"
+                                  ? "#FF8300"
+                                  : "inherit",
+                              backgroundColor:
+                                patient.status === "Sent"
+                                  ? "#e2fbe3"
+                                  : patient.status === "Created"
+                                  ? "#f8f5e7"
+                                  : "inherit",
+                              borderRadius: 10,
+                              width: "fit-content",
+                              padding: "5px",
+                              alignItems: "center",
+                              height: "fit-content",
+                              display: "flex",
+                              gap: "6px",
+                            }}
+                          >
+                            {patient.status === "Sent" ? (
+                              <Send size={16} />
+                            ) : (
+                              <ClipboardPlus size={16} />
+                            )}
+                            {patient.status}
+                          </Box>
+                        </td>
+                        <td style={cellStyle}>{patient.charges}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Box>
+            </>
+          ) : (
+            <PatientsCardView patients={currentPatients} />
+          )}
         </Box>
         <Box
           sx={{
