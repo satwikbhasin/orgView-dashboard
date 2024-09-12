@@ -35,25 +35,25 @@ const Navbar = () => {
   const sliderRef = useRef(null);
 
   const links = [
-    { href: "/home", label: "Home", icon: <House size={22} /> },
-    { href: "/patients", label: "Patients", icon: <Users size={22} /> },
+    { href: "/home", label: "Home", icon: <House size={18} /> },
+    { href: "/patients", label: "Patients", icon: <Users size={18} /> },
     {
       href: "/financials",
       label: "Financials",
-      icon: <DollarSign size={22} />,
+      icon: <DollarSign size={18} />,
     },
-    { href: "/orders", label: "Orders", icon: <Package size={22} /> },
-    { href: "/inventory", label: "Inventory", icon: <Container size={22} /> },
-    { href: "/mail", label: "Mail", icon: <Mail size={22} /> },
+    { href: "/orders", label: "Orders", icon: <Package size={18} /> },
+    { href: "/inventory", label: "Inventory", icon: <Container size={18} /> },
+    { href: "/mail", label: "Mail", icon: <Mail size={18} /> },
     {
       href: "/appointments",
       label: "Appointments",
-      icon: <Calendar size={22} />,
+      icon: <Calendar size={18} />,
     },
     {
       href: "/analytics",
       label: "Analytics",
-      icon: <ChartNoAxesCombined size={22} />,
+      icon: <ChartNoAxesCombined size={18} />,
     },
   ];
 
@@ -98,6 +98,7 @@ const Navbar = () => {
         paddingTop: 1,
         paddingBottom: 1,
         display: "flex",
+        height: "6vh",
         alignItems: "center",
         justifyContent: "space-between",
         width: "100%",
@@ -145,7 +146,7 @@ const Navbar = () => {
                   sx={{
                     color: pathName === link.href ? "#000000" : "#cccbca",
                     gap: 0.5,
-                    padding: 1,
+                    padding: 0.6,
                     backgroundColor:
                       pathName === link.href ? "#ffffff" : "transparent",
                     "&:hover": {

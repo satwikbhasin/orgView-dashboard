@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Table, Box, Button, Typography, IconButton } from "@mui/joy";
+import { Table, Box, Button, IconButton } from "@mui/joy";
 import patientsData, { getPayerTypes } from "@/assets/patients";
 import { Send, ClipboardPlus } from "lucide-react";
 import SearchFilter from "@/components/patients/searchFilter";
@@ -21,20 +21,27 @@ export default function PatientsTable() {
   const payerTypes = getPayerTypes();
 
   const headerStyle = {
-    width: "11%",
+    height: "5vh",
     fontWeight: "700",
-    fontSize: 16,
-    textAlign: "center",
+    textAlign: "left",
     backgroundColor: "#f0f4f8",
-    padding: "3vh",
     position: "sticky",
-    top: 0,
     zIndex: 1,
     cursor: "pointer",
+    whiteSpace: "normal",
+    overflow: "hidden",
+    fontSize: "16px",
   };
 
   const cellStyle = {
-    padding: "18px",
+    fontWeight: "400",
+    height: "8vh",
+    textAlign: "left",
+    fontSize: {
+      xs: 10,
+      sm: 12,
+      md: 13,
+    },
   };
 
   const handleSearch = (query) => {
@@ -116,7 +123,17 @@ export default function PatientsTable() {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: {
+          xs: "column",
+          md: "row",
+        },
+        gap: 3,
+        height: "100%",
+      }}
+    >
       <SearchFilter
         onSearch={handleSearch}
         payerTypes={payerTypes}
@@ -124,165 +141,193 @@ export default function PatientsTable() {
       />
       <Box
         sx={{
-          border: "2px solid #d3dce5",
-          borderRadius: 10,
-          overflow: "auto",
-          height: "60vh",
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
         }}
       >
-        <Table>
-          <thead>
-            <tr>
-              <th style={headerStyle} onClick={() => handleSort("dos")}>
-                DOS
-              </th>
-              <th style={headerStyle} onClick={() => handleSort("ptName")}>
-                Patient Name
-              </th>
-              <th style={headerStyle} onClick={() => handleSort("createDate")}>
-                Create Date
-              </th>
-              <th style={headerStyle} onClick={() => handleSort("payer")}>
-                Payer
-              </th>
-              <th style={headerStyle} onClick={() => handleSort("provider")}>
-                Provider
-              </th>
-              <th style={headerStyle} onClick={() => handleSort("claimId")}>
-                Claim ID
-              </th>
-              <th style={headerStyle} onClick={() => handleSort("procedures")}>
-                Procedures
-              </th>
-              <th style={headerStyle} onClick={() => handleSort("status")}>
-                Status
-              </th>
-              <th style={headerStyle} onClick={() => handleSort("charges")}>
-                Charges
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentPatients.map((patient) => (
-              <tr
-                key={patient.id}
-                style={{
-                  textAlign: "center",
-                  backgroundColor: "#fbfcfe",
-                  transition: "background-color 0.3s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#f0f4f8";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#fbfcfe";
-                }}
-              >
-                <td style={cellStyle}>{patient.dos}</td>
-                <td style={cellStyle}>{patient.ptName}</td>
-                <td style={cellStyle}>{patient.createDate}</td>
-                <td style={cellStyle}>{patient.payer}</td>
-                <td style={cellStyle}>{patient.provider}</td>
-                <td style={cellStyle}>{patient.claimId}</td>
-                <td style={cellStyle}>{patient.procedures}</td>
-                <td style={cellStyle}>
-                  <Box
-                    sx={{
-                      fontWeight: "500",
-                      color:
-                        patient.status === "Sent"
-                          ? "#104b0f"
-                          : patient.status === "Created"
-                          ? "#FF8300"
-                          : "inherit",
-                      backgroundColor:
-                        patient.status === "Sent"
-                          ? "#e2fbe3"
-                          : patient.status === "Created"
-                          ? "#f8f5e7"
-                          : "inherit",
-                      borderRadius: 10,
-                      width: "fit-content",
-                      padding: "8px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
+        <Box
+          sx={{
+            border: "2px solid #d3dce5",
+            borderRadius: 10,
+            overflow: "hidden",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Table>
+            <thead>
+              <tr>
+                <th style={headerStyle} onClick={() => handleSort("dos")}>
+                  DOS
+                </th>
+                <th style={headerStyle} onClick={() => handleSort("ptName")}>
+                  Patient Name
+                </th>
+                <th
+                  style={headerStyle}
+                  onClick={() => handleSort("createDate")}
+                >
+                  Create Date
+                </th>
+                <th style={headerStyle} onClick={() => handleSort("payer")}>
+                  Payer
+                </th>
+                <th style={headerStyle} onClick={() => handleSort("provider")}>
+                  Provider
+                </th>
+                <th style={headerStyle} onClick={() => handleSort("claimId")}>
+                  Claim ID
+                </th>
+                <th
+                  style={headerStyle}
+                  onClick={() => handleSort("procedures")}
+                >
+                  Procedures
+                </th>
+                <th style={headerStyle} onClick={() => handleSort("status")}>
+                  Status
+                </th>
+                <th style={headerStyle} onClick={() => handleSort("charges")}>
+                  Charges
+                </th>
+              </tr>
+            </thead>
+          </Table>
+          <Box sx={{ overflow: "auto", flex: 1 }}>
+            <Table>
+              <tbody>
+                {currentPatients.map((patient) => (
+                  <tr
+                    key={patient.id}
+                    style={{
+                      textAlign: "center",
+                      backgroundColor: "#fbfcfe",
+                      transition: "background-color 0.3s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = "#f0f4f8";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = "#fbfcfe";
                     }}
                   >
-                    {patient.status === "Sent" ? (
-                      <Send size={16} />
-                    ) : (
-                      <ClipboardPlus size={16} />
-                    )}
-                    {patient.status}
-                  </Box>
-                </td>
-                <td style={cellStyle}>{patient.charges}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mt: 2,
-          mb: 2,
-        }}
-      >
-        <Button
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-          sx={{
-            backgroundColor: "#222b38",
-            "&:hover": {
-              backgroundColor: "#404c5c",
-            },
-          }}
-        >
-          Previous
-        </Button>
-        <Box sx={{ display: "flex", alignItems: "center", mx: 2 }}>
-          {generatePageNumbers().map((page, index) => (
-            <IconButton
-              key={index}
-              sx={{
-                mx: 1,
-                width: 36,
-                height: 36,
-                borderRadius: "50%",
-                border: "1px solid",
-                backgroundColor:
-                  page === currentPage ? "#222b38" : "transparent",
-                color: page === currentPage ? "#ffffff" : "black",
-                cursor: page !== "..." ? "pointer" : "default",
-                fontWeight: page === currentPage ? "800" : "600",
-                "&:hover": {
-                  color: page === currentPage ? "#ffffff" : "black",
-                  backgroundColor: page === currentPage ? "#222b38" : "#f0f4f8",
-                },
-              }}
-              onClick={() => page !== "..." && setCurrentPage(page)}
-              disabled={page === "..."}
-            >
-              {page}
-            </IconButton>
-          ))}
+                    <td style={cellStyle}>{patient.dos}</td>
+                    <td style={cellStyle}>{patient.ptName}</td>
+                    <td style={cellStyle}>{patient.createDate}</td>
+                    <td style={cellStyle}>{patient.payer}</td>
+                    <td style={cellStyle}>{patient.provider}</td>
+                    <td style={cellStyle}>{patient.claimId}</td>
+                    <td style={cellStyle}>{patient.procedures}</td>
+                    <td
+                      style={{
+                        ...cellStyle,
+                        display: "flex",
+                        justifyContent: "left",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          fontWeight: "500",
+                          color:
+                            patient.status === "Sent"
+                              ? "#104b0f"
+                              : patient.status === "Created"
+                              ? "#FF8300"
+                              : "inherit",
+                          backgroundColor:
+                            patient.status === "Sent"
+                              ? "#e2fbe3"
+                              : patient.status === "Created"
+                              ? "#f8f5e7"
+                              : "inherit",
+                          borderRadius: 10,
+                          width: "fit-content",
+                          padding: "5px",
+                          alignItems: "center",
+                          height: "fit-content",
+                          display: "flex",
+                          gap: "6px",
+                        }}
+                      >
+                        {patient.status === "Sent" ? (
+                          <Send size={16} />
+                        ) : (
+                          <ClipboardPlus size={16} />
+                        )}
+                        {patient.status}
+                      </Box>
+                    </td>
+                    <td style={cellStyle}>{patient.charges}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Box>
         </Box>
-        <Button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
+        <Box
           sx={{
-            backgroundColor: "#222b38",
-            "&:hover": {
-              backgroundColor: "#404c5c",
-            },
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mt: 2,
           }}
         >
-          Next
-        </Button>
+          <Button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            sx={{
+              backgroundColor: "#222b38",
+              "&:hover": {
+                backgroundColor: "#333e4c",
+              },
+            }}
+          >
+            Previous
+          </Button>
+          <Box sx={{ display: "flex", alignItems: "center", mx: 2 }}>
+            {generatePageNumbers().map((page, index) => (
+              <IconButton
+                key={index}
+                sx={{
+                  mx: 1,
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  border: "1px solid",
+                  backgroundColor:
+                    page === currentPage ? "#222b38" : "transparent",
+                  color: page === currentPage ? "#ffffff" : "black",
+                  cursor: page !== "..." ? "pointer" : "default",
+                  fontWeight: page === currentPage ? "800" : "600",
+                  "&:hover": {
+                    color: page === currentPage ? "#ffffff" : "black",
+                    backgroundColor:
+                      page === currentPage ? "#222b38" : "#f0f4f8",
+                  },
+                }}
+                onClick={() => page !== "..." && setCurrentPage(page)}
+                disabled={page === "..."}
+              >
+                {page}
+              </IconButton>
+            ))}
+          </Box>
+          <Button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            sx={{
+              backgroundColor: "#222b38",
+              "&:hover": {
+                backgroundColor: "#333e4c",
+              },
+            }}
+          >
+            Next
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
