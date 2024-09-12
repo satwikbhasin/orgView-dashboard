@@ -26,6 +26,11 @@ export default function PatientsTable({
     whiteSpace: "normal",
     overflow: "hidden",
     fontSize: "16px",
+    fontSize: {
+      xs: 10,
+      sm: 12,
+      md: 13,
+    },
   };
 
   const cellStyle = {
@@ -130,7 +135,7 @@ export default function PatientsTable({
       >
         <Box
           sx={{
-            border: "2px solid #d3dce5",
+            border: "1px solid #d3dce5",
             borderRadius: 10,
             overflow: "hidden",
             height: "100%",
