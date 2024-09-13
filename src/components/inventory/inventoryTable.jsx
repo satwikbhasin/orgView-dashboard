@@ -11,7 +11,7 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/joy";
-import { ChartSpline, ShoppingBasket, Ellipsis, Dot } from "lucide-react";
+import { ChartSpline, ShoppingBasket, Ellipsis, Dot, ArrowUpDown } from "lucide-react";
 import inventoryData from "@/assets/inventory";
 import { useMediaQuery } from "@mui/material";
 import ItemsCardView from "./itemsCardView";
@@ -51,9 +51,20 @@ const ResponsiveTypography = ({ children }) => (
 
 const SortableHeader = ({ label, onClick }) => (
   <th style={headerStyle} onClick={onClick}>
-    <ResponsiveTypography>{label}</ResponsiveTypography>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 1,
+      }}
+    >
+      <ResponsiveTypography>{label}</ResponsiveTypography>
+      <ArrowUpDown color="grey" size={14} />
+    </Box>
   </th>
 );
+
 
 export default function InventoryTable() {
   const [currentPage, setCurrentPage] = useState(1);

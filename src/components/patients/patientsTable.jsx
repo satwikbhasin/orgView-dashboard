@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Table, Box, Button, IconButton, Typography } from "@mui/joy";
 import patientsData from "@/assets/patients";
-import { Send, ClipboardPlus } from "lucide-react";
+import { Send, ClipboardPlus, ArrowUpDown } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
 import PatientsCardView from "@/components/patients/patientsCardView";
 
@@ -42,7 +42,17 @@ const ResponsiveTypography = ({ children }) => (
 
 const SortableHeader = ({ label, onClick }) => (
   <th style={headerStyle} onClick={onClick}>
-    <ResponsiveTypography>{label}</ResponsiveTypography>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 1,
+      }}
+    >
+      <ResponsiveTypography>{label}</ResponsiveTypography>
+      <ArrowUpDown color="grey" size={14} />
+    </Box>
   </th>
 );
 
@@ -177,7 +187,7 @@ export default function PatientsTable({ patientName, selectedPayer }) {
                   </tr>
                 </thead>
               </Table>
-              
+
               <Box sx={{ overflow: "auto", flex: 1 }}>
                 <Table>
                   <tbody>
