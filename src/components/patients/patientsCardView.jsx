@@ -64,24 +64,40 @@ const PatientsCardView = ({ patients }) => {
           </Box>
           <Divider sx={{ marginBottom: 2 }} />
           <Box sx={{ marginBottom: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>DOS: </Typography>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+              DOS:
+            </Typography>
             <Typography sx={{ display: "inline" }}>{patient.dos}</Typography>
           </Box>
           <Box sx={{ marginBottom: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>Payer: </Typography>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+              Payer:
+            </Typography>
             <Typography sx={{ display: "inline" }}>{patient.payer}</Typography>
           </Box>
           <Box sx={{ marginBottom: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>Provider: </Typography>
-            <Typography sx={{ display: "inline" }}>{patient.provider}</Typography>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+              Provider:
+            </Typography>
+            <Typography sx={{ display: "inline" }}>
+              {patient.provider}
+            </Typography>
           </Box>
           <Box sx={{ marginBottom: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>Claim ID: </Typography>
-            <Typography sx={{ display: "inline" }}>{patient.claimId}</Typography>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+              Claim ID:
+            </Typography>
+            <Typography sx={{ display: "inline" }}>
+              {patient.claimId}
+            </Typography>
           </Box>
           <Box>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>Charges: </Typography>
-            <Typography sx={{ display: "inline" }}>{patient.charges}</Typography>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+              Charges:
+            </Typography>
+            <Typography sx={{ display: "inline" }}>
+              {patient.charges}
+            </Typography>
           </Box>
         </Box>
       ))}
