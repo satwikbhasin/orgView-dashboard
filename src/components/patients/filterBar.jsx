@@ -126,24 +126,32 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
   };
 
   const toggleAllFilters = () => {
-    const newState = !allFiltersDisabled;
-    setAllFiltersDisabled(newState);
-    setFilterStates({
-      patientName: newState,
-      payer: newState,
-      billType: newState,
-      cptCode: newState,
-      aging: newState,
-      claimNumber: newState,
-    });
+    setAllFiltersDisabled((prev) => {
+      const newState = !prev;
 
-    if (newState) {
-      onPatientNameChange(filterValues.patientName);
-      onPayerChange(filterValues.payer);
-    } else {
-      onPatientNameChange("");
-      onPayerChange("any");
-    }
+      setFilterStates({
+        patientName: !newState,
+        payer: !newState,
+        billType: !newState,
+        cptCode: !newState,
+        aging: !newState,
+        claimNumber: !newState,
+      });
+
+      if (newState) {
+        onPatientNameChange("");
+        onPayerChange("any");
+      } else {
+        // Restore filter values when enabling all filters
+        onPatientNameChange(filterValues.patientName);
+        onPayerChange(filterValues.payer);
+      }
+
+      console.log("All filters disabled: ", newState);
+      console.log("Filter states: ", filterStates);
+
+      return newState;
+    });
   };
 
   const handlePatientNameChange = (value) => {
@@ -221,18 +229,18 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               <IconButton
                 onClick={toggleAllFilters}
                 sx={{
-                  color: allFiltersDisabled ? "black" : "green",
+                  color: allFiltersDisabled ? "green" : "black",
                   transition: "color 0.3s ease",
                   "&:hover": {
-                    color: allFiltersDisabled ? "black" : "green",
+                    color: allFiltersDisabled ? "green" : "black",
                     backgroundColor: "transparent",
                   },
                 }}
               >
                 {allFiltersDisabled ? (
-                  <ToggleLeft size={24} />
-                ) : (
                   <ToggleRight size={24} />
+                ) : (
+                  <ToggleLeft size={24} />
                 )}
               </IconButton>
             </Box>
