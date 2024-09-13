@@ -98,7 +98,7 @@ const Navbar = () => {
         paddingTop: 1,
         paddingBottom: 1,
         display: "flex",
-        height: "6vh",
+        height: "8vh",
         alignItems: "center",
         justifyContent: "space-between",
         width: "100%",

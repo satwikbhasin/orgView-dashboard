@@ -43,7 +43,7 @@ const Patients = () => {
                     padding: 0,
                 }}
             >
-                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", fontWeight: "800", gap: 1 }}>
+                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", fontWeight: "800", gap: 1, cursor: "default" }}>
                     <Users
                         color="#222b38"
                         size={"10%"}
@@ -67,19 +67,14 @@ const Patients = () => {
                         onClick={handleMenuOpen}
                         sx={{
                             gap: 1,
-                            fontWeight: 600,
                             padding: 1,
-                            height: "5vh",
-                            width: "fit-content",
+                            fontWeight: 600,
+                            height: "fit-content",
                             color: "#ffffff",
                             backgroundColor: "#222b38",
-                            fontSize: {
-                                xs: 12,
-                                sm: 14,
-                                md: 16,
-                                lg: 18,
-                            },
                             display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
                             "&:hover": {
                                 color: "#ffffff",
                                 backgroundColor: "#333e4c",
@@ -95,7 +90,19 @@ const Patients = () => {
                                 },
                             }}
                         >
-                            Export
+                            <Typography
+                                sx={{
+                                    fontSize: {
+                                        xs: 12,
+                                        sm: 14,
+                                        md: 16,
+                                        lg: 18,
+                                    },
+                                    color: "#ffffff",
+                                }}
+                            >
+                                Export
+                            </Typography>
                         </Box>
                     </IconButton>
                     <Menu

@@ -7,6 +7,45 @@ import { Send, ClipboardPlus } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
 import PatientsCardView from "@/components/patients/patientsCardView";
 
+const headerStyle = {
+  height: "6vh",
+  fontWeight: "800",
+  textAlign: "center",
+  verticalAlign: "middle",
+  backgroundColor: "#f0f4f8",
+  position: "sticky",
+  zIndex: 1,
+  cursor: "pointer",
+  whiteSpace: "normal",
+  overflow: "hidden",
+};
+
+const cellStyle = {
+  fontWeight: "400",
+  height: "6vh",
+  textAlign: "center",
+};
+
+const ResponsiveTypography = ({ children }) => (
+  <Typography
+    sx={{
+      fontSize: {
+        xs: "12px",
+        sm: "12px",
+        md: "16px",
+      },
+    }}
+  >
+    {children}
+  </Typography>
+);
+
+const SortableHeader = ({ label, onClick }) => (
+  <th style={headerStyle} onClick={onClick}>
+    <ResponsiveTypography>{label}</ResponsiveTypography>
+  </th>
+);
+
 export default function PatientsTable({
   patientName,
   selectedPayer,
@@ -18,39 +57,9 @@ export default function PatientsTable({
 
   const patientsPerPage = 15;
 
-  const headerStyle = {
-    height: "5vh",
-    fontWeight: "700",
-    textAlign: "center",
-    backgroundColor: "#f0f4f8",
-    position: "sticky",
-    zIndex: 1,
-    cursor: "pointer",
-    whiteSpace: "normal",
-    overflow: "hidden",
-    fontSize: {
-      xs: "10px",
-      sm: "12px",
-      md: "13px",
-    },
-  };
-
-  const cellStyle = {
-    fontWeight: "500",
-    height: "8vh",
-    textAlign: "center",
-    fontSize: {
-      xs: 10,
-      sm: 12,
-      md: 13,
-    },
-  };
-
   const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
     setSortConfig({ key, direction });
   };
 
@@ -58,12 +67,8 @@ export default function PatientsTable({
     if (sortConfig.key) {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
-      if (aValue < bValue) {
-        return sortConfig.direction === "asc" ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return sortConfig.direction === "asc" ? 1 : -1;
-      }
+      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
     }
     return 0;
   });
@@ -89,15 +94,11 @@ export default function PatientsTable({
   const totalPages = Math.ceil(filteredPatients.length / patientsPerPage);
 
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
   const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
   const generatePageNumbers = () => {
@@ -120,28 +121,19 @@ export default function PatientsTable({
     <Box
       sx={{
         display: "flex",
-        flexDirection: {
-          xs: "column",
-          md: "row",
-        },
+        flexDirection: { xs: "column", md: "row" },
         gap: 5,
-        height: "72vh",
+        height: isSmallScreen ? "fit-content" : "70vh",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
-        }}
-      >
+      <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <Box
           sx={{
-            border: "1px solid #e0e0e0",
+            border: isSmallScreen ? "transparent" : "1.5px solid #e0e0e0",
             borderRadius: 10,
             overflow: "hidden",
             height: "100%",
-            width: "100%",  
+            width: "100%",
             display: "flex",
             flexDirection: "column",
           }}
@@ -151,54 +143,42 @@ export default function PatientsTable({
               <Table>
                 <thead>
                   <tr>
-                    <th style={headerStyle} onClick={() => handleSort("dos")}>
-                      DOS
-                    </th>
-                    <th
-                      style={headerStyle}
+                    <SortableHeader
+                      label="DOS"
+                      onClick={() => handleSort("dos")}
+                    />
+                    <SortableHeader
+                      label="Patient Name"
                       onClick={() => handleSort("ptName")}
-                    >
-                      Patient Name
-                    </th>
-                    <th
-                      style={headerStyle}
+                    />
+                    <SortableHeader
+                      label="Create Date"
                       onClick={() => handleSort("createDate")}
-                    >
-                      Create Date
-                    </th>
-                    <th style={headerStyle} onClick={() => handleSort("payer")}>
-                      Payer
-                    </th>
-                    <th
-                      style={headerStyle}
+                    />
+                    <SortableHeader
+                      label="Payer"
+                      onClick={() => handleSort("payer")}
+                    />
+                    <SortableHeader
+                      label="Provider"
                       onClick={() => handleSort("provider")}
-                    >
-                      Provider
-                    </th>
-                    <th
-                      style={headerStyle}
+                    />
+                    <SortableHeader
+                      label="Claim ID"
                       onClick={() => handleSort("claimId")}
-                    >
-                      Claim ID
-                    </th>
-                    <th
-                      style={headerStyle}
+                    />
+                    <SortableHeader
+                      label="Procedures"
                       onClick={() => handleSort("procedures")}
-                    >
-                      Procedures
-                    </th>
-                    <th
-                      style={headerStyle}
+                    />
+                    <SortableHeader
+                      label="Status"
                       onClick={() => handleSort("status")}
-                    >
-                      Status
-                    </th>
-                    <th
-                      style={headerStyle}
+                    />
+                    <SortableHeader
+                      label="Charges"
                       onClick={() => handleSort("charges")}
-                    >
-                      Charges
-                    </th>
+                    />
                   </tr>
                 </thead>
               </Table>

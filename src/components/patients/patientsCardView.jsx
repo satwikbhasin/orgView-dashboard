@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Box, Typography } from "@mui/joy";
+import { Box, Typography, Divider } from "@mui/joy";
 import { Send, ClipboardPlus } from "lucide-react";
 
 const PatientsCardView = ({ patients }) => {
@@ -25,13 +25,13 @@ const PatientsCardView = ({ patients }) => {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 1,
             }}
           >
             <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>
               {patient.ptName}
             </Typography>
-
             <Box
               sx={{
                 fontWeight: "500",
@@ -48,11 +48,9 @@ const PatientsCardView = ({ patients }) => {
                     ? "#f8f5e7"
                     : "inherit",
                 borderRadius: 10,
-                width: "fit-content",
                 padding: "5px",
-                alignItems: "center",
-                height: "fit-content",
                 display: "flex",
+                alignItems: "center",
                 gap: "6px",
               }}
             >
@@ -64,17 +62,27 @@ const PatientsCardView = ({ patients }) => {
               {patient.status}
             </Box>
           </Box>
-          <Typography variant="body2">DOS: {patient.dos}</Typography>
-          <Typography variant="body2">
-            Create Date: {patient.createDate}
-          </Typography>
-          <Typography variant="body2">Payer: {patient.payer}</Typography>
-          <Typography variant="body2">Provider: {patient.provider}</Typography>
-          <Typography variant="body2">Claim ID: {patient.claimId}</Typography>
-          <Typography variant="body2">
-            Procedures: {patient.procedures}
-          </Typography>
-          <Typography variant="body2">Charges: {patient.charges}</Typography>
+          <Divider sx={{ marginBottom: 2 }} />
+          <Box sx={{ marginBottom: 1 }}>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>DOS: </Typography>
+            <Typography sx={{ display: "inline" }}>{patient.dos}</Typography>
+          </Box>
+          <Box sx={{ marginBottom: 1 }}>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>Payer: </Typography>
+            <Typography sx={{ display: "inline" }}>{patient.payer}</Typography>
+          </Box>
+          <Box sx={{ marginBottom: 1 }}>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>Provider: </Typography>
+            <Typography sx={{ display: "inline" }}>{patient.provider}</Typography>
+          </Box>
+          <Box sx={{ marginBottom: 1 }}>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>Claim ID: </Typography>
+            <Typography sx={{ display: "inline" }}>{patient.claimId}</Typography>
+          </Box>
+          <Box>
+            <Typography sx={{ fontWeight: 600, display: "inline" }}>Charges: </Typography>
+            <Typography sx={{ display: "inline" }}>{patient.charges}</Typography>
+          </Box>
         </Box>
       ))}
     </Box>

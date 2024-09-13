@@ -20,6 +20,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import { useMediaQuery } from "@mui/material";
 
 const FilterItem = ({ label, children, isEnabled, onToggle }) => (
   <Box
@@ -103,6 +104,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
   });
   const [allFiltersDisabled, setAllFiltersDisabled] = useState(false);
   const payerTypes = getPayerTypes();
+  const isSmallScreen = useMediaQuery("(max-width:960px)");
 
   const toggleFilterVisibility = () => {
     setIsFilterVisible(!isFilterVisible);
@@ -184,11 +186,12 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             sx={{
               gap: 1,
               fontSize: {
-                xs: 16,
-                md: 20,
+                xs: 14,
+                sm: 16,
+                md: 18,
+                lg: 20,
               },
               fontWeight: 600,
-              padding: 0,
               color: "#258bE6",
               "&:hover": {
                 color: "#258bE6",
@@ -255,7 +258,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: { xs: "column", md: "row" },
+                  flexDirection: isSmallScreen ? "column" : "row",
                   width: "100%",
                 }}
               >
