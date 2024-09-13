@@ -1,11 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { Table, Box, Button, IconButton, Typography } from "@mui/joy";
-import patientsData from "@/assets/patients";
-import { Send, ClipboardPlus } from "lucide-react";
+import {
+  Table,
+  Box,
+  Button,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  MenuList,
+} from "@mui/joy";
+import { ChartSpline, ShoppingBasket, Ellipsis, Dot } from "lucide-react";
+import inventoryData from "@/assets/inventory";
 import { useMediaQuery } from "@mui/material";
-import PatientsCardView from "@/components/patients/patientsCardView";
+import ItemsCardView from "./itemsCardView";
 
 const headerStyle = {
   height: "6vh",
@@ -46,10 +55,14 @@ const SortableHeader = ({ label, onClick }) => (
   </th>
 );
 
-export default function PatientsTable({ patientName, selectedPayer }) {
+export default function InventoryTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
+  const itemsPerPage = 15; // Ensure this is set correctly
 
   const handleSort = (key) => {
     const direction =
@@ -57,7 +70,7 @@ export default function PatientsTable({ patientName, selectedPayer }) {
     setSortConfig({ key, direction });
   };
 
-  const sortedPatients = [...patientsData].sort((a, b) => {
+  const sortedInventory = [...inventoryData].sort((a, b) => {
     if (sortConfig.key) {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
@@ -67,26 +80,10 @@ export default function PatientsTable({ patientName, selectedPayer }) {
     return 0;
   });
 
-  const filteredPatients = sortedPatients.filter((patient) => {
-    const lowerCaseQuery = (patientName || "").toLowerCase();
-    const matchesSearchQuery =
-      patient.ptName.toLowerCase().includes(lowerCaseQuery) ||
-      patient.payer.toLowerCase().includes(lowerCaseQuery) ||
-      patient.procedures.toLowerCase().includes(lowerCaseQuery) ||
-      patient.claimId.toLowerCase().includes(lowerCaseQuery);
-    const matchesPayer =
-      selectedPayer === "any" || patient.payer === selectedPayer;
-    return matchesSearchQuery && matchesPayer;
-  });
-
-  const patientsPerPage = 15;
-  const indexOfLastPatient = currentPage * patientsPerPage;
-  const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
-  const currentPatients = filteredPatients.slice(
-    indexOfFirstPatient,
-    indexOfLastPatient
-  );
-  const totalPages = Math.ceil(filteredPatients.length / patientsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage; // Calculate the index of the last item on the current page
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage; // Calculate the index of the first item on the current page
+  const currentItems = sortedInventory.slice(indexOfFirstItem, indexOfLastItem); // Slice the items to get the current page's items
+  const totalPages = Math.ceil(sortedInventory.length / itemsPerPage); // Calculate the total number of pages
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -112,6 +109,34 @@ export default function PatientsTable({ patientName, selectedPayer }) {
     return [...new Set(pages)];
   };
 
+  const handleMenuOpen = (event, item) => {
+    setAnchorEl(event.currentTarget);
+    setMenuOpen(true);
+    setSelectedItem(item);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setMenuOpen(false);
+    setSelectedItem(null);
+  };
+
+  const handleMenuItemClick = (action) => {
+    console.log(`Action: ${action} for item: ${selectedItem.sku}`);
+    handleMenuClose();
+  };
+
+  const getStatus = (status) => {
+    switch (status) {
+      case "green":
+        return ["Green", "#019992"];
+      case "yellow":
+        return ["Yellow", "#FFB001"];
+      case "red":
+        return ["Red", "#E13D00"];
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -126,7 +151,7 @@ export default function PatientsTable({ patientName, selectedPayer }) {
           sx={{
             border: isSmallScreen ? "transparent" : "1.5px solid #e0e0e0",
             borderRadius: 10,
-            overflow: "hidden",
+            overflow: "scroll",
             height: "100%",
             width: "100%",
             display: "flex",
@@ -139,51 +164,44 @@ export default function PatientsTable({ patientName, selectedPayer }) {
                 <thead>
                   <tr>
                     <SortableHeader
-                      label="DOS"
-                      onClick={() => handleSort("dos")}
+                      label="SKU"
+                      onClick={() => handleSort("sku")}
                     />
                     <SortableHeader
-                      label="Patient Name"
-                      onClick={() => handleSort("ptName")}
+                      label="Item Name"
+                      onClick={() => handleSort("itemName")}
                     />
                     <SortableHeader
-                      label="Create Date"
-                      onClick={() => handleSort("createDate")}
+                      label="Category"
+                      onClick={() => handleSort("category")}
                     />
                     <SortableHeader
-                      label="Payer"
-                      onClick={() => handleSort("payer")}
+                      label="Price"
+                      onClick={() => handleSort("price")}
                     />
                     <SortableHeader
-                      label="Provider"
-                      onClick={() => handleSort("provider")}
+                      label="Current Stock"
+                      onClick={() => handleSort("currentStock")}
                     />
                     <SortableHeader
-                      label="Claim ID"
-                      onClick={() => handleSort("claimId")}
-                    />
-                    <SortableHeader
-                      label="Procedures"
-                      onClick={() => handleSort("procedures")}
+                      label="Minimum Threshold"
+                      onClick={() => handleSort("minThreshold")}
                     />
                     <SortableHeader
                       label="Status"
                       onClick={() => handleSort("status")}
                     />
-                    <SortableHeader
-                      label="Charges"
-                      onClick={() => handleSort("charges")}
-                    />
+                    <SortableHeader />
                   </tr>
                 </thead>
               </Table>
-              
+
               <Box sx={{ overflow: "auto", flex: 1 }}>
                 <Table>
                   <tbody>
-                    {currentPatients.map((patient) => (
+                    {currentItems.map((item) => (
                       <tr
-                        key={patient.id}
+                        key={item.sku}
                         style={{
                           textAlign: "center",
                           backgroundColor: "#fbfcfe",
@@ -196,54 +214,68 @@ export default function PatientsTable({ patientName, selectedPayer }) {
                           e.currentTarget.style.backgroundColor = "#fbfcfe";
                         }}
                       >
-                        <td style={cellStyle}>{patient.dos}</td>
-                        <td style={cellStyle}>{patient.ptName}</td>
-                        <td style={cellStyle}>{patient.createDate}</td>
-                        <td style={cellStyle}>{patient.payer}</td>
-                        <td style={cellStyle}>{patient.provider}</td>
-                        <td style={cellStyle}>{patient.claimId}</td>
-                        <td style={cellStyle}>{patient.procedures}</td>
+                        <td style={cellStyle}>{item.sku}</td>
+                        <td style={cellStyle}>{item.itemName}</td>
+                        <td style={cellStyle}>{item.category}</td>
+                        <td style={cellStyle}>{item.price}</td>
                         <td
                           style={{
                             ...cellStyle,
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
+                            color:
+                              item.currentStock < item.minThreshold
+                                ? "#E13D00"
+                                : "inherit",
+                            fontWeight:
+                              item.currentStock < item.minThreshold
+                                ? "800"
+                                : "400",
                           }}
                         >
+                          {item.currentStock}
+                        </td>
+                        <td style={cellStyle}>{item.minThreshold}</td>
+                        <td style={cellStyle}>
                           <Box
                             sx={{
-                              fontWeight: "500",
-                              color:
-                                patient.status === "Sent"
-                                  ? "#104b0f"
-                                  : patient.status === "Created"
-                                  ? "#FF8300"
-                                  : "inherit",
-                              backgroundColor:
-                                patient.status === "Sent"
-                                  ? "#e2fbe3"
-                                  : patient.status === "Created"
-                                  ? "#f8f5e7"
-                                  : "inherit",
-                              borderRadius: 10,
-                              width: "fit-content",
-                              padding: "5px",
-                              alignItems: "center",
-                              height: "fit-content",
                               display: "flex",
-                              gap: "6px",
+                              flexDirection: "row",
+                              justifyContent: "center",
+                              alignItems: "center",
                             }}
                           >
-                            {patient.status === "Sent" ? (
-                              <Send size={16} />
-                            ) : (
-                              <ClipboardPlus size={16} />
-                            )}
-                            {patient.status}
+                            <Dot size={50} color={getStatus(item.status)[1]} />
+                            {getStatus(item.status)[0]}
                           </Box>
                         </td>
-                        <td style={cellStyle}>{patient.charges}</td>
+                        <td style={cellStyle}>
+                          <IconButton
+                            onClick={(event) => handleMenuOpen(event, item)}
+                          >
+                            <Ellipsis />
+                          </IconButton>
+                          <Menu
+                            anchorEl={anchorEl}
+                            open={menuOpen}
+                            onClose={handleMenuClose}
+                          >
+                            <MenuList>
+                              <MenuItem
+                                onClick={() =>
+                                  handleMenuItemClick("View Usage")
+                                }
+                              >
+                                <ChartSpline />
+                                Usage
+                              </MenuItem>
+                              <MenuItem
+                                onClick={() => handleMenuItemClick("Order")}
+                              >
+                                <ShoppingBasket />
+                                Order
+                              </MenuItem>
+                            </MenuList>
+                          </Menu>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -251,7 +283,7 @@ export default function PatientsTable({ patientName, selectedPayer }) {
               </Box>
             </>
           ) : (
-            <PatientsCardView patients={currentPatients} />
+            <ItemsCardView />
           )}
         </Box>
         <Box
@@ -277,7 +309,7 @@ export default function PatientsTable({ patientName, selectedPayer }) {
           </Button>
           <Box sx={{ display: "flex", alignItems: "center", mx: 2 }}>
             {generatePageNumbers().map((page, index) => (
-              <IconButton
+              <Button
                 key={index}
                 sx={{
                   mx: 1,
@@ -300,7 +332,7 @@ export default function PatientsTable({ patientName, selectedPayer }) {
                 disabled={page === "..."}
               >
                 {page}
-              </IconButton>
+              </Button>
             ))}
           </Box>
           <Button

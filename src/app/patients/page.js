@@ -8,9 +8,9 @@ import PatientsTable from "@/components/patients/patientsTable";
 import { Menu, MenuItem } from "@mui/material";
 
 const Patients = () => {
+    const [currentPage, setCurrentPage] = useState(1);
     const [patientName, setPatientName] = useState("");
     const [selectedPayer, setSelectedPayer] = useState("any");
-    const [currentPage, setCurrentPage] = useState(1);
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handlePatientNameChange = (patientName) => {
@@ -162,14 +162,12 @@ const Patients = () => {
                 sx={{
                     height: "fit-content",
                     width: "100%",
-                    transition: "width 0.4s",
+                    transition: "opacity 0.5s ease"
                 }}
             >
                 <PatientsTable
                     patientName={patientName}
                     selectedPayer={selectedPayer}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
                 />
             </Box>
         </Box>
