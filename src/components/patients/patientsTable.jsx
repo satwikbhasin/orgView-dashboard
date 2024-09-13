@@ -261,9 +261,10 @@ export default function PatientsTable({
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
             mt: 2,
+            gap: 5,
           }}
         >
           <Button
