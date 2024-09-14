@@ -10,7 +10,13 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/joy";
-import { Send, Dot, ChartSpline, ShoppingBasket, CircleEllipsis } from "lucide-react";
+import {
+  Send,
+  Dot,
+  ChartSpline,
+  ShoppingBasket,
+  CircleEllipsis,
+} from "lucide-react";
 import inventoryData from "@/assets/inventory";
 
 const getStatus = (status) => {
@@ -54,9 +60,8 @@ const ItemsCardView = () => {
         <Box
           key={item.sku}
           sx={{
-            borderRadius: 10,
             padding: 2,
-            marginBottom: 2,
+            borderBottom: "1px solid #e0e0e0",
             backgroundColor: "#fbfcfe",
             transition: "background-color 0.3s",
             "&:hover": {
@@ -72,44 +77,43 @@ const ItemsCardView = () => {
               marginBottom: 1,
             }}
           >
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 14,
+                  md: 16,
+                },
+                fontWeight: "600",
+              }}
+            >
+              {item.itemName}
+            </Typography>
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "left",
+                justifyContent: "space-between",
                 alignItems: "center",
-                marginBottom: 1,
               }}
             >
-              <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>
-                {item.itemName}
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
+              <IconButton onClick={(event) => handleMenuOpen(event, item)}>
+                <CircleEllipsis size={13} />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={menuOpen}
+                onClose={handleMenuClose}
               >
-                <IconButton onClick={(event) => handleMenuOpen(event, item)}>
-                  <CircleEllipsis size={20} />
-                </IconButton>
-                <Menu
-                  anchorEl={anchorEl}
-                  open={menuOpen}
-                  onClose={handleMenuClose}
-                >
-                  <MenuList>
-                    <MenuItem onClick={() => handleMenuItemClick("View Usage")}>
-                      <ChartSpline />
-                      View Usage
-                    </MenuItem>
-                    <MenuItem onClick={() => handleMenuItemClick("Order")}>
-                      <ShoppingBasket />
-                      Order
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-              </Box>
+                <MenuList>
+                  <MenuItem onClick={() => handleMenuItemClick("View Usage")}>
+                    <ChartSpline size={13} />
+                    View Usage
+                  </MenuItem>
+                  <MenuItem onClick={() => handleMenuItemClick("Order")}>
+                    <ShoppingBasket size={13} />
+                    Order
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </Box>
 
             <Box
@@ -119,37 +123,104 @@ const ItemsCardView = () => {
                 borderRadius: 10,
                 display: "flex",
                 alignItems: "center",
+                gap: "6px",
+                fontSize: {
+                  xs: 14,
+                  md: 16,
+                },
               }}
             >
-              {item.status === "Sent" ? <Send size={16} /> : <Dot size={60} />}
+              <Dot size={60} />
               {getStatus(item.status)[0]}
             </Box>
           </Box>
           <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               SKU:
             </Typography>
-            <Typography sx={{ display: "inline" }}>{item.sku}</Typography>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
+              {item.sku}
+            </Typography>
           </Box>
           <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               Category:
             </Typography>
-            <Typography sx={{ display: "inline" }}>{item.category}</Typography>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
+              {item.category}
+            </Typography>
           </Box>
           <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               Price:
             </Typography>
-            <Typography sx={{ display: "inline" }}>${item.price}</Typography>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
+              ${item.price}
+            </Typography>
           </Box>
           <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               Current Stock:
             </Typography>
             <Typography
               sx={{
-                display: "inline",
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
                 color:
                   item.currentStock < item.minThreshold ? "#E13D00" : "black",
                 fontWeight:
@@ -160,10 +231,25 @@ const ItemsCardView = () => {
             </Typography>
           </Box>
           <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               Minimum Threshold:
             </Typography>
-            <Typography sx={{ display: "inline" }}>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               {item.minThreshold}
             </Typography>
           </Box>

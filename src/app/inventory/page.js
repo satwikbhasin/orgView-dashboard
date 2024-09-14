@@ -2,19 +2,21 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
-import { Container, ChevronRight, ChevronDown } from "lucide-react";
+import { Container, ArrowDownToLine } from "lucide-react";
 import InventoryItemsTab from "@/components/inventory/inventoryItemsTab";
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 const Inventory = () => {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const tab = searchParams.get('tab');
     const [selectedTab, setSelectedTab] = useState(tab || "inventoryItems");
+    const [underlineStyle, setUnderlineStyle] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
-    const [menuOpen, setMenuOpen] = useState(false);
-    const closeTimeoutRef = useRef(null);
-    const menuRef = useRef(null);
+    const tabsRef = useRef([]);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const contentRef = useRef(null);
 
     useEffect(() => {
         if (tab) {
@@ -22,158 +24,221 @@ const Inventory = () => {
         }
     }, [tab]);
 
-    const handleMenuOpen = () => {
-        if (closeTimeoutRef.current) {
-            clearTimeout(closeTimeoutRef.current);
+    useEffect(() => {
+        const activeTab = tabsRef.current.find(ref => ref && ref.getAttribute('data-value') === selectedTab);
+        if (activeTab) {
+            setUnderlineStyle({
+                left: activeTab.offsetLeft,
+                width: activeTab.offsetWidth,
+            });
         }
-        if (menuRef.current) {
-            setAnchorEl(menuRef.current);
-            setMenuOpen(true);
-        }
+    }, [selectedTab]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(contentRef.current.scrollTop > 0);
+        };
+
+        const contentElement = contentRef.current;
+        contentElement.addEventListener('scroll', handleScroll);
+
+        console.log('contentElement', contentElement);
+        return () => {
+            contentElement.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    const handleTabChange = (tab) => {
+        router.push(`?tab=${tab}`);
+        setSelectedTab(tab);
+    };
+
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
     };
 
     const handleMenuClose = () => {
-        closeTimeoutRef.current = setTimeout(() => {
-            setMenuOpen(false);
-            setAnchorEl(null);
-        }, 300);
-    };
-
-    const handleTabChange = (tab) => {
-        setSelectedTab(tab);
-        setMenuOpen(false);
         setAnchorEl(null);
     };
 
-    const menuItems = [
-        { value: "inventoryItems", label: "items" },
-        { value: "pendingOrders", label: "pending orders" }
+    const tabs = [
+        { value: "inventoryItems", label: "Items" },
+        { value: "pendingOrders", label: "Pending orders" }
     ];
 
     return (
-        <Box sx={{ height: "fit-content", width: "100vw", padding: 8, paddingTop: 3, display: 'flex', flexDirection: 'column', overflow: "scroll" }}>
-            <Box
-                sx={{
+        <Box ref={contentRef} sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
+            <Box sx={{
+                background: isScrolled
+                    && "rgba( 250, 250, 250, 0.1 )",
+                backdropFilter: isScrolled ? "blur(4.5px)" : "none",
+                borderBottom: isScrolled ? "1px solid #dedede2" : "none",
+                position: "sticky",
+                top: 0,
+                zIndex: 1,
+            }}>
+                <Box sx={{
                     display: "flex",
+                    flexDirection: "row",
                     alignItems: "center",
-                    gap: 1,
-                    marginBottom: 3,
-                }}
-            >
-                <Box sx={{ display: "flex", alignItems: "center", fontWeight: "800", gap: 1, cursor: "default" }}>
-                    <Container
-                        color="#222b38"
-                        size={"4vh"}
-                    />
-                    <Typography
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            fontSize: {
-                                xs: 24,
-                                sm: 28,
-                                md: 32,
-                                lg: 38,
-                            },
-                            color: "#222b38",
-                            transition: "opacity 0.2s ease",
-                            display: {
-                                xs: "none",
-                                md: "block",
-                            },
-                        }}
-                    >
-                        Inventory
-                    </Typography>
-                </Box>
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: 1,
-                        padding: 0,
-                    }}
-                >
-                    <ChevronRight
-                        color="#808080"
-                        strokeWidth={3}
-                        size={20}
-                    />
-                </Box>
-                <Box
-                    ref={menuRef}
-                    onMouseEnter={handleMenuOpen}
-                    onMouseLeave={handleMenuClose}
-                    sx={{
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        marginTop: 0.5,
-                    }}
-                >
-                    <IconButton
-                        sx={{
-                            backgroundColor: "transparent",
-                            "&:hover": {
-                                backgroundColor: "transparent",
-                            },
-                            display: "flex",
-                            alignItems: "center",
-                            padding: 0,
-                            justifyContent: "left",
-                        }}
-                    >
+                    cursor: "default",
+                    height: "10vh",
+                    justifyContent: "space-between",
+                    padding: 2,
+                }}>
+                    <Box sx={{
+                        display: "flex", alignItems: "center", gap: 1,
+                    }}>
                         <Typography
                             sx={{
-                                color: "#808080",
+                                fontWeight: "400",
                                 fontSize: {
                                     xs: 20,
+                                    sm: 24,
                                     md: 28,
+                                },
+                                color: "black",
+                            }}
+                        >
+                            Inventory
+                        </Typography>
+                    </Box>
+                    <Box>
+                        <IconButton
+                            onClick={handleMenuOpen}
+                            size="small"
+                            sx={{
+                                gap: 0.5,
+                                height: "100%",
+                                width: "100%",
+                                padding: 1,
+                                backgroundColor: "transparent",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                "&:hover": {
+                                    backgroundColor: "#EDEDED",
+                                    color: "#1c69fb",
+                                },
+                                fontWeight: 700,
+                                color: "#1c69fb",
+                                fontSize: {
+                                    xs: 10,
+                                    sm: 12,
+                                    md: 14,
                                 },
                             }}
                         >
-                            {selectedTab === "inventoryItems" ? "inventory items" : "pending orders"}
-                        </Typography>
-                        <ChevronDown
-                            color="#808080"
-                            strokeWidth={3}
-                            size={20}
-                            style={{
-                                marginTop: 5,
+                            <ArrowDownToLine strokeWidth={2.5} color="#1c69fb" size={"2.5vh"} />
+                            <Box
+                                sx={{
+                                    display: {
+                                        xs: "none",
+                                        md: "block",
+                                    },
+                                }}
+                            >
+                                Export
+                            </Box>
+                        </IconButton>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleMenuClose}
+                            variant="menu"
+                            size="sm"
+                            sx={{
+                                "& .MuiPaper-root": {
+                                    backgroundColor: "#ffffff",
+                                    color: "black",
+                                    borderRadius: "5px",
+                                },
                             }}
-                        />
-                    </IconButton>
-                    <Menu
-                        anchorEl={anchorEl}
-                        open={menuOpen}
-                        onClose={handleMenuClose}
-                        onMouseEnter={() => clearTimeout(closeTimeoutRef.current)}
-                        onMouseLeave={handleMenuClose}
-                        sx={{
-                            width: {
-                                xs: "fit-content",
-                                md: "20vw"
-                            },
-                            display: "flex",
-                        }}
-                    >
-                        {menuItems.filter(item => item.value !== selectedTab).map(item => (
-                            <MenuItem key={item.value} onClick={() => handleTabChange(item.value)}>
-                                <Link href={`/inventory?tab=${item.value}`} passHref>
-                                    <Typography sx={{
-                                        color: "#808080",
-                                        fontSize: "20px",
-                                        fontWeight: "600",
-                                    }}>{item.label}</Typography>
-                                </Link>
+                        >
+                            <MenuItem
+                                onClick={handleMenuClose}
+                                sx={{
+                                    "&:hover": {
+                                        color: "#1c69fb",
+                                        fontWeight: 600,
+                                        backgroundColor: "#f1f5ff",
+                                    },
+                                }}
+                            >
+                                PDF
                             </MenuItem>
-                        ))}
-                    </Menu>
+                            <MenuItem
+                                onClick={handleMenuClose}
+                                sx={{
+                                    "&:hover": {
+                                        color: "#1c69fb",
+                                        fontWeight: 600,
+                                        backgroundColor: "#f1f5ff",
+                                    },
+                                }}
+                            >
+                                Excel
+                            </MenuItem>
+                            <MenuItem
+                                onClick={handleMenuClose}
+                                sx={{
+                                    "&:hover": {
+                                        color: "#1c69fb",
+                                        fontWeight: 600,
+                                        backgroundColor: "#f1f5ff",
+                                    },
+                                }}
+                            >
+                                CSV
+                            </MenuItem>
+                        </Menu>
+                    </Box>
+                </Box>
+                <Box
+                    sx={{
+                        display: "flex", alignItems: "center", justifyContent: "flex-start", padding: 2, paddingTop: 0, paddingBottom: 3, paddingLeft: 3, gap: 2, position: 'relative'
+                    }}
+                >
+                    {tabs.map((tab, index) => (
+                        <Link key={tab.value} href={`?tab=${tab.value}`} passHref>
+                            <Typography
+                                ref={el => tabsRef.current[index] = el}
+                                data-value={tab.value}
+                                sx={{
+                                    color: selectedTab === tab.value ? "#1c69fb" : "grey",
+                                    fontWeight: 400,
+                                    fontSize: {
+                                        xs: 10,
+                                        sm: 12,
+                                        md: 14,
+                                    },
+                                    textDecoration: "none",
+                                    cursor: "pointer",
+                                }}
+                                onClick={() => handleTabChange(tab.value)}
+                            >
+                                {tab.label}
+                            </Typography>
+                        </Link>
+                    ))}
+                    <Box
+                        sx={{
+                            marginTop: 5,
+                            position: 'absolute',
+                            height: '2px',
+                            backgroundColor: '#1c69fb',
+                            transition: 'left 0.3s ease, width 0.3s ease',
+                            ...underlineStyle,
+                        }}
+                    />
                 </Box>
             </Box>
-            <Box sx={{ transition: "opacity 0.5s ease", opacity: selectedTab === "inventoryItems" ? 1 : 0 }}>
+
+            <Box sx={{ transition: "opacity 0.5s ease" }}>
                 {selectedTab === "inventoryItems" && <InventoryItemsTab />}
                 {selectedTab === "pendingOrders" && <Box>Pending Orders</Box>}
             </Box>
-        </Box>
+        </Box >
     );
 };
 

@@ -10,16 +10,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/joy";
-import { Collapse } from "@mui/material";
-import {
-  Search,
-  Filter,
-  ToggleLeft,
-  ToggleRight,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
-import { useMediaQuery } from "@mui/material";
+import { Search, Filter, ToggleLeft, ToggleRight } from "lucide-react";
 
 const FilterItem = ({ label, children, isEnabled, onToggle }) => (
   <Box
@@ -27,7 +18,6 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
       flex: 1,
       display: "flex",
       flexDirection: "column",
-      padding: 1.5,
       "&:hover .toggle-button": {
         visibility: "visible",
         opacity: 1,
@@ -44,7 +34,12 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
     >
       <Typography
         sx={{
-          fontWeight: 600,
+          fontWeight: 500,
+          fontSize: {
+            xs: 7,
+            sm: 9,
+            md: 11,
+          },
           cursor: "pointer",
           color: isEnabled ? "black" : "grey",
         }}
@@ -58,14 +53,14 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
           className="toggle-button"
           sx={{
             visibility: "hidden",
-            color: isEnabled ? "green" : "black",
+            color: isEnabled ? "#1c69fb" : "black",
             "&:hover": {
-              color: isEnabled ? "green" : "black",
+              color: isEnabled ? "#1c69fb" : "black",
               backgroundColor: "transparent",
             },
           }}
         >
-          {isEnabled ? <ToggleRight size={24} /> : <ToggleLeft size={24} />}
+          {isEnabled ? <ToggleRight size={20} /> : <ToggleLeft size={20} />}
         </IconButton>
       </Tooltip>
     </Box>
@@ -80,6 +75,7 @@ const FilterGroup = ({ children }) => (
       display: "flex",
       flexDirection: "column",
       width: "100%",
+      gap: 1.5,
     }}
   >
     {children}
@@ -87,7 +83,6 @@ const FilterGroup = ({ children }) => (
 );
 
 export default function FilterBar() {
-  const [isFilterVisible, setIsFilterVisible] = useState(true);
   const [filterStates, setFilterStates] = useState({
     itemName: true,
     stockStatus: true,
@@ -98,11 +93,6 @@ export default function FilterBar() {
   });
   const [filterValues, setFilterValues] = useState({});
   const [allFiltersDisabled, setAllFiltersDisabled] = useState(false);
-  const isSmallScreen = useMediaQuery("(max-width:960px)");
-
-  const toggleFilterVisibility = () => {
-    setIsFilterVisible(!isFilterVisible);
-  };
 
   const toggleFilterEnabled = (filter) => {
     setFilterStates((prev) => ({
@@ -145,169 +135,169 @@ export default function FilterBar() {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100%", width: "100%" }}>
+    <Box
+      sx={{
+        backgroundColor: "#fafafa",
+        boxShadow: 3,
+        padding: 1,
+        paddingRight: 0,
+        paddingBottom: 0,
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        width: "100%",
+      }}
+    >
       <Box
         sx={{
-          backgroundColor: "white",
-          boxShadow: 3,
-          zIndex: 0,
-          display: "flex",
-          flexDirection: "column",
-          position: "relative",
-          width: "100%",
-          height: "100%",
+          textAlign: "left",
         }}
       >
-        <Box
+        <IconButton
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            fontSize: {
+              xs: 10,
+              sm: 12,
+              md: 14,
+            },
+            fontWeight: 700,
+            gap: 0.5,
+            color: "#1c69fb",
+            "&:hover": {
+              color: "#1c69fb",
+              backgroundColor: "transparent",
+            },
+            cursor: "default",
           }}
         >
-          <IconButton
-            onClick={toggleFilterVisibility}
-            sx={{
-              gap: 1,
-              fontSize: {
-                xs: 15,
-                sm: 17,
-                md: 19,
-              },
-              fontWeight: 600,
-              color: "#258bE6",
-              "&:hover": {
-                color: "#258bE6",
-                backgroundColor: "transparent",
-              },
-            }}
-          >
-            <Filter />
-            Filters
-            {isFilterVisible ? (
-              <ChevronUp size={20} />
-            ) : (
-              <ChevronDown size={20} />
-            )}
-          </IconButton>
-          {isFilterVisible && (
-            <Box
-              sx={{
-                color: "black",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography sx={{ fontWeight: 600 }}>
-                Disable All Filters
-              </Typography>
-              <IconButton
-                onClick={toggleAllFilters}
-                sx={{
-                  color: allFiltersDisabled ? "green" : "black",
-                  transition: "color 0.3s ease",
-                  "&:hover": {
-                    color: allFiltersDisabled ? "green" : "black",
-                    backgroundColor: "transparent",
-                  },
-                }}
-              >
-                {allFiltersDisabled ? (
-                  <ToggleRight size={24} />
-                ) : (
-                  <ToggleLeft size={24} />
-                )}
-              </IconButton>
-            </Box>
+          <Filter strokeWidth={3} size={"2vh"} />
+          Filters
+        </IconButton>
+      </Box>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Typography
+          sx={{
+            fontWeight: 500,
+            fontSize: {
+              xs: 7,
+              sm: 9,
+              md: 11,
+            },
+            color: "black",
+          }}
+        >
+          Disable All Filters
+        </Typography>
+        <IconButton
+          onClick={toggleAllFilters}
+          sx={{
+            color: allFiltersDisabled ? "#1c69fb" : "black",
+            transition: "color 0.3s ease",
+            "&:hover": {
+              color: allFiltersDisabled ? "#1c69fb" : "black",
+              backgroundColor: "transparent",
+            },
+          }}
+        >
+          {allFiltersDisabled ? (
+            <ToggleRight size={20} />
+          ) : (
+            <ToggleLeft size={20} />
           )}
-        </Box>
-        <Collapse in={isFilterVisible} timeout={400} unmountOnExit>
-          <Box
-            sx={{
-              display: "flex",
-              overflow: "scroll",
-              flexDirection: "column",
-              marginBottom: 1.5,
-            }}
+        </IconButton>
+      </Box>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+        <FilterGroup>
+          <FilterItem
+            label="Item Name"
+            isEnabled={filterStates.itemName}
+            onToggle={() => toggleFilterEnabled("itemName")}
           >
-            <Box
+            <Input
+              placeholder="Enter item name"
+              value={filterValues.itemName}
+              onChange={(e) => handleItemNameChange(e.target.value)}
+              startDecorator={<Search size={13} />}
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
                 width: "100%",
+                fontSize: {
+                  xs: 7,
+                  sm: 9,
+                  md: 11,
+                },
               }}
+              size="sm"
+              disabled={!filterStates.itemName}
+            />
+          </FilterItem>
+          <FilterItem
+            label="Stock Status"
+            isEnabled={filterStates.stockStatus}
+            onToggle={() => toggleFilterEnabled("stockStatus")}
+          >
+            <Select
+              defaultValue="any"
+              onChange={(e) => handleStockStatusChange(e.target.value)}
+              sx={{
+                width: "100%",
+                fontSize: {
+                  xs: 7,
+                  sm: 9,
+                  md: 11,
+                },
+              }}
+              size="sm"
+              disabled={!filterStates.stockStatus}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: isSmallScreen ? "column" : "row",
-                  width: "100%",
-                }}
-              >
-                <FilterGroup>
-                  <FilterItem
-                    label="Item Name"
-                    isEnabled={filterStates.itemName}
-                    onToggle={() => toggleFilterEnabled("itemName")}
-                  >
-                    <Input
-                      placeholder="Enter item name"
-                      value={filterValues.itemName}
-                      onChange={(e) => handleItemNameChange(e.target.value)}
-                      startDecorator={<Search size={20} />}
-                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.itemName}
-                    />
-                  </FilterItem>
-                  <FilterItem
-                    label="Stock Status"
-                    isEnabled={filterStates.stockStatus}
-                    onToggle={() => toggleFilterEnabled("stockStatus")}
-                  >
-                    <Select
-                      defaultValue="any"
-                      onChange={(e) => handleStockStatusChange(e.target.value)}
-                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.stockStatus}
-                    >
-                      <Option value="any">Any</Option>
-                    </Select>
-                  </FilterItem>
-                </FilterGroup>
-                <FilterGroup>
-                  <FilterItem
-                    label="Category"
-                    isEnabled={filterStates.category}
-                    onToggle={() => toggleFilterEnabled("category")}
-                  >
-                    <Select
-                      defaultValue="any"
-                      onChange={(e) => handleCategoryChange(e.target.value)}
-                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.category}
-                    >
-                      <Option value="any">Any</Option>
-                    </Select>
-                  </FilterItem>
-                  <FilterItem
-                    label="SKU"
-                    isEnabled={filterStates.sku}
-                    onToggle={() => toggleFilterEnabled("sku")}
-                  >
-                    <Input
-                      placeholder="Enter SKU"
-                      onChange={(e) => handleSKUChange(e.target.value)}
-                      startDecorator={<Search size={20} />}
-                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.sku}
-                    />
-                  </FilterItem>
-                </FilterGroup>
-              </Box>
-            </Box>
-          </Box>
-        </Collapse>
+              <Option value="any">Any</Option>
+            </Select>
+          </FilterItem>
+        </FilterGroup>
+        <FilterGroup>
+          <FilterItem
+            label="Category"
+            isEnabled={filterStates.category}
+            onToggle={() => toggleFilterEnabled("category")}
+          >
+            <Select
+              defaultValue="any"
+              onChange={(e) => handleCategoryChange(e.target.value)}
+              sx={{
+                width: "100%",
+                fontSize: {
+                  xs: 7,
+                  sm: 9,
+                  md: 11,
+                },
+              }}
+              size="sm"
+              disabled={!filterStates.category}
+            >
+              <Option value="any">Any</Option>
+            </Select>
+          </FilterItem>
+          <FilterItem
+            label="SKU"
+            isEnabled={filterStates.sku}
+            onToggle={() => toggleFilterEnabled("sku")}
+          >
+            <Input
+              placeholder="Enter SKU"
+              onChange={(e) => handleSKUChange(e.target.value)}
+              startDecorator={<Search size={13} />}
+              sx={{
+                width: "100%",
+                fontSize: {
+                  xs: 7,
+                  sm: 9,
+                  md: 11,
+                },
+              }}
+              size="sm"
+              disabled={!filterStates.sku}
+            />
+          </FilterItem>
+        </FilterGroup>
       </Box>
     </Box>
   );

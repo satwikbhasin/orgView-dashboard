@@ -3,18 +3,23 @@
 import React, { useState } from "react";
 import { Table, Box, Button, IconButton, Typography } from "@mui/joy";
 import patientsData from "@/assets/patients";
-import { Send, ClipboardPlus, ArrowUpDown } from "lucide-react";
+import {
+  Send,
+  ClipboardPlus,
+  ArrowUpDown,
+  ChevronRight,
+  ChevronLeft,
+} from "lucide-react";
 import { useMediaQuery } from "@mui/material";
 import PatientsCardView from "@/components/patients/patientsCardView";
 
 const headerStyle = {
   height: "6vh",
-  fontWeight: "800",
+  fontWeight: "700",
   textAlign: "center",
   verticalAlign: "middle",
   backgroundColor: "#f0f4f8",
   position: "sticky",
-  zIndex: 1,
   cursor: "pointer",
   whiteSpace: "normal",
   overflow: "hidden",
@@ -23,16 +28,34 @@ const headerStyle = {
 const cellStyle = {
   fontWeight: "500",
   height: "6vh",
-  textAlign: "center",
+  textAlign: "left",
 };
+
+const ResponsiveCellTypography = ({ children }) => (
+  <Typography
+    sx={{
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+      fontSize: {
+        xs: "8px",
+        lg: "10px",
+        xl: "12px",
+      },
+    }}
+  >
+    {children}
+  </Typography>
+);
 
 const ResponsiveTypography = ({ children }) => (
   <Typography
     sx={{
+      textAlign: "left",
       fontSize: {
-        xs: "12px",
-        sm: "12px",
-        md: "16px",
+        xs: "8px",
+        md: "10px",
+        lg: "12px",
       },
     }}
   >
@@ -42,20 +65,24 @@ const ResponsiveTypography = ({ children }) => (
 
 const SortableHeader = ({ label, onClick }) => (
   <th style={headerStyle} onClick={onClick}>
-    <Box
+    <IconButton
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "left",
         gap: 1,
+        padding: 0,
+        width: "100%",
+        "&:hover": {
+          backgroundColor: "transparent",
+        },
       }}
     >
-      <ResponsiveTypography>{label}</ResponsiveTypography>
-      <ArrowUpDown color="grey" size={14} />
-    </Box>
+      {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
+      {label && <ArrowUpDown color="#1c69fb" size={10} strokeWidth={3} />}
+    </IconButton>
   </th>
 );
-
 export default function PatientsTable({ patientName, selectedPayer }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -128,13 +155,17 @@ export default function PatientsTable({ patientName, selectedPayer }) {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         gap: 5,
-        height: isSmallScreen ? "fit-content" : "70vh",
+        height: "100%",
+        width: "100%",
+        padding: 1,
+        paddingLeft: 0,
+        paddingRight: { xs: 0, sm: 2 },
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <Box
           sx={{
-            border: isSmallScreen ? "transparent" : "1.5px solid #e0e0e0",
+            border: { xs: "transparent", sm: "1.5px solid #dedede" },
             borderRadius: 10,
             overflow: "hidden",
             height: "100%",
@@ -206,13 +237,41 @@ export default function PatientsTable({ patientName, selectedPayer }) {
                           e.currentTarget.style.backgroundColor = "#fbfcfe";
                         }}
                       >
-                        <td style={cellStyle}>{patient.dos}</td>
-                        <td style={cellStyle}>{patient.ptName}</td>
-                        <td style={cellStyle}>{patient.createDate}</td>
-                        <td style={cellStyle}>{patient.payer}</td>
-                        <td style={cellStyle}>{patient.provider}</td>
-                        <td style={cellStyle}>{patient.claimId}</td>
-                        <td style={cellStyle}>{patient.procedures}</td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {patient.dos}
+                          </ResponsiveCellTypography>
+                        </td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {patient.ptName}
+                          </ResponsiveCellTypography>
+                        </td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {patient.createDate}
+                          </ResponsiveCellTypography>
+                        </td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {patient.payer}
+                          </ResponsiveCellTypography>
+                        </td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {patient.provider}
+                          </ResponsiveCellTypography>
+                        </td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {patient.claimId}
+                          </ResponsiveCellTypography>
+                        </td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {patient.procedures}
+                          </ResponsiveCellTypography>
+                        </td>
                         <td
                           style={{
                             ...cellStyle,
@@ -250,10 +309,16 @@ export default function PatientsTable({ patientName, selectedPayer }) {
                             ) : (
                               <ClipboardPlus size={16} />
                             )}
-                            {patient.status}
+                            <ResponsiveCellTypography>
+                              {patient.status}
+                            </ResponsiveCellTypography>
                           </Box>
                         </td>
-                        <td style={cellStyle}>{patient.charges}</td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {patient.charges}
+                          </ResponsiveCellTypography>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -276,34 +341,44 @@ export default function PatientsTable({ patientName, selectedPayer }) {
           <Button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
+            size="small"
             sx={{
-              backgroundColor: "#222b38",
+              fontSize: {
+                xs: 10,
+                md: 12,
+              },
+              padding: 0.8,
+              color: "#1c69fb",
+              backgroundColor: "transparent",
               "&:hover": {
-                backgroundColor: "#333e4c",
+                backgroundColor: "transparent",
+              },
+              "&:disabled": {
+                backgroundColor: "transparent",
+                color: "#707070",
               },
             }}
+            startDecorator={<ChevronLeft size={16} />}
           >
             Previous
           </Button>
-          <Box sx={{ display: "flex", alignItems: "center", mx: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             {generatePageNumbers().map((page, index) => (
               <IconButton
                 key={index}
+                size="small"
                 sx={{
-                  mx: 1,
-                  width: 36,
-                  height: 36,
                   borderRadius: "50%",
-                  border: "1px solid",
-                  backgroundColor:
-                    page === currentPage ? "#222b38" : "transparent",
-                  color: page === currentPage ? "#ffffff" : "black",
+                  height: 25,
+                  width: 25,
+                  backgroundColor: "transparent",
+                  color: page === currentPage ? "#1c69fb" : "black",
                   cursor: page !== "..." ? "pointer" : "default",
                   fontWeight: page === currentPage ? "800" : "600",
                   "&:hover": {
-                    color: page === currentPage ? "#ffffff" : "black",
+                    color: page === currentPage ? "#1c69fb" : "#1c69fb",
                     backgroundColor:
-                      page === currentPage ? "#222b38" : "#f0f4f8",
+                      page === currentPage ? "transparent" : "transparent",
                   },
                 }}
                 onClick={() => page !== "..." && setCurrentPage(page)}
@@ -316,12 +391,24 @@ export default function PatientsTable({ patientName, selectedPayer }) {
           <Button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
+            size="small"
             sx={{
-              backgroundColor: "#222b38",
+              fontSize: {
+                xs: 10,
+                md: 12,
+              },
+              padding: 0.8,
+              color: "#1c69fb",
+              backgroundColor: "transparent",
               "&:hover": {
-                backgroundColor: "#333e4c",
+                backgroundColor: "transparent",
+              },
+              "&:disabled": {
+                backgroundColor: "transparent",
+                color: "#707070",
               },
             }}
+            endDecorator={<ChevronRight size={16} />}
           >
             Next
           </Button>

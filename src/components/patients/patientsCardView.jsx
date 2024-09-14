@@ -11,9 +11,8 @@ const PatientsCardView = ({ patients }) => {
         <Box
           key={patient.id}
           sx={{
-            borderRadius: 10,
             padding: 2,
-            marginBottom: 2,
+            borderBottom: "1px solid #e0e0e0",
             backgroundColor: "#fbfcfe",
             transition: "background-color 0.3s",
             "&:hover": {
@@ -29,7 +28,15 @@ const PatientsCardView = ({ patients }) => {
               marginBottom: 1,
             }}
           >
-            <Typography sx={{ fontSize: "22px", fontWeight: "600" }}>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 14,
+                  md: 16,
+                },
+                fontWeight: "600",
+              }}
+            >
               {patient.ptName}
             </Typography>
             <Box
@@ -52,49 +59,138 @@ const PatientsCardView = ({ patients }) => {
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
+                fontSize: {
+                  xs: 14,
+                  md: 16,
+                },
               }}
             >
               {patient.status === "Sent" ? (
-                <Send size={16} />
+                <Send size={13} />
               ) : (
-                <ClipboardPlus size={16} />
+                <ClipboardPlus size={13} />
               )}
               {patient.status}
             </Box>
           </Box>
           <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               DOS:
             </Typography>
-            <Typography sx={{ display: "inline" }}>{patient.dos}</Typography>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
+              {patient.dos}
+            </Typography>
           </Box>
-          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+          <Box
+            sx={{
+              marginBottom: 1,
+              display: "flex",
+              gap: 1,
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               Payer:
             </Typography>
-            <Typography sx={{ display: "inline" }}>{patient.payer}</Typography>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
+              {patient.payer}
+            </Typography>
           </Box>
           <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               Provider:
             </Typography>
-            <Typography sx={{ display: "inline" }}>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               {patient.provider}
             </Typography>
           </Box>
           <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               Claim ID:
             </Typography>
-            <Typography sx={{ display: "inline" }}>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               {patient.claimId}
             </Typography>
           </Box>
           <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography sx={{ fontWeight: 600, display: "inline" }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               Charges:
             </Typography>
-            <Typography sx={{ display: "inline" }}>
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: 12,
+                  md: 14,
+                },
+              }}
+            >
               {patient.charges}
             </Typography>
           </Box>
