@@ -96,7 +96,6 @@ const Navbar = () => {
           ? "rgba(13, 29, 50, 0.85)"
           : "linear-gradient(225deg, hsla(213, 17%, 35%, 1) 0%, hsla(216, 25%, 16%, 1) 81%, hsla(217, 36%, 12%, 1) 100%)",
         backdropFilter: isScrolled ? "blur(4.5px)" : "none",
-        "-webkit-backdrop-filter": isScrolled ? "blur(4.5px)" : "none",
         border: isScrolled ? "1px solid rgba(255, 255, 255, 0.18)" : "none",
         paddingLeft: 1,
         paddingRight: 2,
