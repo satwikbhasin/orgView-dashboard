@@ -10,9 +10,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/joy";
-import { Collapse } from "@mui/material";
 import { Search, Filter, ToggleLeft, ToggleRight } from "lucide-react";
-import { useMediaQuery } from "@mui/material";
 
 const FilterItem = ({ label, children, isEnabled, onToggle }) => (
   <Box
@@ -36,11 +34,11 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
     >
       <Typography
         sx={{
-          fontWeight: 600,
+          fontWeight: 500,
           fontSize: {
-            xs: 10,
-            sm: 12,
-            md: 13,
+            xs: 7,
+            sm: 9,
+            md: 11,
           },
           cursor: "pointer",
           color: isEnabled ? "black" : "grey",
@@ -77,7 +75,7 @@ const FilterGroup = ({ children }) => (
       display: "flex",
       flexDirection: "column",
       width: "100%",
-      gap: 1.2,
+      gap: 1.5,
     }}
   >
     {children}
@@ -141,7 +139,6 @@ export default function FilterBar() {
       sx={{
         backgroundColor: "#fafafa",
         boxShadow: 3,
-        zIndex: 0,
         padding: 1,
         paddingRight: 0,
         paddingBottom: 0,
@@ -149,7 +146,6 @@ export default function FilterBar() {
         flexDirection: "column",
         height: "100%",
         width: "100%",
-        position: "relative",
       }}
     >
       <Box
@@ -160,10 +156,9 @@ export default function FilterBar() {
         <IconButton
           sx={{
             fontSize: {
-              xs: 12,
-              sm: 14,
-              md: 16,
-              lg: 16,
+              xs: 10,
+              sm: 12,
+              md: 14,
             },
             fontWeight: 700,
             gap: 0.5,
@@ -182,13 +177,13 @@ export default function FilterBar() {
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography
           sx={{
-            fontWeight: 600,
+            fontWeight: 500,
             fontSize: {
-              xs: 10,
-              sm: 12,
-              md: 13,
-              lg: 13,
+              xs: 7,
+              sm: 9,
+              md: 11,
             },
+            color: "black",
           }}
         >
           Disable All Filters
@@ -211,7 +206,7 @@ export default function FilterBar() {
           )}
         </IconButton>
       </Box>
-      <Box gap={1.2}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
         <FilterGroup>
           <FilterItem
             label="Item Name"
@@ -223,7 +218,14 @@ export default function FilterBar() {
               value={filterValues.itemName}
               onChange={(e) => handleItemNameChange(e.target.value)}
               startDecorator={<Search size={13} />}
-              sx={{ width: "100%", fontSize: 13 }}
+              sx={{
+                width: "100%",
+                fontSize: {
+                  xs: 7,
+                  sm: 9,
+                  md: 11,
+                },
+              }}
               size="sm"
               disabled={!filterStates.itemName}
             />
@@ -236,7 +238,14 @@ export default function FilterBar() {
             <Select
               defaultValue="any"
               onChange={(e) => handleStockStatusChange(e.target.value)}
-              sx={{ width: "100%", fontSize: 13 }}
+              sx={{
+                width: "100%",
+                fontSize: {
+                  xs: 7,
+                  sm: 9,
+                  md: 11,
+                },
+              }}
               size="sm"
               disabled={!filterStates.stockStatus}
             >
@@ -253,7 +262,14 @@ export default function FilterBar() {
             <Select
               defaultValue="any"
               onChange={(e) => handleCategoryChange(e.target.value)}
-              sx={{ width: "100%", fontSize: 13 }}
+              sx={{
+                width: "100%",
+                fontSize: {
+                  xs: 7,
+                  sm: 9,
+                  md: 11,
+                },
+              }}
               size="sm"
               disabled={!filterStates.category}
             >
@@ -269,7 +285,14 @@ export default function FilterBar() {
               placeholder="Enter SKU"
               onChange={(e) => handleSKUChange(e.target.value)}
               startDecorator={<Search size={13} />}
-              sx={{ width: "100%", fontSize: 13 }}
+              sx={{
+                width: "100%",
+                fontSize: {
+                  xs: 7,
+                  sm: 9,
+                  md: 11,
+                },
+              }}
               size="sm"
               disabled={!filterStates.sku}
             />

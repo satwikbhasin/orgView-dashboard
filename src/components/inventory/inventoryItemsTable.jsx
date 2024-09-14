@@ -25,7 +25,7 @@ import { useMediaQuery } from "@mui/material";
 import ItemsCardView from "./itemsCardView";
 
 const headerStyle = {
-  height: "8vh",
+  height: "5vh",
   fontWeight: "700",
   textAlign: "center",
   verticalAlign: "middle",
@@ -38,16 +38,18 @@ const headerStyle = {
 
 const cellStyle = {
   fontWeight: "500",
-  height: "8vh",
-  textAlign: "center",
+  height: "5vh",
+  textAlign: "left",
 };
 
 const ResponsiveTypography = ({ children }) => (
   <Typography
     sx={{
+      textAlign: "left",
       fontSize: {
-        xs: "10px",
-        md: "12px",
+        xs: "8px",
+        md: "10px",
+        lg: "12px",
       },
     }}
   >
@@ -58,9 +60,13 @@ const ResponsiveTypography = ({ children }) => (
 const ResponsiveCellTypography = ({ children }) => (
   <Typography
     sx={{
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
       fontSize: {
         xs: "8px",
-        md: "10px",
+        lg: "10px",
+        xl: "12px",
       },
     }}
   >
@@ -74,12 +80,17 @@ const SortableHeader = ({ label, onClick }) => (
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "left",
         gap: 1,
+        padding: 0,
+        width: "100%",
+        "&:hover": {
+          backgroundColor: "transparent",
+        },
       }}
     >
       {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
-      {label && <ArrowUpDown color="#1c69fb" size={12} strokeWidth={3} />}
+      {label && <ArrowUpDown color="#1c69fb" size={10} strokeWidth={3} />}
     </IconButton>
   </th>
 );
@@ -91,7 +102,7 @@ export default function InventoryItemsTable() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
-  const itemsPerPage = 15; // Ensure this is set correctly
+  const itemsPerPage = 15;
 
   const handleSort = (key) => {
     const direction =
@@ -109,10 +120,10 @@ export default function InventoryItemsTable() {
     return 0;
   });
 
-  const indexOfLastItem = currentPage * itemsPerPage; // Calculate the index of the last item on the current page
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage; // Calculate the index of the first item on the current page
-  const currentItems = sortedInventory.slice(indexOfFirstItem, indexOfLastItem); // Slice the items to get the current page's items
-  const totalPages = Math.ceil(sortedInventory.length / itemsPerPage); // Calculate the total number of pages
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = sortedInventory.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(sortedInventory.length / itemsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -172,7 +183,7 @@ export default function InventoryItemsTable() {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         gap: 5,
-        height: "100%",
+        height: "80vh",
         width: "100%",
         padding: 1,
         paddingLeft: 0,
@@ -185,9 +196,9 @@ export default function InventoryItemsTable() {
             border: { xs: "transparent", sm: "1.5px solid #dedede" },
             borderRadius: 10,
             overflow: "hidden",
-            height: "100%",
             width: "100%",
             display: "flex",
+            justifyContent: "center",
             flexDirection: "column",
           }}
         >
@@ -217,7 +228,7 @@ export default function InventoryItemsTable() {
                       onClick={() => handleSort("currentStock")}
                     />
                     <SortableHeader
-                      label="Minimum Threshold"
+                      label="Min. Threshold"
                       onClick={() => handleSort("minThreshold")}
                     />
                     <SortableHeader
@@ -292,16 +303,14 @@ export default function InventoryItemsTable() {
                         <td style={cellStyle}>
                           <Box
                             sx={{
-                              display: "flex",
-                              flexDirection: "row",
-                              justifyContent: "center",
                               alignItems: "center",
+                              justifyContent: "left",
                             }}
                           >
                             <ResponsiveCellTypography>
                               <Dot
                                 strokeWidth={3}
-                                size={40}
+                                size={20}
                                 color={getStatus(item.status)[1]}
                               />
                               {getStatus(item.status)[0]}

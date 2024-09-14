@@ -11,7 +11,7 @@ import {
   Mail,
   Calendar,
   ChartNoAxesCombined,
-  Menu as MenuIcon,
+  Settings,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -23,38 +23,54 @@ const Navbar = () => {
   const pathName = usePathname();
   const [collapsedNav, setCollapsedNav] = useState(false);
 
-  const links = [
-    { href: "/home", label: "Home", icon: <House size={18} strokeWidth={3} /> },
+  const menuLinks = [
+    {
+      href: "/home",
+      label: "Home",
+      icon: <House size={16} strokeWidth={2.5} />,
+    },
     {
       href: "/patients",
       label: "Patients",
-      icon: <Users size={18} strokeWidth={3} />,
+      icon: <Users size={16} strokeWidth={2.5} />,
     },
     {
       href: "/financials",
       label: "Financials",
-      icon: <DollarSign size={18} strokeWidth={3} />,
+      icon: <DollarSign size={16} strokeWidth={2.5} />,
     },
     {
       href: "/orders",
       label: "Orders",
-      icon: <Package size={18} strokeWidth={3} />,
+      icon: <Package size={16} strokeWidth={2.5} />,
     },
     {
       href: "/inventory?tab=inventoryItems",
       label: "Inventory",
-      icon: <Container size={18} strokeWidth={3} />,
-    },
-    { href: "/mail", label: "Mail", icon: <Mail size={18} strokeWidth={3} /> },
-    {
-      href: "/appointments",
-      label: "Appointments",
-      icon: <Calendar size={18} strokeWidth={3} />,
+      icon: <Container size={16} strokeWidth={2.5} />,
     },
     {
       href: "/analytics",
       label: "Analytics",
-      icon: <ChartNoAxesCombined size={18} strokeWidth={3} />,
+      icon: <ChartNoAxesCombined size={16} strokeWidth={2.5} />,
+    },
+    {
+      href: "/mail",
+      label: "Mail",
+      icon: <Mail size={16} strokeWidth={2.5} />,
+    },
+    {
+      href: "/appointments",
+      label: "Appointments",
+      icon: <Calendar size={16} strokeWidth={2.5} />,
+    },
+  ];
+
+  const supportLinks = [
+    {
+      href: "/settings",
+      label: "Settings",
+      icon: <Settings size={18} strokeWidth={2.5} />,
     },
   ];
 
@@ -70,10 +86,18 @@ const Navbar = () => {
         position: "sticky",
         borderRight: "1px solid #dedede",
         transition: "width 0.2s ease",
-        gap: 5,
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", height: "10%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          height: "10%",
+          width: "100%",
+          paddingRight: { sm: 0, md: collapsedNav ? 0 : 2.5 },
+          justifyContent: "center",
+        }}
+      >
         <IconButton
           onClick={() => window.location.replace("/")}
           sx={{
@@ -83,26 +107,23 @@ const Navbar = () => {
             gap: 1,
           }}
         >
-          <Box
-            sx={{
-              display: { xs: "inline", md: collapsedNav ? "inline" : "none" },
-            }}
-          >
-            <Image
-              src="/syntra_logo.png"
-              alt="Syntra Logo"
-              width={30}
-              height={30}
-            />
-          </Box>
+          <Image
+            src="/syntra_logo.png"
+            alt="Syntra Logo"
+            width={25}
+            height={25}
+          />
           {!collapsedNav && (
             <Typography
               className="nav-label"
               sx={{
-                color: "#1c69fb",
-                fontSize: 26,
+                color: "black",
+                fontSize: {
+                  xs: 16,
+                  md: 18,
+                  lg: 22,
+                },
                 fontWeight: 400,
-                fontFamily: "'Kode Mono', monospace",
                 display: { xs: "none", md: "inline" },
               }}
             >
@@ -111,14 +132,33 @@ const Navbar = () => {
           )}
         </IconButton>
       </Box>
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "column",
+          padding: 2,
+          gap: 2,
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: 50,
+            paddingLeft: 1,
+            fontSize: { xs: 8, md: 10, lg: 12 },
+            display: { xs: "none", md: collapsedNav ? "none" : "block" },
+            cursor: "default",
+          }}
+        >
+          MENU
+        </Typography>
         <ButtonGroup
           size="sm"
           variant="plain"
           orientation="vertical"
-          spacing={3}
+          spacing={2}
         >
-          {links.map((link) => (
+          {menuLinks.map((link) => (
             <Link key={link.href} href={link.href}>
               <IconButton
                 key={link.href}
@@ -128,9 +168,103 @@ const Navbar = () => {
                     ? "#1c69fb"
                     : "#707070",
                   gap: 2,
-                  padding: 0.9,
                   display: "flex",
-                  justifyContent: "flex-start",
+                  justifyContent: {
+                    xs: "center",
+                    md: collapsedNav ? "center" : "flex-start",
+                  },
+                  padding: 1,
+                  borderLeft: pathName.includes(link.href.split("?")[0])
+                    ? "2.5px solid #1c69fb"
+                    : "2.5px solid transparent",
+
+                  backgroundColor: {
+                    xs: "transparent",
+                    md: pathName.includes(link.href.split("?")[0])
+                      ? "#f1f5ff"
+                      : "transparent",
+                  },
+                  transition: "background-color 0.6s ease, color 0.6s ease",
+                  "&:hover": {
+                    backgroundColor: pathName.includes(link.href.split("?")[0])
+                      ? "#e3ebf9"
+                      : "transparent",
+                    color: pathName.includes(link.href.split("?")[0])
+                      ? "#1c69fb"
+                      : "black",
+                  },
+                  borderRadius: 4,
+                  fontSize: { xs: 8, md: 10, lg: 12 },
+                }}
+              >
+                {link.icon}
+                {!collapsedNav && (
+                  <Box
+                    className="nav-label"
+                    sx={{
+                      fontWeight: pathName.includes(link.href.split("?")[0])
+                        ? 500
+                        : 200,
+                      display: { xs: "none", md: "inline" },
+                    }}
+                  >
+                    {link.label}
+                  </Box>
+                )}
+              </IconButton>
+            </Link>
+          ))}
+        </ButtonGroup>
+      </Box>
+      <Box
+        sx={{
+          width: "85%",
+          borderBottom: "1px solid #dedede",
+          marginTop: 2,
+        }}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "column",
+          padding: 2,
+          marginTop: 1,
+          gap: 2,
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: 50,
+            paddingLeft: 1,
+            fontSize: { xs: 8, md: 10, lg: 12 },
+            display: { xs: "none", md: collapsedNav ? "none" : "block" },
+            cursor: "default",
+          }}
+        >
+          SUPPORT
+        </Typography>
+        <ButtonGroup
+          size="sm"
+          variant="plain"
+          orientation="vertical"
+          spacing={2}
+        >
+          {supportLinks.map((link) => (
+            <Link key={link.href} href={link.href}>
+              <IconButton
+                key={link.href}
+                sx={{
+                  width: "100%",
+                  color: pathName.includes(link.href.split("?")[0])
+                    ? "#1c69fb"
+                    : "#707070",
+                  gap: 2,
+                  display: "flex",
+                  justifyContent: {
+                    xs: "center",
+                    md: collapsedNav ? "center" : "flex-start",
+                  },
                   padding: 1,
                   borderLeft: pathName.includes(link.href.split("?")[0])
                     ? "4px solid #1c69fb"
@@ -149,7 +283,7 @@ const Navbar = () => {
                       : "black",
                   },
                   borderRadius: 4,
-                  fontSize: { xs: 12, md: 12.5 },
+                  fontSize: { xs: 8, md: 10, lg: 12 },
                 }}
               >
                 {link.icon}
@@ -157,7 +291,7 @@ const Navbar = () => {
                   <Box
                     className="nav-label"
                     sx={{
-                      fontWeight: 600,
+                      fontWeight: 200,
                       display: { xs: "none", md: "inline" },
                     }}
                   >
@@ -173,7 +307,9 @@ const Navbar = () => {
         sx={{
           marginTop: "auto",
           marginBottom: 2,
-          display: { xs: "none", md: "block" },
+          width: "100%",
+          justifyContent: "center",
+          display: { xs: "none", md: "flex" },
         }}
       >
         <IconButton

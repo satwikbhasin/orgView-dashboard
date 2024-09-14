@@ -36,11 +36,11 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
     >
       <Typography
         sx={{
-          fontWeight: 600,
+          fontWeight: 500,
           fontSize: {
-            xs: 10,
-            sm: 12,
-            md: 13,
+            xs: 7,
+            sm: 9,
+            md: 11,
           },
           cursor: "pointer",
           color: isEnabled ? "black" : "grey",
@@ -77,7 +77,7 @@ const FilterGroup = ({ children }) => (
       display: "flex",
       flexDirection: "column",
       width: "100%",
-      gap: 1.2,
+      gap: 1.5,
     }}
   >
     {children}
@@ -178,10 +178,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
         <IconButton
           sx={{
             fontSize: {
-              xs: 12,
-              sm: 14,
-              md: 16,
-              lg: 16,
+              xs: 10,
+              sm: 12,
+              md: 14,
             },
             fontWeight: 700,
             gap: 0.5,
@@ -213,12 +212,12 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography
             sx={{
-              fontWeight: 600,
+              fontWeight: 500,
+              color: "black",
               fontSize: {
-                xs: 10,
-                sm: 12,
-                md: 13,
-                lg: 13,
+                xs: 7,
+                sm: 9,
+                md: 11,
               },
             }}
           >
@@ -242,7 +241,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             )}
           </IconButton>
         </Box>
-        <Box gap={1.2}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
           <FilterGroup>
             <FilterItem
               label="Patient Name"
@@ -254,7 +253,14 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 value={filterValues.patientName}
                 onChange={(e) => handlePatientNameChange(e.target.value)}
                 startDecorator={<Search size={13} />}
-                sx={{ width: "100%", fontSize: 13 }}
+                sx={{
+                  width: "100%",
+                  fontSize: {
+                    xs: 7,
+                    sm: 9,
+                    md: 11,
+                  },
+                }}
                 size="sm"
                 disabled={!filterStates.patientName}
               />
@@ -266,7 +272,14 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             >
               <Select
                 defaultValue="any"
-                sx={{ width: "100%", fontSize: 13 }}
+                sx={{
+                  width: "100%",
+                  fontSize: {
+                    xs: 7,
+                    sm: 9,
+                    md: 11,
+                  },
+                }}
                 size="sm"
                 disabled={!filterStates.billType}
               >
@@ -283,7 +296,14 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               <Select
                 value={filterValues.payer}
                 onChange={(e, newValue) => handlePayerChange(newValue)}
-                sx={{ width: "100%", fontSize: 13 }}
+                sx={{
+                  width: "100%",
+                  fontSize: {
+                    xs: 7,
+                    sm: 9,
+                    md: 11,
+                  },
+                }}
                 size="sm"
                 disabled={!filterStates.payer}
               >
@@ -303,7 +323,14 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               <Input
                 placeholder="Enter CPT Code"
                 startDecorator={<Search size={13} />}
-                sx={{ width: "100%", fontSize: 13 }}
+                sx={{
+                  width: "100%",
+                  fontSize: {
+                    xs: 7,
+                    sm: 9,
+                    md: 11,
+                  },
+                }}
                 size="sm"
                 disabled={!filterStates.cptCode}
               />
@@ -317,7 +344,14 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             >
               <Select
                 defaultValue="+0 days"
-                sx={{ width: "100%", fontSize: 13 }}
+                sx={{
+                  width: "100%",
+                  fontSize: {
+                    xs: 7,
+                    sm: 9,
+                    md: 11,
+                  },
+                }}
                 size="sm"
                 disabled={!filterStates.aging}
               >
@@ -332,7 +366,14 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               <Input
                 placeholder="Enter Claim Number"
                 startDecorator={<Search size={13} />}
-                sx={{ width: "100%", fontSize: 13 }}
+                sx={{
+                  width: "100%",
+                  fontSize: {
+                    xs: 7,
+                    sm: 9,
+                    md: 11,
+                  },
+                }}
                 size="sm"
                 disabled={!filterStates.claimNumber}
               />
