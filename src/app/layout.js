@@ -19,6 +19,7 @@ export const metadata = {
 };
 
 import Navbar from "@/components/common/navbar";
+import { Box } from "@mui/joy";
 import { Suspense } from "react";
 
 export default function RootLayout({ children }) {
@@ -36,9 +37,10 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Suspense fallback={<div>Loading...</div>}>
-          <Navbar />
-
-          {children}
+          <Box sx={{display: "flex", flexDirection: "row"}}>
+            <Navbar />
+            {children}
+          </Box>
         </Suspense>
       </body>
     </html>

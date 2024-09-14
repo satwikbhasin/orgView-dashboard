@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Typography, IconButton } from "@mui/joy";
+import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
 import { ArrowDownToLine, Users } from "lucide-react";
 import FilterBar from "@/components/patients/filterBar";
 import PatientsTable from "@/components/patients/patientsTable";
-import { Menu, MenuItem } from "@mui/material";
 
 const Patients = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,30 +32,39 @@ const Patients = () => {
     };
 
     return (
-        <Box sx={{ height: "fit-content", width: "100vw", padding: 8, paddingTop: 3, display: 'flex', flexDirection: 'column', overflow: "scroll" }}>
-            <Box
-                sx={{
+        <Box sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 1,
+                cursor: "default",
+                justifyContent: "space-between",
+                height: "10vh",
+                padding: 2,
+                backgroundColor: "#fafafa",
+                // borderBottom: "1px solid #e0e0e0",
+            }}>
+                <Box sx={{
                     display: "flex",
-                    justifyContent: "space-between",
                     alignItems: "center",
-                    marginBottom: 3,
-                    padding: 0,
-                }}
-            >
-                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", fontWeight: "800", gap: 1, cursor: "default" }}>
+                    gap: 1,
+                    fontWeight: "600",
+                    cursor: "default",
+                }}>
                     <Users
-                        color="#222b38"
-                        size={"4vh"}
+                        color="#707070"
+                        size={"3vh"}
+                        strokeWidth={3}
                     />
                     <Typography
                         sx={{
                             fontSize: {
-                                xs: 24,
-                                sm: 28,
-                                md: 32,
-                                lg: 38,
+                                xs: 20,
+                                sm: 22,
+                                md: 24,
                             },
-                            color: "#222b38",
+                            color: "grey",
                             display: {
                                 xs: "none",
                                 md: "block",
@@ -69,23 +77,25 @@ const Patients = () => {
                 <Box>
                     <IconButton
                         onClick={handleMenuOpen}
+                        size="small"
                         sx={{
-                            gap: 1,
+                            gap: 0.5,
+                            height: "100%",
+                            width: "100%",
                             padding: 1,
-                            fontWeight: 600,
-                            height: "fit-content",
-                            color: "#ffffff",
-                            backgroundColor: "#222b38",
+                            backgroundColor: "transparent",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
                             "&:hover": {
-                                color: "#ffffff",
-                                backgroundColor: "#333e4c",
+                                backgroundColor: "#EDEDED",
+                                color: "#1c69fb",
                             },
+                            fontWeight: 600,
+                            color: "#1c69fb",
                         }}
                     >
-                        <ArrowDownToLine />
+                        <ArrowDownToLine strokeWidth={2.5} color="#1c69fb" size={"2.5vh"} />
                         <Box
                             sx={{
                                 display: {
@@ -94,31 +104,19 @@ const Patients = () => {
                                 },
                             }}
                         >
-                            <Typography
-                                sx={{
-                                    fontSize: {
-                                        xs: 12,
-                                        sm: 14,
-                                        md: 16,
-                                        lg: 18,
-                                    },
-                                    color: "#ffffff",
-                                }}
-                            >
-                                Export
-                            </Typography>
+                            Export
                         </Box>
                     </IconButton>
                     <Menu
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
+                        variant="menu"
+                        size="sm"
                         sx={{
-                            marginTop: "3px",
                             "& .MuiPaper-root": {
-                                width: "200px",
-                                backgroundColor: "#222b38",
-                                color: "#ffffff",
+                                backgroundColor: "#ffffff",
+                                color: "black",
                                 borderRadius: "5px",
                             },
                         }}
@@ -127,7 +125,9 @@ const Patients = () => {
                             onClick={handleMenuClose}
                             sx={{
                                 "&:hover": {
-                                    backgroundColor: "#333e4c",
+                                    color: "#1c69fb",
+                                    fontWeight: 600,
+                                    backgroundColor: "#f1f5ff",
                                 },
                             }}
                         >
@@ -137,7 +137,9 @@ const Patients = () => {
                             onClick={handleMenuClose}
                             sx={{
                                 "&:hover": {
-                                    backgroundColor: "#333e4c",
+                                    color: "#1c69fb",
+                                    fontWeight: 600,
+                                    backgroundColor: "#f1f5ff",
                                 },
                             }}
                         >
@@ -147,7 +149,9 @@ const Patients = () => {
                             onClick={handleMenuClose}
                             sx={{
                                 "&:hover": {
-                                    backgroundColor: "#333e4c",
+                                    color: "#1c69fb",
+                                    fontWeight: 600,
+                                    backgroundColor: "#f1f5ff",
                                 },
                             }}
                         >
@@ -156,23 +160,31 @@ const Patients = () => {
                     </Menu>
                 </Box>
             </Box>
-            <Box sx={{ height: "fit-content", marginBottom: 2 }}>
-                <FilterBar
-                    onPatientNameChange={handlePatientNameChange}
-                    onPayerChange={handlePayerChange}
-                />
-            </Box>
             <Box
                 sx={{
-                    height: "fit-content",
-                    width: "100%",
-                    transition: "opacity 0.5s ease"
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    gap: 2,
+                    padding: { xs: 0, sm: 1 },
+                    height: "90vh",
+                    overflow: "scroll",
+                    backgroundColor: "#fafafa",
                 }}
             >
-                <PatientsTable
-                    patientName={patientName}
-                    selectedPayer={selectedPayer}
-                />
+                <Box sx={{ display: "flex", flex: 1 }}>
+                    <FilterBar
+                        onPatientNameChange={handlePatientNameChange}
+                        onPayerChange={handlePayerChange}
+                    />
+
+                </Box>
+                <Box sx={{ display: "flex", flex: 10 }}>
+                    <PatientsTable
+                        patientName={patientName}
+                        selectedPayer={selectedPayer}
+                    />
+                </Box>
+
             </Box>
         </Box>
     );

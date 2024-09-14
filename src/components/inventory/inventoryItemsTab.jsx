@@ -11,17 +11,21 @@ const InventoryTab = () => {
     useState(true);
 
   return (
-    <Box> 
-      <Box
-        sx={{
-          height: "fit-content",
-          marginBottom: 1,
-          display: "flex",
-        }}
-      >
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
+        gap: 2,
+        padding: { xs: 0, sm: 1 },
+        height: "90vh",
+        overflow: "scroll",
+        backgroundColor: "#fafafa",
+      }}
+    >
+      <Box sx={{ display: "flex", flex: 1, marginLeft: 1, marginRight: 1 }}>
         <FilterBar />
       </Box>
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           alignItems: "center",
@@ -39,8 +43,7 @@ const InventoryTab = () => {
                 ? "#ebf5ef"
                 : "#ebdfe0",
               padding: 1,
-              transition:
-                "background-color 0.5s ease, color 0.5s",
+              transition: "background-color 0.5s ease, color 0.5s",
               "&:hover": {
                 background: isIntelligentOrderingEnabled
                   ? "#dae3de"
@@ -96,8 +99,8 @@ const InventoryTab = () => {
                 ? "Intelligent Ordering Enabled"
                 : "Intelligent Ordering Disabled"}
             </Typography>
-          </IconButton>
-          {/* <IconButton
+          </IconButton> */}
+      {/* <IconButton
             sx={{
               gap: 0.5,
               backgroundColor: "#222b38",
@@ -154,9 +157,11 @@ const InventoryTab = () => {
                 : "Intelligent Ordering Disabled"}
             </Typography>
           </IconButton> */}
-        </Tooltip>
+      {/* </Tooltip>
+      </Box> */}
+      <Box sx={{ display: "flex", flex: 10 }}>
+        <InventoryTable />
       </Box>
-      <InventoryTable />
     </Box>
   );
 };

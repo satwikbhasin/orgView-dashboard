@@ -51,32 +51,39 @@ const Inventory = () => {
     ];
 
     return (
-        <Box sx={{ height: "fit-content", width: "100vw", padding: 8, paddingTop: 3, display: 'flex', flexDirection: 'column', overflow: "scroll" }}>
-            <Box
-                sx={{
+        <Box sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 1,
+                cursor: "default",
+                justifyContent: "space-between",
+                height: "10vh",
+                padding: 2,
+                backgroundColor: "#fafafa",
+                // borderBottom: "1px solid #e0e0e0",
+            }}>
+                <Box sx={{
                     display: "flex",
                     alignItems: "center",
                     gap: 1,
-                    marginBottom: 3,
-                }}
-            >
-                <Box sx={{ display: "flex", alignItems: "center", fontWeight: "800", gap: 1, cursor: "default" }}>
+                    fontWeight: "600",
+                    cursor: "default",
+                }}>
                     <Container
-                        color="#222b38"
-                        size={"4vh"}
+                        color="#707070"
+                        size={"3vh"}
+                        strokeWidth={3}
                     />
                     <Typography
                         sx={{
-                            display: "flex",
-                            alignItems: "center",
                             fontSize: {
-                                xs: 24,
-                                sm: 28,
-                                md: 32,
-                                lg: 38,
+                                xs: 20,
+                                sm: 22,
+                                md: 24,
                             },
-                            color: "#222b38",
-                            transition: "opacity 0.2s ease",
+                            color: "grey",
                             display: {
                                 xs: "none",
                                 md: "block",
@@ -85,20 +92,6 @@ const Inventory = () => {
                     >
                         Inventory
                     </Typography>
-                </Box>
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: 1,
-                        padding: 0,
-                    }}
-                >
-                    <ChevronRight
-                        color="#808080"
-                        strokeWidth={3}
-                        size={20}
-                    />
                 </Box>
                 <Box
                     ref={menuRef}
@@ -123,22 +116,21 @@ const Inventory = () => {
                     >
                         <Typography
                             sx={{
-                                color: "#808080",
+                                color: "#1c69fb",
+                                fontWeight: 600,
                                 fontSize: {
                                     xs: 20,
-                                    md: 28,
+                                    sm: 16,
+                                    md: 18,
                                 },
                             }}
                         >
                             {selectedTab === "inventoryItems" ? "inventory items" : "pending orders"}
                         </Typography>
                         <ChevronDown
-                            color="#808080"
+                            color="#1c69fb"
                             strokeWidth={3}
                             size={20}
-                            style={{
-                                marginTop: 5,
-                            }}
                         />
                     </IconButton>
                     <Menu
@@ -160,7 +152,11 @@ const Inventory = () => {
                                 <Link href={`/inventory?tab=${item.value}`} passHref>
                                     <Typography sx={{
                                         color: "#808080",
-                                        fontSize: "20px",
+                                        fontSize: {
+                                            xs: 20,
+                                            sm: 16,
+                                            md: 18,
+                                        },
                                         fontWeight: "600",
                                     }}>{item.label}</Typography>
                                 </Link>
@@ -173,7 +169,7 @@ const Inventory = () => {
                 {selectedTab === "inventoryItems" && <InventoryItemsTab />}
                 {selectedTab === "pendingOrders" && <Box>Pending Orders</Box>}
             </Box>
-        </Box>
+        </Box >
     );
 };
 

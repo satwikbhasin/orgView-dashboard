@@ -17,19 +17,20 @@ import {
   Ellipsis,
   Dot,
   ArrowUpDown,
+  ChevronRight,
+  ChevronLeft,
 } from "lucide-react";
 import inventoryData from "@/assets/inventory";
 import { useMediaQuery } from "@mui/material";
 import ItemsCardView from "./itemsCardView";
 
 const headerStyle = {
-  height: "6vh",
-  fontWeight: "800",
+  height: "8vh",
+  fontWeight: "700",
   textAlign: "center",
   verticalAlign: "middle",
   backgroundColor: "#f0f4f8",
   position: "sticky",
-  zIndex: 1,
   cursor: "pointer",
   whiteSpace: "normal",
   overflow: "hidden",
@@ -37,7 +38,7 @@ const headerStyle = {
 
 const cellStyle = {
   fontWeight: "500",
-  height: "6vh",
+  height: "8vh",
   textAlign: "center",
 };
 
@@ -45,9 +46,21 @@ const ResponsiveTypography = ({ children }) => (
   <Typography
     sx={{
       fontSize: {
-        xs: "12px",
-        sm: "12px",
-        md: "16px",
+        xs: "10px",
+        md: "12px",
+      },
+    }}
+  >
+    {children}
+  </Typography>
+);
+
+const ResponsiveCellTypography = ({ children }) => (
+  <Typography
+    sx={{
+      fontSize: {
+        xs: "8px",
+        md: "10px",
       },
     }}
   >
@@ -57,7 +70,7 @@ const ResponsiveTypography = ({ children }) => (
 
 const SortableHeader = ({ label, onClick }) => (
   <th style={headerStyle} onClick={onClick}>
-    <Box
+    <IconButton
       sx={{
         display: "flex",
         alignItems: "center",
@@ -65,9 +78,9 @@ const SortableHeader = ({ label, onClick }) => (
         gap: 1,
       }}
     >
-      <ResponsiveTypography>{label}</ResponsiveTypography>
-      {label && <ArrowUpDown color="grey" size={14} />}
-    </Box>
+      {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
+      {label && <ArrowUpDown color="#1c69fb" size={12} strokeWidth={3} />}
+    </IconButton>
   </th>
 );
 
@@ -159,15 +172,19 @@ export default function InventoryItemsTable() {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         gap: 5,
-        height: isSmallScreen ? "fit-content" : "70vh",
+        height: "100%",
+        width: "100%",
+        padding: 1,
+        paddingLeft: 0,
+        paddingRight: { xs: 0, sm: 2 },
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <Box
           sx={{
-            border: isSmallScreen ? "transparent" : "1.5px solid #e0e0e0",
+            border: { xs: "transparent", sm: "1.5px solid #dedede" },
             borderRadius: 10,
-            overflow: "scroll",
+            overflow: "hidden",
             height: "100%",
             width: "100%",
             display: "flex",
@@ -230,10 +247,26 @@ export default function InventoryItemsTable() {
                           e.currentTarget.style.backgroundColor = "#fbfcfe";
                         }}
                       >
-                        <td style={cellStyle}>{item.sku}</td>
-                        <td style={cellStyle}>{item.itemName}</td>
-                        <td style={cellStyle}>{item.category}</td>
-                        <td style={cellStyle}>{item.price}</td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {item.sku}
+                          </ResponsiveCellTypography>
+                        </td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {item.itemName}
+                          </ResponsiveCellTypography>
+                        </td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {item.category}
+                          </ResponsiveCellTypography>
+                        </td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {item.price}
+                          </ResponsiveCellTypography>
+                        </td>
                         <td
                           style={{
                             ...cellStyle,
@@ -247,9 +280,15 @@ export default function InventoryItemsTable() {
                                 : "400",
                           }}
                         >
-                          {item.currentStock}
+                          <ResponsiveCellTypography>
+                            {item.currentStock}
+                          </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle}>{item.minThreshold}</td>
+                        <td style={cellStyle}>
+                          <ResponsiveCellTypography>
+                            {item.minThreshold}
+                          </ResponsiveCellTypography>
+                        </td>
                         <td style={cellStyle}>
                           <Box
                             sx={{
@@ -259,8 +298,14 @@ export default function InventoryItemsTable() {
                               alignItems: "center",
                             }}
                           >
-                            <Dot strokeWidth={3} size={40} color={getStatus(item.status)[1]} />
-                            {getStatus(item.status)[0]}
+                            <ResponsiveCellTypography>
+                              <Dot
+                                strokeWidth={3}
+                                size={40}
+                                color={getStatus(item.status)[1]}
+                              />
+                              {getStatus(item.status)[0]}
+                            </ResponsiveCellTypography>
                           </Box>
                         </td>
                         <td style={cellStyle}>
@@ -314,52 +359,74 @@ export default function InventoryItemsTable() {
           <Button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
+            size="small"
             sx={{
-              backgroundColor: "#222b38",
+              fontSize: {
+                xs: 10,
+                md: 12,
+              },
+              padding: 0.8,
+              color: "#1c69fb",
+              backgroundColor: "transparent",
               "&:hover": {
-                backgroundColor: "#333e4c",
+                backgroundColor: "transparent",
+              },
+              "&:disabled": {
+                backgroundColor: "transparent",
+                color: "#707070",
               },
             }}
+            startDecorator={<ChevronLeft size={16} />}
           >
             Previous
           </Button>
-          <Box sx={{ display: "flex", alignItems: "center", mx: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             {generatePageNumbers().map((page, index) => (
-              <Button
+              <IconButton
                 key={index}
+                size="small"
                 sx={{
-                  mx: 1,
-                  width: 36,
-                  height: 36,
                   borderRadius: "50%",
-                  border: "1px solid",
-                  backgroundColor:
-                    page === currentPage ? "#222b38" : "transparent",
-                  color: page === currentPage ? "#ffffff" : "black",
+                  height: 25,
+                  width: 25,
+                  backgroundColor: "transparent",
+                  color: page === currentPage ? "#1c69fb" : "black",
                   cursor: page !== "..." ? "pointer" : "default",
                   fontWeight: page === currentPage ? "800" : "600",
                   "&:hover": {
-                    color: page === currentPage ? "#ffffff" : "black",
+                    color: page === currentPage ? "#1c69fb" : "#1c69fb",
                     backgroundColor:
-                      page === currentPage ? "#222b38" : "#f0f4f8",
+                      page === currentPage ? "transparent" : "transparent",
                   },
                 }}
                 onClick={() => page !== "..." && setCurrentPage(page)}
                 disabled={page === "..."}
               >
                 {page}
-              </Button>
+              </IconButton>
             ))}
           </Box>
           <Button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
+            size="small"
             sx={{
-              backgroundColor: "#222b38",
+              fontSize: {
+                xs: 10,
+                md: 12,
+              },
+              padding: 0.8,
+              color: "#1c69fb",
+              backgroundColor: "transparent",
               "&:hover": {
-                backgroundColor: "#333e4c",
+                backgroundColor: "transparent",
+              },
+              "&:disabled": {
+                backgroundColor: "transparent",
+                color: "#707070",
               },
             }}
+            endDecorator={<ChevronRight size={16} />}
           >
             Next
           </Button>
