@@ -8,9 +8,9 @@ import PatientsTable from "@/components/patients/patientsTable";
 import { Menu, MenuItem } from "@mui/material";
 
 const Patients = () => {
+    const [currentPage, setCurrentPage] = useState(1);
     const [patientName, setPatientName] = useState("");
     const [selectedPayer, setSelectedPayer] = useState("any");
-    const [currentPage, setCurrentPage] = useState(1);
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handlePatientNameChange = (patientName) => {
@@ -33,20 +33,20 @@ const Patients = () => {
     };
 
     return (
-        <Box sx={{ height: "fit-content", width: "100vw", padding: 8, paddingBottom: 2, paddingTop: 3 }}>
+        <Box sx={{ height: "fit-content", width: "100vw", padding: 8, paddingTop: 3, display: 'flex', flexDirection: 'column', overflow: "scroll" }}>
             <Box
                 sx={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    marginBottom: 5,
+                    marginBottom: 3,
                     padding: 0,
                 }}
             >
                 <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", fontWeight: "800", gap: 1, cursor: "default" }}>
                     <Users
                         color="#222b38"
-                        size={"10%"}
+                        size={"4vh"}
                     />
                     <Typography
                         sx={{
@@ -57,6 +57,10 @@ const Patients = () => {
                                 lg: 38,
                             },
                             color: "#222b38",
+                            display: {
+                                xs: "none",
+                                md: "block",
+                            },
                         }}
                     >
                         Patients
@@ -162,14 +166,12 @@ const Patients = () => {
                 sx={{
                     height: "fit-content",
                     width: "100%",
-                    transition: "width 0.4s",
+                    transition: "opacity 0.5s ease"
                 }}
             >
                 <PatientsTable
                     patientName={patientName}
                     selectedPayer={selectedPayer}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
                 />
             </Box>
         </Box>

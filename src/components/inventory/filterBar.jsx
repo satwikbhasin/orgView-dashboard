@@ -11,7 +11,6 @@ import {
   Tooltip,
 } from "@mui/joy";
 import { Collapse } from "@mui/material";
-import { getPayerTypes } from "@/assets/patients";
 import {
   Search,
   Filter,
@@ -47,7 +46,6 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
         sx={{
           fontWeight: 600,
           cursor: "pointer",
-
           color: isEnabled ? "black" : "grey",
         }}
         onClick={onToggle}
@@ -88,22 +86,18 @@ const FilterGroup = ({ children }) => (
   </Box>
 );
 
-export default function FilterBar({ onPatientNameChange, onPayerChange }) {
+export default function FilterBar() {
   const [isFilterVisible, setIsFilterVisible] = useState(true);
   const [filterStates, setFilterStates] = useState({
-    patientName: true,
-    payer: true,
-    billType: true,
-    cptCode: true,
-    aging: true,
-    claimNumber: true,
+    itemName: true,
+    stockStatus: true,
+    intelligentOrdering: true,
+    inventoryItems: true,
+    category: true,
+    sku: true,
   });
-  const [filterValues, setFilterValues] = useState({
-    patientName: "",
-    payer: "any",
-  });
+  const [filterValues, setFilterValues] = useState({});
   const [allFiltersDisabled, setAllFiltersDisabled] = useState(false);
-  const payerTypes = getPayerTypes();
   const isSmallScreen = useMediaQuery("(max-width:960px)");
 
   const toggleFilterVisibility = () => {
@@ -115,14 +109,6 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
       ...prev,
       [filter]: !prev[filter],
     }));
-
-    if (filter === "patientName") {
-      onPatientNameChange(
-        !filterStates.patientName ? filterValues.patientName : ""
-      );
-    } else if (filter === "payer") {
-      onPayerChange(!filterStates.payer ? filterValues.payer : "any");
-    }
   };
 
   const toggleAllFilters = () => {
@@ -130,42 +116,32 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
       const newState = !prev;
 
       setFilterStates({
-        patientName: !newState,
-        payer: !newState,
-        billType: !newState,
-        cptCode: !newState,
-        aging: !newState,
-        claimNumber: !newState,
+        itemName: !newState,
+        stockStatus: !newState,
+        intelligentOrdering: !newState,
+        inventoryItems: !newState,
+        category: !newState,
+        sku: !newState,
       });
-
-      if (newState) {
-        onPatientNameChange("");
-        onPayerChange("any");
-      } else {
-        // Restore filter values when enabling all filters
-        onPatientNameChange(filterValues.patientName);
-        onPayerChange(filterValues.payer);
-      }
-
-      console.log("All filters disabled: ", newState);
-      console.log("Filter states: ", filterStates);
 
       return newState;
     });
   };
 
-  const handlePatientNameChange = (value) => {
-    setFilterValues((prev) => ({ ...prev, patientName: value }));
-    if (filterStates.patientName) {
-      onPatientNameChange(value);
-    }
+  const handleItemNameChange = (value) => {
+    setFilterValues((prev) => ({ ...prev, itemName: value }));
   };
 
-  const handlePayerChange = (value) => {
-    setFilterValues((prev) => ({ ...prev, payer: value }));
-    if (filterStates.payer) {
-      onPayerChange(value);
-    }
+  const handleStockStatusChange = (value) => {
+    setFilterValues((prev) => ({ ...prev, stockStatus: value }));
+  };
+
+  const handleCategoryChange = (value) => {
+    setFilterValues((prev) => ({ ...prev, category: value }));
+  };
+
+  const handleSKUChange = (value) => {
+    setFilterValues((prev) => ({ ...prev, sku: value }));
   };
 
   return (
@@ -271,28 +247,29 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               >
                 <FilterGroup>
                   <FilterItem
-                    label="Patient Name"
-                    isEnabled={filterStates.patientName}
-                    onToggle={() => toggleFilterEnabled("patientName")}
+                    label="Item Name"
+                    isEnabled={filterStates.itemName}
+                    onToggle={() => toggleFilterEnabled("itemName")}
                   >
                     <Input
-                      placeholder="Last, First"
-                      value={filterValues.patientName}
-                      onChange={(e) => handlePatientNameChange(e.target.value)}
+                      placeholder="Enter item name"
+                      value={filterValues.itemName}
+                      onChange={(e) => handleItemNameChange(e.target.value)}
                       startDecorator={<Search size={20} />}
                       sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.patientName}
+                      disabled={!filterStates.itemName}
                     />
                   </FilterItem>
                   <FilterItem
-                    label="Bill Type"
-                    isEnabled={filterStates.billType}
-                    onToggle={() => toggleFilterEnabled("billType")}
+                    label="Stock Status"
+                    isEnabled={filterStates.stockStatus}
+                    onToggle={() => toggleFilterEnabled("stockStatus")}
                   >
                     <Select
                       defaultValue="any"
+                      onChange={(e) => handleStockStatusChange(e.target.value)}
                       sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.billType}
+                      disabled={!filterStates.stockStatus}
                     >
                       <Option value="any">Any</Option>
                     </Select>
@@ -300,61 +277,30 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 </FilterGroup>
                 <FilterGroup>
                   <FilterItem
-                    label="Payer"
-                    isEnabled={filterStates.payer}
-                    onToggle={() => toggleFilterEnabled("payer")}
+                    label="Category"
+                    isEnabled={filterStates.category}
+                    onToggle={() => toggleFilterEnabled("category")}
                   >
                     <Select
-                      value={filterValues.payer}
-                      onChange={(e, newValue) => handlePayerChange(newValue)}
+                      defaultValue="any"
+                      onChange={(e) => handleCategoryChange(e.target.value)}
                       sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.payer}
+                      disabled={!filterStates.category}
                     >
                       <Option value="any">Any</Option>
-                      {payerTypes.map((payer) => (
-                        <Option key={payer} value={payer}>
-                          {payer}
-                        </Option>
-                      ))}
                     </Select>
                   </FilterItem>
                   <FilterItem
-                    label="CPT Code"
-                    isEnabled={filterStates.cptCode}
-                    onToggle={() => toggleFilterEnabled("cptCode")}
+                    label="SKU"
+                    isEnabled={filterStates.sku}
+                    onToggle={() => toggleFilterEnabled("sku")}
                   >
                     <Input
-                      placeholder="Enter CPT Code"
+                      placeholder="Enter SKU"
+                      onChange={(e) => handleSKUChange(e.target.value)}
                       startDecorator={<Search size={20} />}
                       sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.cptCode}
-                    />
-                  </FilterItem>
-                </FilterGroup>
-                <FilterGroup>
-                  <FilterItem
-                    label="Aging"
-                    isEnabled={filterStates.aging}
-                    onToggle={() => toggleFilterEnabled("aging")}
-                  >
-                    <Select
-                      defaultValue="+0 days"
-                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.aging}
-                    >
-                      <Option value="+0 days">+0 Days</Option>
-                    </Select>
-                  </FilterItem>
-                  <FilterItem
-                    label="Claim Number"
-                    isEnabled={filterStates.claimNumber}
-                    onToggle={() => toggleFilterEnabled("claimNumber")}
-                  >
-                    <Input
-                      placeholder="Enter Claim Number"
-                      startDecorator={<Search size={20} />}
-                      sx={{ width: "100%", fontSize: 18, height: "3vh" }}
-                      disabled={!filterStates.claimNumber}
+                      disabled={!filterStates.sku}
                     />
                   </FilterItem>
                 </FilterGroup>

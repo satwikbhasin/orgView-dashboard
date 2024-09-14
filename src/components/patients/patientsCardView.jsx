@@ -34,7 +34,7 @@ const PatientsCardView = ({ patients }) => {
             </Typography>
             <Box
               sx={{
-                fontWeight: "500",
+                fontWeight: "550",
                 color:
                   patient.status === "Sent"
                     ? "#104b0f"
@@ -62,20 +62,19 @@ const PatientsCardView = ({ patients }) => {
               {patient.status}
             </Box>
           </Box>
-          <Divider sx={{ marginBottom: 2 }} />
-          <Box sx={{ marginBottom: 1 }}>
+          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
             <Typography sx={{ fontWeight: 600, display: "inline" }}>
               DOS:
             </Typography>
             <Typography sx={{ display: "inline" }}>{patient.dos}</Typography>
           </Box>
-          <Box sx={{ marginBottom: 1 }}>
+          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
             <Typography sx={{ fontWeight: 600, display: "inline" }}>
               Payer:
             </Typography>
             <Typography sx={{ display: "inline" }}>{patient.payer}</Typography>
           </Box>
-          <Box sx={{ marginBottom: 1 }}>
+          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
             <Typography sx={{ fontWeight: 600, display: "inline" }}>
               Provider:
             </Typography>
@@ -83,7 +82,7 @@ const PatientsCardView = ({ patients }) => {
               {patient.provider}
             </Typography>
           </Box>
-          <Box sx={{ marginBottom: 1 }}>
+          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
             <Typography sx={{ fontWeight: 600, display: "inline" }}>
               Claim ID:
             </Typography>
@@ -91,7 +90,7 @@ const PatientsCardView = ({ patients }) => {
               {patient.claimId}
             </Typography>
           </Box>
-          <Box>
+          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
             <Typography sx={{ fontWeight: 600, display: "inline" }}>
               Charges:
             </Typography>
