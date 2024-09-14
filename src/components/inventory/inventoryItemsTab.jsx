@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Box, IconButton, Tooltip, Typography } from "@mui/joy";
 import FilterBar from "./filterBar";
-import InventoryTable from "./stockTable";
+import InventoryTable from "@/components/inventory/inventoryItemsTable";
 import { Power, PowerOff } from "lucide-react";
 
 const InventoryTab = () => {

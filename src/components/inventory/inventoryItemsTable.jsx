@@ -71,7 +71,7 @@ const SortableHeader = ({ label, onClick }) => (
   </th>
 );
 
-export default function StockTable() {
+export default function InventoryItemsTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [anchorEl, setAnchorEl] = useState(null);

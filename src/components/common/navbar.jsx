@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   ButtonGroup,
@@ -31,6 +31,7 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathName = usePathname();
   const [menuAnchor, setMenuAnchor] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const links = [
     { href: "/home", label: "Home", icon: <House size={18} /> },
@@ -42,7 +43,7 @@ const Navbar = () => {
     },
     { href: "/orders", label: "Orders", icon: <Package size={18} /> },
     {
-      href: "/inventory?tab=stock",
+      href: "/inventory?tab=inventoryItems",
       label: "Inventory",
       icon: <Container size={18} />,
     },
@@ -73,11 +74,30 @@ const Navbar = () => {
   const currentIcon = currentLink?.icon || <MenuIcon size={24} />;
   const currentLabel = currentLink?.label || "Menu";
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <Box
       sx={{
-        background:
-          "linear-gradient(225deg, hsla(213, 17%, 35%, 1) 0%, hsla(216, 25%, 16%, 1) 81%, hsla(217, 36%, 12%, 1) 100%)",
+        background: isScrolled
+          ? "rgba(13, 29, 50, 0.85)"
+          : "linear-gradient(225deg, hsla(213, 17%, 35%, 1) 0%, hsla(216, 25%, 16%, 1) 81%, hsla(217, 36%, 12%, 1) 100%)",
+        backdropFilter: isScrolled ? "blur(4.5px)" : "none",
+        "-webkit-backdrop-filter": isScrolled ? "blur(4.5px)" : "none",
+        border: isScrolled ? "1px solid rgba(255, 255, 255, 0.18)" : "none",
         paddingLeft: 1,
         paddingRight: 2,
         paddingTop: 1,
@@ -87,6 +107,9 @@ const Navbar = () => {
         alignItems: "center",
         justifyContent: "space-between",
         width: "100%",
+        position: "sticky",
+        top: 0,
+        zIndex: 1000,
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center" }}>

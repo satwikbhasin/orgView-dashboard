@@ -3,17 +3,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
 import { Container, ChevronRight, ChevronDown } from "lucide-react";
-import InventoryTab from "@/components/inventory/stockTab";
+import InventoryItemsTab from "@/components/inventory/inventoryItemsTab";
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 const Inventory = () => {
     const searchParams = useSearchParams();
     const tab = searchParams.get('tab');
-    const [selectedTab, setSelectedTab] = useState(tab || "stock");
+    const [selectedTab, setSelectedTab] = useState(tab || "inventoryItems");
     const [anchorEl, setAnchorEl] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const closeTimeoutRef = useRef(null);
+    const menuRef = useRef(null);
 
     useEffect(() => {
         if (tab) {
@@ -21,12 +22,14 @@ const Inventory = () => {
         }
     }, [tab]);
 
-    const handleMenuOpen = (event) => {
+    const handleMenuOpen = () => {
         if (closeTimeoutRef.current) {
             clearTimeout(closeTimeoutRef.current);
         }
-        setAnchorEl(event.currentTarget);
-        setMenuOpen(true);
+        if (menuRef.current) {
+            setAnchorEl(menuRef.current);
+            setMenuOpen(true);
+        }
     };
 
     const handleMenuClose = () => {
@@ -43,12 +46,12 @@ const Inventory = () => {
     };
 
     const menuItems = [
-        { value: "stock", label: "items" },
+        { value: "inventoryItems", label: "items" },
         { value: "pendingOrders", label: "pending orders" }
     ];
 
     return (
-        <Box sx={{ minHeight: "94vh", width: "100vw", padding: 8, paddingBottom: 2, paddingTop: 3, display: 'flex', flexDirection: 'column', overflow: "scroll" }}>
+        <Box sx={{ height: "fit-content", width: "100vw", padding: 8, paddingTop: 3, display: 'flex', flexDirection: 'column', overflow: "scroll" }}>
             <Box
                 sx={{
                     display: "flex",
@@ -74,17 +77,23 @@ const Inventory = () => {
                             },
                             color: "#222b38",
                             transition: "opacity 0.2s ease",
+                            display: {
+                                xs: "none",
+                                md: "block",
+                            },
                         }}
                     >
                         Inventory
                     </Typography>
                 </Box>
-                <Box sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginTop: 1,
-                    padding: 0,
-                }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: 1,
+                        padding: 0,
+                    }}
+                >
                     <ChevronRight
                         color="#808080"
                         strokeWidth={3}
@@ -92,6 +101,7 @@ const Inventory = () => {
                     />
                 </Box>
                 <Box
+                    ref={menuRef}
                     onMouseEnter={handleMenuOpen}
                     onMouseLeave={handleMenuClose}
                     sx={{
@@ -114,10 +124,13 @@ const Inventory = () => {
                         <Typography
                             sx={{
                                 color: "#808080",
-                                fontSize: "26px",
+                                fontSize: {
+                                    xs: 20,
+                                    md: 28,
+                                },
                             }}
                         >
-                            {selectedTab === "stock" ? "items" : "pending orders"}
+                            {selectedTab === "inventoryItems" ? "inventory items" : "pending orders"}
                         </Typography>
                         <ChevronDown
                             color="#808080"
@@ -132,29 +145,22 @@ const Inventory = () => {
                         anchorEl={anchorEl}
                         open={menuOpen}
                         onClose={handleMenuClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
                         onMouseEnter={() => clearTimeout(closeTimeoutRef.current)}
                         onMouseLeave={handleMenuClose}
                         sx={{
-                            backgroundColor: "transparent",
-                            width: "10vw",
-                            height: "fit-content",
-                            boxShadow: "none",
-                            "& .MuiPaper-root": {
-                                backgroundColor: "transparent",
-                                boxShadow: "none",
+                            width: {
+                                xs: "fit-content",
+                                md: "20vw"
                             },
-                        }}Ï
+                            display: "flex",
+                        }}
                     >
                         {menuItems.filter(item => item.value !== selectedTab).map(item => (
                             <MenuItem key={item.value} onClick={() => handleTabChange(item.value)}>
                                 <Link href={`/inventory?tab=${item.value}`} passHref>
                                     <Typography sx={{
                                         color: "#808080",
-                                        fontSize: "18px",
+                                        fontSize: "20px",
                                         fontWeight: "600",
                                     }}>{item.label}</Typography>
                                 </Link>
@@ -163,8 +169,8 @@ const Inventory = () => {
                     </Menu>
                 </Box>
             </Box>
-            <Box sx={{ transition: "opacity 0.5s ease", opacity: selectedTab === "stock" ? 1 : 0 }}>
-                {selectedTab === "stock" && <InventoryTab />}
+            <Box sx={{ transition: "opacity 0.5s ease", opacity: selectedTab === "inventoryItems" ? 1 : 0 }}>
+                {selectedTab === "inventoryItems" && <InventoryItemsTab />}
                 {selectedTab === "pendingOrders" && <Box>Pending Orders</Box>}
             </Box>
         </Box>
