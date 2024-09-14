@@ -17,7 +17,6 @@ const InventoryTab = () => {
         flexDirection: { xs: "column", sm: "row" },
         gap: 2,
         padding: { xs: 0, sm: 1 },
-        height: "90vh",
         overflow: "scroll",
         backgroundColor: "#fafafa",
       }}

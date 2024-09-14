@@ -5,7 +5,7 @@ import { Box } from "@mui/joy";
 
 const Financials = () => {
     return (
-        <Box sx={{ height: "fit-content", width: "100vw", padding: 8, paddingTop: 3, display: 'flex', flexDirection: 'column', overflow: "scroll" }}>
+        <Box sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
             <h1>Financials Page</h1>
         </Box>
     );

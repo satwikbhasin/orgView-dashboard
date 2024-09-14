@@ -14,7 +14,7 @@ import { useMediaQuery } from "@mui/material";
 import PatientsCardView from "@/components/patients/patientsCardView";
 
 const headerStyle = {
-  height: "8vh",
+  height: "6vh",
   fontWeight: "700",
   textAlign: "center",
   verticalAlign: "middle",
@@ -27,16 +27,20 @@ const headerStyle = {
 
 const cellStyle = {
   fontWeight: "500",
-  height: "8vh",
-  textAlign: "center",
+  height: "6vh",
+  textAlign: "left",
 };
 
-const ResponsiveTypography = ({ children }) => (
+const ResponsiveCellTypography = ({ children }) => (
   <Typography
     sx={{
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
       fontSize: {
-        xs: "10px",
-        md: "12px",
+        xs: "8px",
+        lg: "10px",
+        xl: "12px",
       },
     }}
   >
@@ -44,12 +48,14 @@ const ResponsiveTypography = ({ children }) => (
   </Typography>
 );
 
-const ResponsiveCellTypography = ({ children }) => (
+const ResponsiveTypography = ({ children }) => (
   <Typography
     sx={{
+      textAlign: "left",
       fontSize: {
         xs: "8px",
         md: "10px",
+        lg: "12px",
       },
     }}
   >
@@ -63,16 +69,20 @@ const SortableHeader = ({ label, onClick }) => (
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "left",
         gap: 1,
+        padding: 0,
+        width: "100%",
+        "&:hover": {
+          backgroundColor: "transparent",
+        },
       }}
     >
-      <ResponsiveTypography>{label}</ResponsiveTypography>
-      <ArrowUpDown color="#1c69fb" size={12} strokeWidth={3} />
+      {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
+      {label && <ArrowUpDown color="#1c69fb" size={10} strokeWidth={3} />}
     </IconButton>
   </th>
 );
-
 export default function PatientsTable({ patientName, selectedPayer }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });

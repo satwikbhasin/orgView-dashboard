@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
-import { ArrowDownToLine, Users } from "lucide-react";
+import { ArrowDownToLine, Users, } from "lucide-react";
 import FilterBar from "@/components/patients/filterBar";
 import PatientsTable from "@/components/patients/patientsTable";
 
@@ -46,29 +46,17 @@ const Patients = () => {
                 // borderBottom: "1px solid #e0e0e0",
             }}>
                 <Box sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    fontWeight: "600",
-                    cursor: "default",
+                    display: "flex", alignItems: "center", gap: 1,
                 }}>
-                    <Users
-                        color="#707070"
-                        size={"3vh"}
-                        strokeWidth={3}
-                    />
                     <Typography
                         sx={{
+                            fontWeight: "400",
                             fontSize: {
                                 xs: 20,
-                                sm: 22,
-                                md: 24,
+                                sm: 24,
+                                md: 28,
                             },
-                            color: "grey",
-                            display: {
-                                xs: "none",
-                                md: "block",
-                            },
+                            color: "black",
                         }}
                     >
                         Patients
@@ -91,7 +79,12 @@ const Patients = () => {
                                 backgroundColor: "#EDEDED",
                                 color: "#1c69fb",
                             },
-                            fontWeight: 600,
+                            fontSize: {
+                                xs: 10,
+                                sm: 12,
+                                md: 14,
+                            },
+                            fontWeight: 700,
                             color: "#1c69fb",
                         }}
                     >
