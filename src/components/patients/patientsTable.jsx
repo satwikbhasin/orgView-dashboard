@@ -21,7 +21,7 @@ const headerStyle = {
 };
 
 const cellStyle = {
-  fontWeight: "400",
+  fontWeight: "500",
   height: "6vh",
   textAlign: "center",
 };

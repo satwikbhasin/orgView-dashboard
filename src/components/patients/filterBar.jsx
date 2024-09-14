@@ -194,10 +194,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             sx={{
               gap: 1,
               fontSize: {
-                xs: 14,
-                sm: 16,
-                md: 18,
-                lg: 20,
+                xs: 15,
+                sm: 17,
+                md: 19,
               },
               fontWeight: 600,
               color: "#258bE6",

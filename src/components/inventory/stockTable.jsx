@@ -11,7 +11,13 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/joy";
-import { ChartSpline, ShoppingBasket, Ellipsis, Dot, ArrowUpDown } from "lucide-react";
+import {
+  ChartSpline,
+  ShoppingBasket,
+  Ellipsis,
+  Dot,
+  ArrowUpDown,
+} from "lucide-react";
 import inventoryData from "@/assets/inventory";
 import { useMediaQuery } from "@mui/material";
 import ItemsCardView from "./itemsCardView";
@@ -30,7 +36,7 @@ const headerStyle = {
 };
 
 const cellStyle = {
-  fontWeight: "400",
+  fontWeight: "500",
   height: "6vh",
   textAlign: "center",
 };
@@ -60,13 +66,12 @@ const SortableHeader = ({ label, onClick }) => (
       }}
     >
       <ResponsiveTypography>{label}</ResponsiveTypography>
-      <ArrowUpDown color="grey" size={14} />
+      {label && <ArrowUpDown color="grey" size={14} />}
     </Box>
   </th>
 );
 
-
-export default function InventoryTable() {
+export default function StockTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [anchorEl, setAnchorEl] = useState(null);
@@ -254,7 +259,7 @@ export default function InventoryTable() {
                               alignItems: "center",
                             }}
                           >
-                            <Dot size={50} color={getStatus(item.status)[1]} />
+                            <Dot strokeWidth={3} size={40} color={getStatus(item.status)[1]} />
                             {getStatus(item.status)[0]}
                           </Box>
                         </td>

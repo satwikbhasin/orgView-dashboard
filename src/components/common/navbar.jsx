@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import {
   Box,
   ButtonGroup,
@@ -31,8 +31,6 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathName = usePathname();
   const [menuAnchor, setMenuAnchor] = useState(null);
-  const [activeTab, setActiveTab] = useState(null);
-  const sliderRef = useRef(null);
 
   const links = [
     { href: "/home", label: "Home", icon: <House size={18} /> },
@@ -43,7 +41,11 @@ const Navbar = () => {
       icon: <DollarSign size={18} />,
     },
     { href: "/orders", label: "Orders", icon: <Package size={18} /> },
-    { href: "/inventory", label: "Inventory", icon: <Container size={18} /> },
+    {
+      href: "/inventory?tab=stock",
+      label: "Inventory",
+      icon: <Container size={18} />,
+    },
     { href: "/mail", label: "Mail", icon: <Mail size={18} /> },
     {
       href: "/appointments",
@@ -56,25 +58,6 @@ const Navbar = () => {
       icon: <ChartNoAxesCombined size={18} />,
     },
   ];
-
-  useEffect(() => {
-    const currentTab = links.find((link) => link.href === pathName);
-    setActiveTab(currentTab);
-  }, [pathName]);
-
-  useEffect(() => {
-    if (activeTab && sliderRef.current) {
-      const activeButton = document.querySelector(
-        `a[href="${activeTab.href}"]`
-      );
-      if (activeButton) {
-        const buttonRect = activeButton.getBoundingClientRect();
-        const parentRect = activeButton.parentNode.getBoundingClientRect();
-        sliderRef.current.style.width = `${buttonRect.width}px`;
-        sliderRef.current.style.left = `${buttonRect.left - parentRect.left}px`;
-      }
-    }
-  }, [activeTab]);
 
   const handleMenuOpen = (event) => {
     setMenuAnchor(event.currentTarget);
@@ -93,7 +76,7 @@ const Navbar = () => {
       sx={{
         background:
           "linear-gradient(225deg, hsla(213, 17%, 35%, 1) 0%, hsla(216, 25%, 16%, 1) 81%, hsla(217, 36%, 12%, 1) 100%)",
-        paddingLeft: 0,
+        paddingLeft: 1,
         paddingRight: 2,
         paddingTop: 1,
         paddingBottom: 1,
@@ -111,15 +94,23 @@ const Navbar = () => {
             "&:hover": {
               backgroundColor: "transparent",
             },
+            gap: 1,
           }}
         >
           <Image
             src="/syntra_logo.png"
             alt="Syntra Logo"
-            width={65}
-            height={65}
+            width={35}
+            height={35}
           />
-          <Typography sx={{ color: "#f2f0ef", fontSize: 22 }}>
+          <Typography
+            sx={{
+              color: "#f2f0ef",
+              fontSize: 20,
+              fontWeight: 700,
+              fontFamily: "'Kode Mono', monospace",
+            }}
+          >
             Syntra
           </Typography>
         </IconButton>
@@ -144,17 +135,24 @@ const Navbar = () => {
                 <IconButton
                   key={link.href}
                   sx={{
-                    color: pathName === link.href ? "#000000" : "#cccbca",
+                    color: pathName.includes(link.href.split("?")[0])
+                      ? "#000000"
+                      : "#cccbca",
                     gap: 0.5,
-                    padding: 0.6,
-                    backgroundColor:
-                      pathName === link.href ? "#ffffff" : "transparent",
+                    padding: 0.9,
+                    backgroundColor: pathName.includes(link.href.split("?")[0])
+                      ? "#ffffff"
+                      : "transparent",
+                    transition: "background-color 0.6s ease, color 0.6s ease",
                     "&:hover": {
-                      backgroundColor:
-                        pathName !== link.href
-                          ? "rgba(255, 255, 255, 0.1)"
-                          : "#ffffff",
-                      color: pathName !== link.href ? "#ffffff" : "#000000",
+                      backgroundColor: pathName.includes(
+                        link.href.split("?")[0]
+                      )
+                        ? "#ffffff"
+                        : "rgba(255, 255, 255, 0.1)",
+                      color: pathName.includes(link.href.split("?")[0])
+                        ? "#000000"
+                        : "#ffffff",
                     },
                     "@media (max-width: 1200px)": {
                       ".nav-label": {
@@ -177,7 +175,6 @@ const Navbar = () => {
           ))}
         </ButtonGroup>
         <Box
-          ref={sliderRef}
           sx={{
             position: "absolute",
             bottom: 6,

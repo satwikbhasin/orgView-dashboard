@@ -33,20 +33,20 @@ const Patients = () => {
     };
 
     return (
-        <Box sx={{ height: "fit-content", width: "100vw", padding: 8, paddingBottom: 2, paddingTop: 3 }}>
+        <Box sx={{ minHeight: "94vh", width: "100vw", padding: 8, paddingBottom: 2, paddingTop: 3, display: 'flex', flexDirection: 'column', overflow: "scroll" }}>
             <Box
                 sx={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    marginBottom: 5,
+                    marginBottom: 3,
                     padding: 0,
                 }}
             >
                 <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", fontWeight: "800", gap: 1, cursor: "default" }}>
                     <Users
                         color="#222b38"
-                        size={"10%"}
+                        size={"4vh"}
                     />
                     <Typography
                         sx={{

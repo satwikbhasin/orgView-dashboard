@@ -1,28 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Box,
-  IconButton,
-  Switch,
-  Tooltip,
-  Typography,
-  switchClasses,
-} from "@mui/joy";
+import { Box, IconButton, Tooltip, Typography } from "@mui/joy";
 import FilterBar from "./filterBar";
-import InventoryTable from "./inventoryTable";
+import InventoryTable from "./stockTable";
 import { Power, PowerOff } from "lucide-react";
 
 const InventoryTab = () => {
   const [isIntelligentOrderingEnabled, setIsIntelligentOrderingEnabled] =
-    useState(false);
+    useState(true);
 
   return (
-    <Box>
+    <Box> 
       <Box
         sx={{
           height: "fit-content",
-          marginBottom: 2,
+          marginBottom: 1,
           display: "flex",
         }}
       >
@@ -32,19 +25,20 @@ const InventoryTab = () => {
         sx={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "flex-start",
           gap: 0.5,
-          marginBottom: 3,
-          height: "2vh",
+          marginBottom: 1,
+          minHeight: "2vh",
         }}
       >
-        <Tooltip title="Automatically orders items when they reach the minimum threshold">
-          {/* <IconButton
+        <Tooltip title="When enabled, auto-orders items at minimum threshold">
+          <IconButton
             sx={{
               gap: 0.5,
               backgroundColor: isIntelligentOrderingEnabled
                 ? "#ebf5ef"
                 : "#ebdfe0",
-              padding: 1.2,
+              padding: 1,
               transition:
                 "background-color 0.5s ease, color 0.5s",
               "&:hover": {
@@ -98,14 +92,16 @@ const InventoryTab = () => {
                 transition: "color 1s ease",
               }}
             >
-              Intelligent Ordering
+              {isIntelligentOrderingEnabled
+                ? "Intelligent Ordering Enabled"
+                : "Intelligent Ordering Disabled"}
             </Typography>
-          </IconButton> */}
-          <IconButton
+          </IconButton>
+          {/* <IconButton
             sx={{
               gap: 0.5,
-              backgroundColor: "black",
-              padding: 1,
+              backgroundColor: "#222b38",
+              padding: 1,              
               "&:hover": {
                 background: "black",
               },
@@ -153,9 +149,11 @@ const InventoryTab = () => {
                 transition: "color 1s ease",
               }}
             >
-              Intelligent Ordering
+              {isIntelligentOrderingEnabled
+                ? "Intelligent Ordering Enabled"
+                : "Intelligent Ordering Disabled"}
             </Typography>
-          </IconButton>
+          </IconButton> */}
         </Tooltip>
       </Box>
       <InventoryTable />
