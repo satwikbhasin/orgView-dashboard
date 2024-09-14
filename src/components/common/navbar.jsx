@@ -67,7 +67,9 @@ const Navbar = () => {
     setMenuAnchor(null);
   };
 
-  const currentLink = links.find((link) => link.href === pathName);
+  const currentLink = links.find((link) =>
+    pathName.startsWith(link.href.split("?")[0])
+  );
   const currentIcon = currentLink?.icon || <MenuIcon size={24} />;
   const currentLabel = currentLink?.label || "Menu";
 
