@@ -17,6 +17,7 @@ const Inventory = () => {
     const tabsRef = useRef([]);
     const [isScrolled, setIsScrolled] = useState(false);
     const contentRef = useRef(null);
+    const menuRef = useRef(null);
 
     useEffect(() => {
         if (tab) {
@@ -42,11 +43,23 @@ const Inventory = () => {
         const contentElement = contentRef.current;
         contentElement.addEventListener('scroll', handleScroll);
 
-        console.log('contentElement', contentElement);
         return () => {
             contentElement.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setAnchorEl(null);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuRef]);
 
     const handleTabChange = (tab) => {
         router.push(`?tab=${tab}`);
@@ -63,7 +76,7 @@ const Inventory = () => {
 
     const tabs = [
         { value: "inventoryItems", label: "Items" },
-        { value: "pendingOrders", label: "Pending orders" }
+        { value: "pendingOrders", label: "Pending Orders" }
     ];
 
     return (
@@ -147,6 +160,7 @@ const Inventory = () => {
                             onClose={handleMenuClose}
                             variant="menu"
                             size="sm"
+                            ref={menuRef}
                             sx={{
                                 "& .MuiPaper-root": {
                                     backgroundColor: "#ffffff",
@@ -208,8 +222,7 @@ const Inventory = () => {
                                     color: selectedTab === tab.value ? "#1c69fb" : "grey",
                                     fontWeight: 400,
                                     fontSize: {
-                                        xs: 10,
-                                        sm: 12,
+                                        xs: 12,
                                         md: 14,
                                     },
                                     textDecoration: "none",

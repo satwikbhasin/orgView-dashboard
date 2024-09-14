@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
-import { ArrowDownToLine, Users, } from "lucide-react";
+import { ArrowDownToLine, Users } from "lucide-react";
 import FilterBar from "@/components/patients/filterBar";
 import PatientsTable from "@/components/patients/patientsTable";
 
@@ -11,6 +11,7 @@ const Patients = () => {
     const [patientName, setPatientName] = useState("");
     const [selectedPayer, setSelectedPayer] = useState("any");
     const [anchorEl, setAnchorEl] = useState(null);
+    const menuRef = useRef(null);
 
     const handlePatientNameChange = (patientName) => {
         console.log(patientName);
@@ -30,6 +31,19 @@ const Patients = () => {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setAnchorEl(null);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuRef]);
 
     return (
         <Box sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
@@ -106,11 +120,16 @@ const Patients = () => {
                         onClose={handleMenuClose}
                         variant="menu"
                         size="sm"
+                        ref={menuRef}
                         sx={{
                             "& .MuiPaper-root": {
                                 backgroundColor: "#ffffff",
                                 color: "black",
                                 borderRadius: "5px",
+                            },
+                            fontSize: {
+                                xs: 10,
+                                md: 12,
                             },
                         }}
                     >
@@ -121,6 +140,10 @@ const Patients = () => {
                                     color: "#1c69fb",
                                     fontWeight: 600,
                                     backgroundColor: "#f1f5ff",
+                                },
+                                fontSize: {
+                                    xs: 10,
+                                    md: 12,
                                 },
                             }}
                         >
@@ -133,6 +156,10 @@ const Patients = () => {
                                     color: "#1c69fb",
                                     fontWeight: 600,
                                     backgroundColor: "#f1f5ff",
+                                },
+                                fontSize: {
+                                    xs: 10,
+                                    md: 12,
                                 },
                             }}
                         >
@@ -169,7 +196,6 @@ const Patients = () => {
                         onPatientNameChange={handlePatientNameChange}
                         onPayerChange={handlePayerChange}
                     />
-
                 </Box>
                 <Box sx={{ display: "flex", flex: 10 }}>
                     <PatientsTable
@@ -177,7 +203,6 @@ const Patients = () => {
                         selectedPayer={selectedPayer}
                     />
                 </Box>
-
             </Box>
         </Box>
     );

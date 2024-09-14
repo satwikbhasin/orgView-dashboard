@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, ButtonGroup, IconButton, Typography } from "@mui/joy";
+import { useMediaQuery } from "@mui/material";
 import {
   House,
   Users,
@@ -23,46 +24,53 @@ const Navbar = () => {
   const pathName = usePathname();
   const [collapsedNav, setCollapsedNav] = useState(false);
 
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
+  const isMediumScreen = useMediaQuery(
+    "(min-width:601px) and (max-width:960px)"
+  );
+
+  const iconSize = isSmallScreen ? 12 : isMediumScreen ? 12 : 14;
+
   const menuLinks = [
     {
       href: "/home",
       label: "Home",
-      icon: <House size={16} strokeWidth={2.5} />,
+      icon: <House size={iconSize} strokeWidth={2.5} />,
     },
     {
       href: "/patients",
       label: "Patients",
-      icon: <Users size={16} strokeWidth={2.5} />,
+      icon: <Users size={iconSize} strokeWidth={2.5} />,
     },
     {
       href: "/financials",
       label: "Financials",
-      icon: <DollarSign size={16} strokeWidth={2.5} />,
+      icon: <DollarSign size={iconSize} strokeWidth={2.5} />,
     },
     {
       href: "/orders",
       label: "Orders",
-      icon: <Package size={16} strokeWidth={2.5} />,
+      icon: <Package size={iconSize} strokeWidth={2.5} />,
     },
     {
       href: "/inventory?tab=inventoryItems",
       label: "Inventory",
-      icon: <Container size={16} strokeWidth={2.5} />,
+      icon: <Container size={iconSize} strokeWidth={2.5} />,
     },
     {
       href: "/analytics",
       label: "Analytics",
-      icon: <ChartNoAxesCombined size={16} strokeWidth={2.5} />,
+      icon: <ChartNoAxesCombined size={iconSize} strokeWidth={2.5} />,
     },
     {
       href: "/mail",
       label: "Mail",
-      icon: <Mail size={16} strokeWidth={2.5} />,
+      icon: <Mail size={iconSize} strokeWidth={2.5} />,
     },
     {
       href: "/appointments",
       label: "Appointments",
-      icon: <Calendar size={16} strokeWidth={2.5} />,
+      icon: <Calendar size={iconSize} strokeWidth={2.5} />,
     },
   ];
 
@@ -70,7 +78,7 @@ const Navbar = () => {
     {
       href: "/settings",
       label: "Settings",
-      icon: <Settings size={18} strokeWidth={2.5} />,
+      icon: <Settings size={iconSize} strokeWidth={2.5} />,
     },
   ];
 
@@ -218,9 +226,9 @@ const Navbar = () => {
       </Box>
       <Box
         sx={{
-          width: "85%",
+          width: "100%",
           borderBottom: "1px solid #dedede",
-          marginTop: 2,
+          marginY: 2,
         }}
       />
       <Box
@@ -229,7 +237,7 @@ const Navbar = () => {
           width: "100%",
           flexDirection: "column",
           padding: 2,
-          marginTop: 1,
+          marginTop: 2,
           gap: 2,
         }}
       >

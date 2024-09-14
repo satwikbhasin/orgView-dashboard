@@ -38,9 +38,9 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
         sx={{
           fontWeight: 500,
           fontSize: {
-            xs: 7,
-            sm: 9,
+            xs: 9,
             md: 11,
+            lg: 12,
           },
           cursor: "pointer",
           color: isEnabled ? "black" : "grey",
@@ -154,6 +154,13 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
     }
   };
 
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
+  const isMediumScreen = useMediaQuery(
+    "(min-width:601px) and (max-width:960px)"
+  );
+
+  const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 13;
+
   return (
     <Box
       sx={{
@@ -192,7 +199,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             cursor: "default",
           }}
         >
-          <Filter strokeWidth={3} size={"2vh"} />
+          <Filter strokeWidth={3} size={iconSize} />
           Filters
         </IconButton>
       </Box>
@@ -215,9 +222,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               fontWeight: 500,
               color: "black",
               fontSize: {
-                xs: 7,
-                sm: 9,
+                xs: 9,
                 md: 11,
+                lg: 12,
               },
             }}
           >
@@ -256,9 +263,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 7,
-                    sm: 9,
+                    xs: 9,
                     md: 11,
+                    lg: 12,
                   },
                 }}
                 size="sm"
@@ -275,9 +282,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 7,
-                    sm: 9,
+                    xs: 9,
                     md: 11,
+                    lg: 12,
                   },
                 }}
                 size="sm"
@@ -299,9 +306,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 7,
-                    sm: 9,
+                    xs: 9,
                     md: 11,
+                    lg: 12,
                   },
                 }}
                 size="sm"
@@ -326,9 +333,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 7,
-                    sm: 9,
+                    xs: 9,
                     md: 11,
+                    lg: 12,
                   },
                 }}
                 size="sm"
@@ -347,9 +354,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 7,
-                    sm: 9,
+                    xs: 9,
                     md: 11,
+                    lg: 12,
                   },
                 }}
                 size="sm"
@@ -369,9 +376,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 7,
-                    sm: 9,
+                    xs: 9,
                     md: 11,
+                    lg: 12,
                   },
                 }}
                 size="sm"
