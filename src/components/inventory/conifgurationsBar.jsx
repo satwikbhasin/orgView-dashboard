@@ -5,7 +5,7 @@ import { Box, Typography, IconButton, Tooltip } from "@mui/joy";
 import { Settings2, Power, PowerOff } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
 
-export default function ActionBar() {
+export default function ConfigurationsBar() {
   const [isIntelligentOrderingEnabled, setIsIntelligentOrderingEnabled] =
     useState(true);
 
@@ -14,7 +14,6 @@ export default function ActionBar() {
     "(min-width:601px) and (max-width:960px)"
   );
   const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 13;
-  const buttonHeight = isSmallScreen ? 10 : isMediumScreen ? 15 : 20;
 
   return (
     <Box
@@ -42,7 +41,7 @@ export default function ActionBar() {
           }}
         >
           <Settings2 strokeWidth={3} size={iconSize} />
-          Actions
+          Configure
         </IconButton>
       </Box>
       <Box

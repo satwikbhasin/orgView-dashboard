@@ -206,4 +206,9 @@ export const getItemCategories = () => {
     return [...new Set(categories)];
 };
 
+export const getStockStatusTypes = () => {
+    const statusTypes = inventoryData.map((item) => item.status);
+    return [...new Set(statusTypes)];
+};
+
 export default inventoryData;

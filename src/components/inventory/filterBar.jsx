@@ -10,7 +10,8 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/joy";
-import { Search, ListFilter, ToggleLeft, ToggleRight } from "lucide-react";
+import { Search, Filter, ToggleLeft, ToggleRight } from "lucide-react";
+import { getItemCategories, getStockStatusTypes } from "@/data/inventory";
 import { useMediaQuery } from "@mui/material";
 
 const FilterItem = ({ label, children, isEnabled, onToggle }) => (
@@ -83,23 +84,43 @@ const FilterGroup = ({ children }) => (
   </Box>
 );
 
-export default function FilterBar() {
+export default function FilterBar({
+  onItemNameChange,
+  onStatusChange,
+  onCategoryChange,
+  onSKUChange,
+}) {
   const [filterStates, setFilterStates] = useState({
     itemName: true,
-    stockStatus: true,
-    intelligentOrdering: true,
-    inventoryItems: true,
+    status: true,
     category: true,
     sku: true,
   });
-  const [filterValues, setFilterValues] = useState({});
+  const [filterValues, setFilterValues] = useState({
+    itemName: "",
+    status: "any",
+    category: "any",
+    sku: "",
+  });
   const [allFiltersDisabled, setAllFiltersDisabled] = useState(false);
+  const itemCategories = getItemCategories();
+  const stockStatuses = getStockStatusTypes();
 
   const toggleFilterEnabled = (filter) => {
     setFilterStates((prev) => ({
       ...prev,
       [filter]: !prev[filter],
     }));
+
+    if (filter === "itemName") {
+      onItemNameChange(!filterStates.itemName ? filterValues.itemName : "");
+    } else if (filter === "status") {
+      onStatusChange(!filterStates.status ? filterValues.status : "any");
+    } else if (filter === "category") {
+      onCategoryChange(!filterStates.category ? filterValues.category : "any");
+    } else if (filter === "sku") {
+      onSKUChange(!filterStates.sku ? filterValues.sku : "");
+    }
   };
 
   const toggleAllFilters = () => {
@@ -108,12 +129,22 @@ export default function FilterBar() {
 
       setFilterStates({
         itemName: !newState,
-        stockStatus: !newState,
-        intelligentOrdering: !newState,
-        inventoryItems: !newState,
+        status: !newState,
         category: !newState,
         sku: !newState,
       });
+
+      if (newState) {
+        onItemNameChange("");
+        onCategoryChange("any");
+        onStatusChange("any");
+        onSKUChange("");
+      } else {
+        onItemNameChange(filterValues.itemName);
+        onCategoryChange(filterValues.category);
+        onStatusChange(filterValues.status);
+        onSKUChange(filterValues.sku);
+      }
 
       return newState;
     });
@@ -121,18 +152,30 @@ export default function FilterBar() {
 
   const handleItemNameChange = (value) => {
     setFilterValues((prev) => ({ ...prev, itemName: value }));
+    if (filterStates.itemName) {
+      onItemNameChange(value);
+    }
   };
 
   const handleStockStatusChange = (value) => {
-    setFilterValues((prev) => ({ ...prev, stockStatus: value }));
+    setFilterValues((prev) => ({ ...prev, status: value }));
+    if (filterStates.status) {
+      onStatusChange(value);
+    }
   };
 
   const handleCategoryChange = (value) => {
     setFilterValues((prev) => ({ ...prev, category: value }));
+    if (filterStates.category) {
+      onCategoryChange(value);
+    }
   };
 
   const handleSKUChange = (value) => {
     setFilterValues((prev) => ({ ...prev, sku: value }));
+    if (filterStates.sku) {
+      onSKUChange(value);
+    }
   };
 
   const isSmallScreen = useMediaQuery("(max-width:600px)");
@@ -177,11 +220,23 @@ export default function FilterBar() {
             cursor: "default",
           }}
         >
-          <ListFilter strokeWidth={3} size={iconSize} />
+          <Filter strokeWidth={3} size={iconSize} />
           Filters
         </IconButton>
       </Box>
-      <Box sx={{ paddingLeft: 1, paddingRight: 1 }}>
+      <Box
+        sx={{
+          display: "flex",
+          overflow: "scroll",
+          flexDirection: "column",
+          marginBottom: 1.5,
+          paddingLeft: 1,
+          paddingRight: 1,
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography
             sx={{
@@ -240,12 +295,12 @@ export default function FilterBar() {
             </FilterItem>
             <FilterItem
               label="Stock Status"
-              isEnabled={filterStates.stockStatus}
-              onToggle={() => toggleFilterEnabled("stockStatus")}
+              isEnabled={filterStates.status}
+              onToggle={() => toggleFilterEnabled("status")}
             >
               <Select
                 defaultValue="any"
-                onChange={(e) => handleStockStatusChange(e.target.value)}
+                onChange={(e, newValue) => handleStockStatusChange(newValue)}
                 sx={{
                   width: "100%",
                   fontSize: {
@@ -255,9 +310,14 @@ export default function FilterBar() {
                   },
                 }}
                 size="sm"
-                disabled={!filterStates.stockStatus}
+                disabled={!filterStates.status}
               >
                 <Option value="any">Any</Option>
+                {stockStatuses.map((status) => (
+                  <Option key={status} value={status}>
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                  </Option>
+                ))}
               </Select>
             </FilterItem>
           </FilterGroup>
@@ -269,7 +329,7 @@ export default function FilterBar() {
             >
               <Select
                 defaultValue="any"
-                onChange={(e) => handleCategoryChange(e.target.value)}
+                onChange={(e, newValue) => handleCategoryChange(newValue)}
                 sx={{
                   width: "100%",
                   fontSize: {
@@ -282,6 +342,11 @@ export default function FilterBar() {
                 disabled={!filterStates.category}
               >
                 <Option value="any">Any</Option>
+                {itemCategories.map((category) => (
+                  <Option key={category} value={category}>
+                    {category}
+                  </Option>
+                ))}
               </Select>
             </FilterItem>
             <FilterItem

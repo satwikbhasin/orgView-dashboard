@@ -18,10 +18,11 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-const Navbar = () => {
+export default function Navbar() {
   const pathName = usePathname();
+  const router = useRouter();
   const [collapsedNav, setCollapsedNav] = useState(false);
 
   const isSmallScreen = useMediaQuery("(max-width:600px)");
@@ -107,7 +108,7 @@ const Navbar = () => {
         }}
       >
         <IconButton
-          onClick={() => window.location.replace("/")}
+          onClick={() => router.replace("/")}
           sx={{
             "&:hover": {
               backgroundColor: "transparent",
@@ -337,6 +338,4 @@ const Navbar = () => {
       </Box>
     </Box>
   );
-};
-
-export default Navbar;
+}

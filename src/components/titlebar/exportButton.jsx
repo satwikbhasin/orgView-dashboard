@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Box, IconButton, Menu, MenuItem } from "@mui/joy";
 import { ArrowDownToLine } from "lucide-react";
-import "boxicons";
 
 const ExportButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -94,7 +93,6 @@ const ExportButton = () => {
             },
           }}
         >
-          <box-icon name="file-pdf" type="solid" color="#1c69fb"></box-icon>
           PDF
         </MenuItem>
         <MenuItem
@@ -110,7 +108,6 @@ const ExportButton = () => {
             },
           }}
         >
-          <box-icon name="table" color="#1c69fb"></box-icon>
           Excel
         </MenuItem>
         <MenuItem
@@ -126,8 +123,7 @@ const ExportButton = () => {
             },
           }}
         >
-          <box-icon name="file" type="solid" color="#1c69fb"></box-icon>
-          CSV
+\          CSV
         </MenuItem>
       </Menu>
     </Box>

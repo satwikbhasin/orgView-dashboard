@@ -1,5 +1,3 @@
-"use client";
-
 const patientsData = [
   {
     id: 1,

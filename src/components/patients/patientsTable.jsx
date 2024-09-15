@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Box, Button, IconButton, Typography } from "@mui/joy";
-import patientsData from "@/assets/patients";
+import patientsData from "@/data/patients";
 import {
   Send,
   ClipboardPlus,
@@ -83,8 +83,9 @@ const SortableHeader = ({ label, onClick }) => (
     </IconButton>
   </th>
 );
-export default function PatientsTable({ patientName, selectedPayer }) {
-  const [currentPage, setCurrentPage] = useState(1);
+
+export default function PatientsTable({ searchFilter }) {
+  const { patientName, selectedPayer, currentPage } = searchFilter;
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const isSmallScreen = useMediaQuery("(max-width:960px)");
 
@@ -218,7 +219,6 @@ export default function PatientsTable({ patientName, selectedPayer }) {
                   </tr>
                 </thead>
               </Table>
-
               <Box sx={{ overflow: "auto", flex: 1 }}>
                 <Table>
                   <tbody>

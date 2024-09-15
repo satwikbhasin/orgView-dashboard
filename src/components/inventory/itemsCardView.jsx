@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
 import { ChartSpline, ShoppingBasket, CircleEllipsis, Dot } from "lucide-react";
-import inventoryData from "@/assets/inventory";
+import inventoryData from "@/data/inventory";
 
 const getStatus = (status) => {
   switch (status) {
@@ -18,7 +18,7 @@ const getStatus = (status) => {
   }
 };
 
-const ItemsCardView = () => {
+export default function ItemsCardView() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -199,6 +199,4 @@ const ItemsCardView = () => {
       ))}
     </Box>
   );
-};
-
-export default ItemsCardView;
+}

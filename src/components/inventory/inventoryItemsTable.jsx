@@ -20,7 +20,7 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "lucide-react";
-import inventoryData from "@/assets/inventory";
+import inventoryData from "@/data/inventory";
 import { useMediaQuery } from "@mui/material";
 import ItemsCardView from "./itemsCardView";
 
@@ -95,14 +95,14 @@ const SortableHeader = ({ label, onClick }) => (
   </th>
 );
 
-export default function InventoryItemsTable() {
+export default function InventoryItemsTable({ searchFilter }) {
+  const { itemName, status, category, sku } = searchFilter;
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
-  const itemsPerPage = 15;
 
   const handleSort = (key) => {
     const direction =
@@ -120,10 +120,26 @@ export default function InventoryItemsTable() {
     return 0;
   });
 
+  const filteredInventory = sortedInventory.filter((item) => {
+    const lowerCaseItemName = (itemName || "").toLowerCase();
+    const matchesItemName = item.itemName
+      .toLowerCase()
+      .includes(lowerCaseItemName);
+    const matchesStatus = status === "any" || item.status === status;
+    const lowerCaseSku = (sku || "").toLowerCase();
+    const matchesSku = item.sku.toLowerCase().includes(lowerCaseSku);
+    const matchesCategory = category === "any" || item.category === category;
+    return matchesItemName || matchesStatus || matchesSku || matchesCategory;
+  });
+
+  const itemsPerPage = 15;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = sortedInventory.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(sortedInventory.length / itemsPerPage);
+  const currentItems = filteredInventory.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const totalPages = Math.ceil(filteredInventory.length / itemsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -162,7 +178,6 @@ export default function InventoryItemsTable() {
   };
 
   const handleMenuItemClick = (action) => {
-    console.log(`Action: ${action} for item: ${selectedItem.sku}`);
     handleMenuClose();
   };
 
@@ -174,6 +189,8 @@ export default function InventoryItemsTable() {
         return ["Yellow", "#FFB001"];
       case "red":
         return ["Red", "#E13D00"];
+      default:
+        return ["Unknown", "#000000"];
     }
   };
 
@@ -237,7 +254,6 @@ export default function InventoryItemsTable() {
                       label="Status"
                       onClick={() => handleSort("status")}
                     />
-                    <SortableHeader />
                   </tr>
                 </thead>
               </Table>
@@ -259,6 +275,7 @@ export default function InventoryItemsTable() {
                         onMouseLeave={(e) => {
                           e.currentTarget.style.backgroundColor = "#fbfcfe";
                         }}
+                        onClick={(event) => handleMenuOpen(event, item)}
                       >
                         <td style={cellStyle}>
                           <ResponsiveCellTypography>
@@ -319,39 +336,26 @@ export default function InventoryItemsTable() {
                             </ResponsiveCellTypography>
                           </Box>
                         </td>
-                        <td style={cellStyle}>
-                          <IconButton
-                            onClick={(event) => handleMenuOpen(event, item)}
-                          >
-                            <Ellipsis />
-                          </IconButton>
-                          <Menu
-                            anchorEl={anchorEl}
-                            open={menuOpen}
-                            onClose={handleMenuClose}
-                          >
-                            <MenuList>
-                              <MenuItem
-                                onClick={() =>
-                                  handleMenuItemClick("View Usage")
-                                }
-                              >
-                                <ChartSpline />
-                                Usage
-                              </MenuItem>
-                              <MenuItem
-                                onClick={() => handleMenuItemClick("Order")}
-                              >
-                                <ShoppingBasket />
-                                Order
-                              </MenuItem>
-                            </MenuList>
-                          </Menu>
-                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </Table>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={menuOpen}
+                  onClose={handleMenuClose}
+                >
+                  <MenuList>
+                    <MenuItem onClick={() => handleMenuItemClick("View Usage")}>
+                      <ChartSpline />
+                      Usage
+                    </MenuItem>
+                    <MenuItem onClick={() => handleMenuItemClick("Order")}>
+                      <ShoppingBasket />
+                      Order
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
               </Box>
             </>
           ) : (

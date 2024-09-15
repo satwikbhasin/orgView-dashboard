@@ -6,7 +6,6 @@ import { ArrowDownToLine } from "lucide-react";
 import InventoryItemsTab from "@/components/inventory/inventoryItemsTab";
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
-import 'boxicons'
 import Titlebar from "@/components/common/titlebar";
 
 const Inventory = () => {

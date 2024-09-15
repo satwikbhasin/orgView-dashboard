@@ -1,8 +1,7 @@
-"use client";
+'use client';
 
 import React from "react";
 import { Box, Typography } from "@mui/joy";
-import "boxicons";
 import ExportButton from "../titlebar/exportButton";
 
 export default function Titlebar({ title, showExportButton = true }) {
