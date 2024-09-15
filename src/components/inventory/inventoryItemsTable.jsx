@@ -183,7 +183,7 @@ export default function InventoryItemsTable() {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         gap: 5,
-        height: "82vh",
+        height: "100%",
         width: "100%",
         padding: 1,
         paddingLeft: 0,
@@ -197,6 +197,7 @@ export default function InventoryItemsTable() {
             border: { xs: "transparent", sm: "1.5px solid #dedede" },
             borderRadius: 10,
             overflow: "hidden",
+            height: "100%",
             width: "100%",
             display: "flex",
             justifyContent: "center",
@@ -390,15 +391,12 @@ export default function InventoryItemsTable() {
           >
             Previous
           </Button>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
             {generatePageNumbers().map((page, index) => (
               <IconButton
                 key={index}
                 size="small"
                 sx={{
-                  borderRadius: "50%",
-                  height: 25,
-                  width: 25,
                   backgroundColor: "transparent",
                   color: page === currentPage ? "#1c69fb" : "black",
                   cursor: page !== "..." ? "pointer" : "default",

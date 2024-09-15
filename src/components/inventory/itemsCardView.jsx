@@ -1,22 +1,8 @@
 "use client";
 
-import React from "react";
-import {
-  Box,
-  Typography,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  MenuList,
-} from "@mui/joy";
-import {
-  Send,
-  Dot,
-  ChartSpline,
-  ShoppingBasket,
-  CircleEllipsis,
-} from "lucide-react";
+import React, { useState } from "react";
+import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
+import { ChartSpline, ShoppingBasket, CircleEllipsis, Dot } from "lucide-react";
 import inventoryData from "@/assets/inventory";
 
 const getStatus = (status) => {
@@ -33,19 +19,16 @@ const getStatus = (status) => {
 };
 
 const ItemsCardView = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const [selectedItem, setSelectedItem] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const handleMenuOpen = (event, item) => {
     setAnchorEl(event.currentTarget);
-    setMenuOpen(true);
     setSelectedItem(item);
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    setMenuOpen(false);
     setSelectedItem(null);
   };
 
@@ -77,33 +60,21 @@ const ItemsCardView = () => {
               marginBottom: 1,
             }}
           >
-            <Typography
-              sx={{
-                fontSize: {
-                  xs: 14,
-                  md: 16,
-                },
-                fontWeight: "600",
-              }}
-            >
-              {item.itemName}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <IconButton onClick={(event) => handleMenuOpen(event, item)}>
-                <CircleEllipsis size={13} />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={menuOpen}
-                onClose={handleMenuClose}
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography
+                sx={{ fontSize: { xs: 12, sm: 14, md: 16 }, fontWeight: 600 }}
               >
-                <MenuList>
+                {item.itemName}
+              </Typography>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <IconButton onClick={(event) => handleMenuOpen(event, item)}>
+                  <CircleEllipsis size={13} />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
                   <MenuItem onClick={() => handleMenuItemClick("View Usage")}>
                     <ChartSpline size={13} />
                     View Usage
@@ -112,146 +83,117 @@ const ItemsCardView = () => {
                     <ShoppingBasket size={13} />
                     Order
                   </MenuItem>
-                </MenuList>
-              </Menu>
+                </Menu>
+              </Box>
             </Box>
-
             <Box
               sx={{
-                fontWeight: "500",
+                fontWeight: 800,
                 color: getStatus(item.status)[1],
-                borderRadius: 10,
                 display: "flex",
                 alignItems: "center",
-                gap: "6px",
-                fontSize: {
-                  xs: 14,
-                  md: 16,
-                },
+                fontSize: { xs: 10, sm: 12, md: 14 },
               }}
             >
-              <Dot size={60} />
+              <Dot size={30} strokeWidth={3} />
               {getStatus(item.status)[0]}
             </Box>
           </Box>
-          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 2,
+            }}
+          >
+            <Box
               sx={{
-                fontWeight: 600,
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
+                flexBasis: "calc(50% - 8px)",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
-              SKU:
-            </Typography>
-            <Typography
+              <Typography
+                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
+              >
+                SKU
+              </Typography>
+              <Typography sx={{ fontSize: { xs: 10, sm: 12, md: 14 } }}>
+                {item.sku}
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
+                flexBasis: "calc(50% - 8px)",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
-              {item.sku}
-            </Typography>
-          </Box>
-          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography
+              <Typography
+                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
+              >
+                Category
+              </Typography>
+              <Typography sx={{ fontSize: { xs: 10, sm: 12, md: 14 } }}>
+                {item.category}
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                fontWeight: 600,
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
+                flexBasis: "calc(50% - 8px)",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
-              Category:
-            </Typography>
-            <Typography
+              <Typography
+                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
+              >
+                Price
+              </Typography>
+              <Typography sx={{ fontSize: { xs: 10, sm: 12, md: 14 } }}>
+                {item.price}
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
+                flexBasis: "calc(50% - 8px)",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
-              {item.category}
-            </Typography>
-          </Box>
-          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography
+              <Typography
+                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
+              >
+                Current Stock
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: 10, sm: 12, md: 14 },
+                  color:
+                    item.currentStock < item.minThreshold ? "#E13D00" : "black",
+                  fontWeight: item.currentStock < item.minThreshold ? 800 : 400,
+                }}
+              >
+                {item.currentStock}
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                fontWeight: 600,
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
+                flexBasis: "calc(50% - 8px)",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
-              Price:
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
-              }}
-            >
-              ${item.price}
-            </Typography>
-          </Box>
-          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
-              }}
-            >
-              Current Stock:
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
-                color:
-                  item.currentStock < item.minThreshold ? "#E13D00" : "black",
-                fontWeight:
-                  item.currentStock < item.minThreshold ? "800" : "400",
-              }}
-            >
-              {item.currentStock}
-            </Typography>
-          </Box>
-          <Box sx={{ marginBottom: 1, display: "flex", gap: 1 }}>
-            <Typography
-              sx={{
-                fontWeight: 600,
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
-              }}
-            >
-              Minimum Threshold:
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: {
-                  xs: 12,
-                  md: 14,
-                },
-              }}
-            >
-              {item.minThreshold}
-            </Typography>
+              {" "}
+              <Typography
+                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
+              >
+                Minimum Threshold
+              </Typography>
+              <Typography sx={{ fontSize: { xs: 10, sm: 12, md: 14 } }}>
+                {item.minThreshold}
+              </Typography>
+            </Box>
           </Box>
         </Box>
       ))}

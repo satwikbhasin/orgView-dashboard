@@ -12,7 +12,7 @@ import {
 } from "@mui/joy";
 import { useMediaQuery } from "@mui/material";
 import { getPayerTypes } from "@/assets/patients";
-import { Search, Filter, ToggleLeft, ToggleRight } from "lucide-react";
+import { Search, ListFilter, ToggleLeft, ToggleRight } from "lucide-react";
 
 const FilterItem = ({ label, children, isEnabled, onToggle }) => (
   <Box
@@ -199,7 +199,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             cursor: "default",
           }}
         >
-          <Filter strokeWidth={3} size={iconSize} />
+          <ListFilter strokeWidth={3} size={iconSize} />
           Filters
         </IconButton>
       </Box>
@@ -208,7 +208,6 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
           display: "flex",
           overflow: "scroll",
           flexDirection: "column",
-          marginBottom: 1.5,
           paddingLeft: 1,
           paddingRight: 1,
           display: "flex",

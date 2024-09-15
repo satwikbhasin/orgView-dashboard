@@ -362,15 +362,12 @@ export default function PatientsTable({ patientName, selectedPayer }) {
           >
             Previous
           </Button>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
             {generatePageNumbers().map((page, index) => (
               <IconButton
                 key={index}
                 size="small"
                 sx={{
-                  borderRadius: "50%",
-                  height: 25,
-                  width: 25,
                   backgroundColor: "transparent",
                   color: page === currentPage ? "#1c69fb" : "black",
                   cursor: page !== "..." ? "pointer" : "default",

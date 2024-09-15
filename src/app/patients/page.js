@@ -5,6 +5,7 @@ import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
 import { ArrowDownToLine, Users } from "lucide-react";
 import FilterBar from "@/components/patients/filterBar";
 import PatientsTable from "@/components/patients/patientsTable";
+import Titlebar from "@/components/common/titlebar";
 
 const Patients = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -47,139 +48,7 @@ const Patients = () => {
 
     return (
         <Box sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
-            <Box sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 1,
-                cursor: "default",
-                justifyContent: "space-between",
-                height: "10vh",
-                padding: 2,
-                backgroundColor: "#fafafa",
-                // borderBottom: "1px solid #e0e0e0",
-            }}>
-                <Box sx={{
-                    display: "flex", alignItems: "center", gap: 1,
-                }}>
-                    <Typography
-                        sx={{
-                            fontWeight: "400",
-                            fontSize: {
-                                xs: 20,
-                                sm: 24,
-                                md: 28,
-                            },
-                            color: "black",
-                        }}
-                    >
-                        Patients
-                    </Typography>
-                </Box>
-                <Box>
-                    <IconButton
-                        onClick={handleMenuOpen}
-                        size="small"
-                        sx={{
-                            gap: 0.5,
-                            height: "100%",
-                            width: "100%",
-                            padding: 1,
-                            backgroundColor: "transparent",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            "&:hover": {
-                                backgroundColor: "#EDEDED",
-                                color: "#1c69fb",
-                            },
-                            fontSize: {
-                                xs: 10,
-                                sm: 12,
-                                md: 14,
-                            },
-                            fontWeight: 700,
-                            color: "#1c69fb",
-                        }}
-                    >
-                        <ArrowDownToLine strokeWidth={2.5} color="#1c69fb" size={"2.5vh"} />
-                        <Box
-                            sx={{
-                                display: {
-                                    xs: "none",
-                                    md: "block",
-                                },
-                            }}
-                        >
-                            Export
-                        </Box>
-                    </IconButton>
-                    <Menu
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        onClose={handleMenuClose}
-                        variant="menu"
-                        size="sm"
-                        ref={menuRef}
-                        sx={{
-                            "& .MuiPaper-root": {
-                                backgroundColor: "#ffffff",
-                                color: "black",
-                                borderRadius: "5px",
-                            },
-                            fontSize: {
-                                xs: 10,
-                                md: 12,
-                            },
-                        }}
-                    >
-                        <MenuItem
-                            onClick={handleMenuClose}
-                            sx={{
-                                "&:hover": {
-                                    color: "#1c69fb",
-                                    fontWeight: 600,
-                                    backgroundColor: "#f1f5ff",
-                                },
-                                fontSize: {
-                                    xs: 10,
-                                    md: 12,
-                                },
-                            }}
-                        >
-                            PDF
-                        </MenuItem>
-                        <MenuItem
-                            onClick={handleMenuClose}
-                            sx={{
-                                "&:hover": {
-                                    color: "#1c69fb",
-                                    fontWeight: 600,
-                                    backgroundColor: "#f1f5ff",
-                                },
-                                fontSize: {
-                                    xs: 10,
-                                    md: 12,
-                                },
-                            }}
-                        >
-                            Excel
-                        </MenuItem>
-                        <MenuItem
-                            onClick={handleMenuClose}
-                            sx={{
-                                "&:hover": {
-                                    color: "#1c69fb",
-                                    fontWeight: 600,
-                                    backgroundColor: "#f1f5ff",
-                                },
-                            }}
-                        >
-                            CSV
-                        </MenuItem>
-                    </Menu>
-                </Box>
-            </Box>
+            <Titlebar title="Patients" />
             <Box
                 sx={{
                     display: "flex",

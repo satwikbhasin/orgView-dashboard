@@ -6,6 +6,8 @@ import { ArrowDownToLine } from "lucide-react";
 import InventoryItemsTab from "@/components/inventory/inventoryItemsTab";
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
+import 'boxicons'
+import Titlebar from "@/components/common/titlebar";
 
 const Inventory = () => {
     const searchParams = useSearchParams();
@@ -13,11 +15,9 @@ const Inventory = () => {
     const tab = searchParams.get('tab');
     const [selectedTab, setSelectedTab] = useState(tab || "inventoryItems");
     const [underlineStyle, setUnderlineStyle] = useState({});
-    const [anchorEl, setAnchorEl] = useState(null);
     const tabsRef = useRef([]);
     const [isScrolled, setIsScrolled] = useState(false);
     const contentRef = useRef(null);
-    const menuRef = useRef(null);
 
     useEffect(() => {
         if (tab) {
@@ -48,30 +48,9 @@ const Inventory = () => {
         };
     }, []);
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setAnchorEl(null);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [menuRef]);
-
     const handleTabChange = (tab) => {
         router.push(`?tab=${tab}`);
         setSelectedTab(tab);
-    };
-
-    const handleMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
     };
 
     const tabs = [
@@ -91,124 +70,7 @@ const Inventory = () => {
                 zIndex: 1,
                 transition: "background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease",
             }}>
-                <Box sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    cursor: "default",
-                    height: "10vh",
-                    justifyContent: "space-between",
-                    padding: 2,
-                }}>
-                    <Box sx={{
-                        display: "flex", alignItems: "center", gap: 1,
-                    }}>
-                        <Typography
-                            sx={{
-                                fontWeight: "400",
-                                fontSize: {
-                                    xs: 20,
-                                    sm: 24,
-                                    md: 28,
-                                },
-                                color: "black",
-                            }}
-                        >
-                            Inventory
-                        </Typography>
-                    </Box>
-                    <Box>
-                        <IconButton
-                            onClick={handleMenuOpen}
-                            size="small"
-                            sx={{
-                                gap: 0.5,
-                                height: "100%",
-                                width: "100%",
-                                padding: 1,
-                                backgroundColor: "transparent",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                "&:hover": {
-                                    backgroundColor: "#EDEDED",
-                                    color: "#1c69fb",
-                                },
-                                fontWeight: 700,
-                                color: "#1c69fb",
-                                fontSize: {
-                                    xs: 10,
-                                    sm: 12,
-                                    md: 14,
-                                },
-                            }}
-                        >
-                            <ArrowDownToLine strokeWidth={2.5} color="#1c69fb" size={"2.5vh"} />
-                            <Box
-                                sx={{
-                                    display: {
-                                        xs: "none",
-                                        md: "block",
-                                    },
-                                }}
-                            >
-                                Export
-                            </Box>
-                        </IconButton>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleMenuClose}
-                            variant="menu"
-                            size="sm"
-                            ref={menuRef}
-                            sx={{
-                                "& .MuiPaper-root": {
-                                    backgroundColor: "#ffffff",
-                                    color: "black",
-                                    borderRadius: "5px",
-                                },
-                            }}
-                        >
-                            <MenuItem
-                                onClick={handleMenuClose}
-                                sx={{
-                                    "&:hover": {
-                                        color: "#1c69fb",
-                                        fontWeight: 600,
-                                        backgroundColor: "#f1f5ff",
-                                    },
-                                }}
-                            >
-                                PDF
-                            </MenuItem>
-                            <MenuItem
-                                onClick={handleMenuClose}
-                                sx={{
-                                    "&:hover": {
-                                        color: "#1c69fb",
-                                        fontWeight: 600,
-                                        backgroundColor: "#f1f5ff",
-                                    },
-                                }}
-                            >
-                                Excel
-                            </MenuItem>
-                            <MenuItem
-                                onClick={handleMenuClose}
-                                sx={{
-                                    "&:hover": {
-                                        color: "#1c69fb",
-                                        fontWeight: 600,
-                                        backgroundColor: "#f1f5ff",
-                                    },
-                                }}
-                            >
-                                CSV
-                            </MenuItem>
-                        </Menu>
-                    </Box>
-                </Box>
+                <Titlebar title="Inventory" />
                 <Box
                     sx={{
                         height: "5vh",
