@@ -6,7 +6,8 @@ import {
 } from "@mui/joy";
 
 
-const Mail = () => {
+const Settings = () => {
+
     return (
         <Box sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
             <Box sx={{
@@ -42,7 +43,7 @@ const Mail = () => {
                                 color: "black",
                             }}
                         >
-                            Mail
+                            Settings
                         </Typography>
                     </Box>
                 </Box>
@@ -51,4 +52,4 @@ const Mail = () => {
     );
 };
 
-export default Mail;
+export default Settings;

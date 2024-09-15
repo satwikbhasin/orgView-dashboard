@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
-import { Container, ArrowDownToLine } from "lucide-react";
+import { ArrowDownToLine } from "lucide-react";
 import InventoryItemsTab from "@/components/inventory/inventoryItemsTab";
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -89,6 +89,7 @@ const Inventory = () => {
                 position: "sticky",
                 top: 0,
                 zIndex: 1,
+                transition: "background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease",
             }}>
                 <Box sx={{
                     display: "flex",
@@ -210,6 +211,7 @@ const Inventory = () => {
                 </Box>
                 <Box
                     sx={{
+                        height: "5vh",
                         display: "flex", alignItems: "center", justifyContent: "flex-start", padding: 2, paddingTop: 0, paddingBottom: 3, paddingLeft: 3, gap: 2, position: 'relative'
                     }}
                 >

@@ -183,10 +183,11 @@ export default function InventoryItemsTable() {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         gap: 5,
-        height: "80vh",
+        height: "82vh",
         width: "100%",
         padding: 1,
         paddingLeft: 0,
+        paddingTop: 0,
         paddingRight: { xs: 0, sm: 2 },
       }}
     >

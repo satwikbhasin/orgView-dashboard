@@ -19,40 +19,43 @@ const InventoryTab = () => {
         padding: { xs: 0, sm: 1 },
         overflow: "scroll",
         backgroundColor: "#fafafa",
+        height: "85vh",
       }}
     >
-      <Box sx={{ display: "flex", flex: 1, marginLeft: 1, marginRight: 1 }}>
-        <FilterBar />
-      </Box>
-      {/* <Box
+      <Box
         sx={{
           display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          gap: 0.5,
-          marginBottom: 1,
-          minHeight: "2vh",
+          flex: 1,
+          marginLeft: 1,
+          marginRight: 1,
+          flexDirection: "column",
+          gap: 0,
         }}
       >
         <Tooltip title="When enabled, auto-orders items at minimum threshold">
           <IconButton
             sx={{
-              gap: 0.5,
-              backgroundColor: isIntelligentOrderingEnabled
-                ? "#ebf5ef"
-                : "#ebdfe0",
-              padding: 1,
+              // backgroundColor: isIntelligentOrderingEnabled
+              //   ? "#ebf5ef"
+              //   : "#ebdfe0",
               transition: "background-color 0.5s ease, color 0.5s",
+              // "&:hover": {
+              //   background: isIntelligentOrderingEnabled
+              //     ? "#dae3de"
+              //     : "#dbced0",
+              // },
               "&:hover": {
-                background: isIntelligentOrderingEnabled
-                  ? "#dae3de"
-                  : "#dbced0",
+                background: "transparent",
               },
               "&:active": {
-                background: isIntelligentOrderingEnabled
-                  ? "#d7dbd8"
-                  : "#dbd7d7",
+                background: "transparent",
               },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              padding: 1,
+              paddingRight: 0,
+              paddingBottom: 0,
             }}
             onClick={() =>
               setIsIntelligentOrderingEnabled(!isIntelligentOrderingEnabled)
@@ -63,7 +66,7 @@ const InventoryTab = () => {
                 position: "relative",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "flex-start",
                 width: 20,
                 height: 20,
               }}
@@ -75,7 +78,7 @@ const InventoryTab = () => {
                   opacity: isIntelligentOrderingEnabled ? 1 : 0,
                 }}
               >
-                <Power strokeWidth={2.8} size={20} color="#019992" />
+                <Power strokeWidth={2.8} size={14} color="#019992" />
               </Box>
               <Box
                 sx={{
@@ -84,7 +87,7 @@ const InventoryTab = () => {
                   opacity: isIntelligentOrderingEnabled ? 0 : 1,
                 }}
               >
-                <PowerOff strokeWidth={2.8} size={20} color="#C04000" />
+                <PowerOff strokeWidth={2.8} size={14} color="#C04000" />
               </Box>
             </Box>
             <Typography
@@ -92,14 +95,22 @@ const InventoryTab = () => {
               sx={{
                 color: isIntelligentOrderingEnabled ? "#019992" : "#C04000",
                 transition: "color 1s ease",
+                fontSize: {
+                  xs: 10,
+                  sm: 12,
+                  md: 14,
+                },
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
               }}
             >
               {isIntelligentOrderingEnabled
-                ? "Intelligent Ordering Enabled"
-                : "Intelligent Ordering Disabled"}
+                ? "Intelligent Ordering"
+                : "Intelligent Ordering"}
             </Typography>
-          </IconButton> */}
-      {/* <IconButton
+          </IconButton>
+          {/* <IconButton
             sx={{
               gap: 0.5,
               backgroundColor: "#222b38",
@@ -156,8 +167,9 @@ const InventoryTab = () => {
                 : "Intelligent Ordering Disabled"}
             </Typography>
           </IconButton> */}
-      {/* </Tooltip>
-      </Box> */}
+        </Tooltip>
+        <FilterBar />
+      </Box>
       <Box sx={{ display: "flex", flex: 10 }}>
         <InventoryTable />
       </Box>

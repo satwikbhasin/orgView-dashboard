@@ -152,7 +152,6 @@ export default function FilterBar() {
         paddingBottom: 0,
         display: "flex",
         flexDirection: "column",
-        height: "100%",
         width: "100%",
       }}
     >
@@ -168,7 +167,7 @@ export default function FilterBar() {
               sm: 12,
               md: 14,
             },
-            fontWeight: 700,
+            fontWeight:  700,
             gap: 0.5,
             color: "#1c69fb",
             "&:hover": {
