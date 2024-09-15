@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Table,
   Box,
@@ -103,6 +103,7 @@ export default function InventoryItemsTable({ searchFilter }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
+  const menuRef = useRef(null);
 
   const handleSort = (key) => {
     const direction =
@@ -193,6 +194,19 @@ export default function InventoryItemsTable({ searchFilter }) {
         return ["Unknown", "#000000"];
     }
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        handleMenuClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
 
   return (
     <Box
@@ -344,6 +358,7 @@ export default function InventoryItemsTable({ searchFilter }) {
                   anchorEl={anchorEl}
                   open={menuOpen}
                   onClose={handleMenuClose}
+                  ref={menuRef}
                 >
                   <MenuList>
                     <MenuItem onClick={() => handleMenuItemClick("View Usage")}>

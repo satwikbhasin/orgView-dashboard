@@ -123,7 +123,7 @@ const ExportButton = () => {
             },
           }}
         >
-\          CSV
+          CSV
         </MenuItem>
       </Menu>
     </Box>
