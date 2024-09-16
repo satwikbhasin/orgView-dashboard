@@ -132,11 +132,11 @@ export default function Navbar() {
                   md: 18,
                   lg: 22,
                 },
-                fontWeight: 400,
+                fontWeight: 200,
                 display: { xs: "none", md: "inline" },
               }}
             >
-              Syntra
+              S Y N T R A
             </Typography>
           )}
         </IconButton>
