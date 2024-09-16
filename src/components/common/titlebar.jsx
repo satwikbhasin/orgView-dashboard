@@ -26,7 +26,7 @@ export default function Titlebar({ title, showExportButton = true }) {
       >
         <Typography
           sx={{
-            fontWeight: "400",
+            fontWeight: 400,
             fontSize: {
               xs: 20,
               sm: 24,

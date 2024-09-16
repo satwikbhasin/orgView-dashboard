@@ -103,7 +103,7 @@ export default function Navbar() {
           alignItems: "center",
           height: "10%",
           width: "100%",
-          paddingRight: { sm: 0, md: collapsedNav ? 0 : 2.5 },
+          paddingRight: { sm: 0, md: collapsedNav ? 0 : 1 },
           justifyContent: "center",
         }}
       >
@@ -128,11 +128,11 @@ export default function Navbar() {
               sx={{
                 color: "black",
                 fontSize: {
-                  xs: 16,
-                  md: 18,
-                  lg: 22,
+                  xs: 12,
+                  md: 16,
+                  lg: 20,
                 },
-                fontWeight: 200,
+                fontWeight: 300,
                 display: { xs: "none", md: "inline" },
               }}
             >
