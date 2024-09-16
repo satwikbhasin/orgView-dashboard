@@ -9,20 +9,20 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  MenuList,
 } from "@mui/joy";
 import {
-  ChartSpline,
   ShoppingBasket,
   Dot,
   ArrowUpDown,
   ChevronRight,
   ChevronLeft,
+  TrendingUp,
 } from "lucide-react";
 import inventoryData from "@/data/inventory";
 import { useMediaQuery } from "@mui/material";
 import ItemsCardView from "./itemsCardView";
 import ItemGlance from "./itemGlance";
+import UsageModal from "./usageModel";
 
 const headerStyle = {
   height: "5vh",
@@ -99,10 +99,11 @@ export default function InventoryItemsTable({ searchFilter }) {
   const { itemName, status, category, sku } = searchFilter;
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [usageModalOpen, setUsageModalOpen] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
+  const isExtraSmallScreen = useMediaQuery("(max-width:650px)");
+  const isMediumScreen = useMediaQuery("(max-width:1050px)");
   const menuRef = useRef(null);
 
   const handleSort = (key) => {
@@ -191,6 +192,38 @@ export default function InventoryItemsTable({ searchFilter }) {
     }
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuOpen = (event, item) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedItem(item);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuItemClick = (action) => {
+    console.log(selectedItem);
+    if (action === "View Usage") {
+      setUsageModalOpen(true);
+    }
+    handleMenuClose();
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        handleMenuClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
+
   return (
     <Box sx={{ display: "flex", marginRight: selectedItem ? 1 : 0 }}>
       <Box
@@ -199,7 +232,7 @@ export default function InventoryItemsTable({ searchFilter }) {
           flexDirection: { xs: "column", md: "row" },
           gap: 5,
           height: "100%",
-          width: selectedItem ? "70%" : "100%",
+          width: selectedItem && !isMediumScreen ? "70%" : "100%",
           transition: "width 0.2s ease-in-out",
           padding: 1,
           paddingLeft: 0,
@@ -219,7 +252,7 @@ export default function InventoryItemsTable({ searchFilter }) {
               flexDirection: "column",
             }}
           >
-            {!isSmallScreen ? (
+            {!isExtraSmallScreen ? (
               <>
                 <Table>
                   <thead>
@@ -286,7 +319,11 @@ export default function InventoryItemsTable({ searchFilter }) {
                               e.currentTarget.style.backgroundColor = "#fbfcfe";
                             }
                           }}
-                          onClick={() => setSelectedItem(item)}
+                          onClick={(event) =>
+                            isMediumScreen
+                              ? handleMenuOpen(event, item)
+                              : setSelectedItem(item)
+                          }
                         >
                           <td style={cellStyle}>
                             <ResponsiveCellTypography>
@@ -449,8 +486,97 @@ export default function InventoryItemsTable({ searchFilter }) {
           </Box>
         </Box>
       </Box>
-      {selectedItem && (
+      {selectedItem && !isMediumScreen && (
         <ItemGlance item={selectedItem} onClose={closeItemGlanceView} />
+      )}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        ref={menuRef}
+      >
+        <MenuItem onClick={() => handleMenuItemClick("View Usage")}>
+          <TrendingUp color="#1c69fb" size={13} />
+          <Typography
+            sx={{
+              fontSize: {
+                xs: 8,
+                lg: 10,
+                xl: 12,
+              },
+            }}
+            fontWeight={700}
+          >
+            View Usage
+          </Typography>
+        </MenuItem>
+        <MenuItem onClick={() => handleMenuItemClick("Order")}>
+          <ShoppingBasket color="#1c69fb" size={13} />
+          <Typography
+            sx={{
+              fontSize: {
+                xs: 8,
+                lg: 10,
+                xl: 12,
+              },
+              fontWeight: 700,
+            }}
+          >
+            Order
+          </Typography>
+        </MenuItem>
+      </Menu>
+      {usageModalOpen && selectedItem && (
+        <UsageModal
+          layout="center"
+          onClose={() => setUsageModalOpen(false)}
+          item={selectedItem}
+          chartOptions={{
+            chart: {
+              type: "line",
+              zoomType: "xy",
+              backgroundColor: "#fafafa",
+              height: "100%",
+            },
+            title: {
+              text: null,
+            },
+            xAxis: {
+              categories: selectedItem.usage.months,
+              labels: {
+                style: {
+                  fontSize: isSmallScreen ? "8px" : "10px",
+                },
+              },
+            },
+            yAxis: {
+              title: {
+                text: null,
+              },
+              labels: {
+                style: {
+                  fontSize: isSmallScreen ? "8px" : "10px",
+                },
+              },
+              tickInterval: 2000,
+            },
+            series: [
+              {
+                name: "Units per Month",
+                data: selectedItem.usage.data,
+                color: "#1c69fb",
+              },
+            ],
+            plotOptions: {
+              line: {
+                marker: {
+                  enabled: true,
+                  fillColor: "#1c69fb",
+                },
+              },
+            },
+          }}
+        />
       )}
     </Box>
   );

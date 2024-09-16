@@ -38,9 +38,9 @@ const FilterItem = ({ label, children, isEnabled, onToggle, iconSize }) => (
         sx={{
           fontWeight: 500,
           fontSize: {
-            xs: 6,
-            md: 8,
+            xs: 8,
             lg: 10,
+            xl: 12,
           },
           cursor: "pointer",
           color: isEnabled ? "black" : "grey",
@@ -92,7 +92,7 @@ export default function FilterBar({
   onItemNameChange,
   onStatusChange,
   onCategoryChange,
-  onSKUChange,
+  onSkuChange,
 }) {
   const [filterStates, setFilterStates] = useState({
     itemName: true,
@@ -123,7 +123,7 @@ export default function FilterBar({
     } else if (filter === "category") {
       onCategoryChange(!filterStates.category ? filterValues.category : "any");
     } else if (filter === "sku") {
-      onSKUChange(!filterStates.sku ? filterValues.sku : "");
+      onSkuChange(!filterStates.sku ? filterValues.sku : "");
     }
   };
 
@@ -142,12 +142,12 @@ export default function FilterBar({
         onItemNameChange("");
         onCategoryChange("any");
         onStatusChange("any");
-        onSKUChange("");
+        onSkuChange("");
       } else {
         onItemNameChange(filterValues.itemName);
         onCategoryChange(filterValues.category);
         onStatusChange(filterValues.status);
-        onSKUChange(filterValues.sku);
+        onSkuChange(filterValues.sku);
       }
 
       return newState;
@@ -178,7 +178,7 @@ export default function FilterBar({
   const handleSKUChange = (value) => {
     setFilterValues((prev) => ({ ...prev, sku: value }));
     if (filterStates.sku) {
-      onSKUChange(value);
+      onSkuChange(value);
     }
   };
 
@@ -216,9 +216,10 @@ export default function FilterBar({
         <Typography
           sx={{
             fontSize: {
-              xs: 7,
-              sm: 9,
+              xs: 9,
+              sm: 10,
               md: 11,
+              xl: 13,
             },
             fontWeight: 800,
           }}
@@ -244,9 +245,9 @@ export default function FilterBar({
             sx={{
               fontWeight: 500,
               fontSize: {
-                xs: 6,
-                md: 8,
+                xs: 8,
                 lg: 10,
+                xl: 12,
               },
               color: "black",
             }}
@@ -287,9 +288,9 @@ export default function FilterBar({
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 6,
-                    md: 8,
+                    xs: 8,
                     lg: 10,
+                    xl: 12,
                   },
                 }}
                 size="sm"
@@ -308,9 +309,9 @@ export default function FilterBar({
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 6,
-                    md: 8,
+                    xs: 8,
                     lg: 10,
+                    xl: 12,
                   },
                 }}
                 size="sm"
@@ -338,9 +339,9 @@ export default function FilterBar({
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 6,
-                    md: 8,
+                    xs: 8,
                     lg: 10,
+                    xl: 12,
                   },
                 }}
                 size="sm"
@@ -366,11 +367,7 @@ export default function FilterBar({
                 startDecorator={<Search size={13} />}
                 sx={{
                   width: "100%",
-                  fontSize: {
-                    xs: 6,
-                    md: 8,
-                    lg: 10,
-                  },
+                  fontSize: { xs: 8, lg: 10, xl: 12 },
                 }}
                 size="sm"
                 disabled={!filterStates.sku}

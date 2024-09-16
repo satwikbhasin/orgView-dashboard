@@ -37,7 +37,7 @@ const FilterItem = ({ label, children, isEnabled, onToggle, iconSize }) => (
       <Typography
         sx={{
           fontWeight: 500,
-          fontSize: { xs: 6, md: 8, lg: 10 },
+          fontSize: { xs: 8, lg: 10, xl: 12 },
 
           cursor: "pointer",
           color: isEnabled ? "black" : "grey",
@@ -192,9 +192,10 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
         <Typography
           sx={{
             fontSize: {
-              xs: 7,
-              sm: 9,
+              xs: 9,
+              sm: 10,
               md: 11,
+              xl: 13,
             },
             fontWeight: 800,
           }}
@@ -220,7 +221,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             sx={{
               fontWeight: 500,
               color: "black",
-              fontSize: { xs: 6, md: 8, lg: 10 },
+              fontSize: { xs: 8, lg: 10, xl: 12 },
             }}
           >
             Disable All Filters
@@ -258,7 +259,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 startDecorator={<Search size={13} />}
                 sx={{
                   width: "100%",
-                  fontSize: { xs: 6, md: 8, lg: 10 },
+                  fontSize: { xs: 8, lg: 10, xl: 12 },
                 }}
                 size="sm"
                 disabled={!filterStates.patientName}
@@ -274,7 +275,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 defaultValue="any"
                 sx={{
                   width: "100%",
-                  fontSize: { xs: 6, md: 8, lg: 10 },
+                  fontSize: { xs: 8, lg: 10, xl: 12 },
                 }}
                 size="sm"
                 disabled={!filterStates.billType}
@@ -295,7 +296,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 onChange={(e, newValue) => handlePayerChange(newValue)}
                 sx={{
                   width: "100%",
-                  fontSize: { xs: 6, md: 8, lg: 10 },
+                  fontSize: { xs: 8, lg: 10, xl: 12 },
                 }}
                 size="sm"
                 disabled={!filterStates.payer}
@@ -319,7 +320,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 startDecorator={<Search size={13} />}
                 sx={{
                   width: "100%",
-                  fontSize: { xs: 8, lg: 10 },
+                  fontSize: { xs: 8, lg: 10, xl: 12 },
                 }}
                 size="sm"
                 disabled={!filterStates.cptCode}
@@ -337,7 +338,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 defaultValue="+0 days"
                 sx={{
                   width: "100%",
-                  fontSize: { xs: 6, md: 8, lg: 10 },
+                  fontSize: { xs: 8, lg: 10, xl: 12 },
                 }}
                 size="sm"
                 disabled={!filterStates.aging}
@@ -356,7 +357,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 startDecorator={<Search size={13} />}
                 sx={{
                   width: "100%",
-                  fontSize: { xs: 6, md: 8, lg: 10 },
+                  fontSize: { xs: 8, lg: 10, xl: 12 },
                 }}
                 size="sm"
                 disabled={!filterStates.claimNumber}

@@ -7,11 +7,6 @@ import {
   IconButton,
   Tooltip,
   Chip,
-  Modal,
-  ModalDialog,
-  ModalClose,
-  DialogTitle,
-  DialogContent,
 } from "@mui/joy";
 import {
   X,
@@ -25,6 +20,7 @@ import {
 import { useMediaQuery } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import UsageModal from "@/components/inventory/usageModel";
 
 const getStatus = (status) => {
   switch (status) {
@@ -195,8 +191,8 @@ const ItemGlance = ({ item, onClose }) => {
           height: "45%",
           flexDirection: "column",
           gap: 2,
-          paddingLeft: 2,
-          paddingRight: 2,
+          paddingLeft: 0.5,
+          paddingRight: 0.5,
         }}
       >
         <Box
@@ -364,42 +360,12 @@ const ItemGlance = ({ item, onClose }) => {
           </IconButton>
         </Tooltip>
       </Box>
-      <Modal open={!!layout} onClose={() => setLayout(undefined)}>
-        <ModalDialog
-          layout={layout}
-          sx={{
-            border: "none",
-            boxShadow: "none",
-          }}
-        >
-          <DialogTitle
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              height: "10%",
-              color: "black",
-            }}
-          >
-            Usage for {item.itemName}
-          </DialogTitle>
-          <ModalClose />
-          <DialogContent>
-            <Box
-              sx={{
-                height: "80vh",
-                width: "50vw",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-            </Box>
-          </DialogContent>
-        </ModalDialog>
-      </Modal>
+      <UsageModal
+        layout={layout}
+        onClose={() => setLayout(undefined)}
+        item={item}
+        chartOptions={chartOptions}
+      />
     </Box>
   );
 };

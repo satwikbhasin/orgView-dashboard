@@ -41,9 +41,10 @@ export default function ConfigurationsBar() {
         <Typography
           sx={{
             fontSize: {
-              xs: 7,
-              sm: 9,
+              xs: 9,
+              sm: 10,
               md: 11,
+              xl: 13,
             },
             fontWeight: 800,
           }}
@@ -94,9 +95,9 @@ export default function ConfigurationsBar() {
             }
           >
             {isIntelligentOrderingEnabled ? (
-              <Power strokeWidth={2.8} size={12} color="#019992" />
+              <Power strokeWidth={2.5} size={iconSize} color="#019992" />
             ) : (
-              <PowerOff strokeWidth={2.8} size={12} color="#C04000" />
+              <PowerOff strokeWidth={2.5} size={iconSize} color="#C04000" />
             )}
             <Typography
               fontWeight={700}
