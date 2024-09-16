@@ -8,6 +8,10 @@ const inventoryData = [
         minThreshold: 10,
         status: "red",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "SURG001",
@@ -18,6 +22,10 @@ const inventoryData = [
         minThreshold: 15,
         status: "yellow",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "MED001",
@@ -28,6 +36,10 @@ const inventoryData = [
         minThreshold: 30,
         status: "green",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "DIAG001",
@@ -38,6 +50,10 @@ const inventoryData = [
         minThreshold: 5,
         status: "red",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "IOL002",
@@ -48,6 +64,10 @@ const inventoryData = [
         minThreshold: 10,
         status: "red",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "SURG002",
@@ -58,6 +78,10 @@ const inventoryData = [
         minThreshold: 5,
         status: "green",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "MED002",
@@ -68,6 +92,10 @@ const inventoryData = [
         minThreshold: 20,
         status: "green",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "DIAG002",
@@ -78,6 +106,10 @@ const inventoryData = [
         minThreshold: 3,
         status: "red",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "IOL003",
@@ -88,6 +120,10 @@ const inventoryData = [
         minThreshold: 10,
         status: "red",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "SURG003",
@@ -98,6 +134,10 @@ const inventoryData = [
         minThreshold: 10,
         status: "green",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "MED003",
@@ -108,6 +148,10 @@ const inventoryData = [
         minThreshold: 25,
         status: "green",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "DIAG003",
@@ -118,6 +162,10 @@ const inventoryData = [
         minThreshold: 2,
         status: "red",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "IOL004",
@@ -128,6 +176,10 @@ const inventoryData = [
         minThreshold: 10,
         status: "red",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "SURG004",
@@ -138,6 +190,10 @@ const inventoryData = [
         minThreshold: 10,
         status: "green",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "MED004",
@@ -148,6 +204,10 @@ const inventoryData = [
         minThreshold: 30,
         status: "green",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "DIAG004",
@@ -158,6 +218,10 @@ const inventoryData = [
         minThreshold: 3,
         status: "yellow",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "IOL005",
@@ -168,6 +232,10 @@ const inventoryData = [
         minThreshold: 10,
         status: "red",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "SURG005",
@@ -178,6 +246,10 @@ const inventoryData = [
         minThreshold: 5,
         status: "green",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "MED005",
@@ -188,6 +260,10 @@ const inventoryData = [
         minThreshold: 20,
         status: "green",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
     {
         sku: "DIAG005",
@@ -198,6 +274,10 @@ const inventoryData = [
         minThreshold: 3,
         status: "red",
         actions: ["View Usage", "Order"],
+        usage: {
+            months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * (35000 - 5000 + 1)) + 5000),
+        },
     },
 ];
 

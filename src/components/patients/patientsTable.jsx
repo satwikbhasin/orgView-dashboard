@@ -166,8 +166,7 @@ export default function PatientsTable({ searchFilter }) {
       <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <Box
           sx={{
-            border: { xs: "transparent", sm: "1.5px solid #dedede" },
-            borderRadius: 10,
+            border: { xs: "transparent", sm: "1px solid #dedede" },
             overflow: "hidden",
             height: "100%",
             width: "100%",
