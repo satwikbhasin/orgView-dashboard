@@ -8,7 +8,7 @@ import Titlebar from "@/components/common/titlebar";
 const Home = () => {
     return (
         <Box sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
-            <Titlebar title="Home" />
+            <Titlebar title="Home" showExportButton={false} />
         </Box>
     );
 };

@@ -30,7 +30,7 @@ const PatientsCardView = ({ patients }) => {
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography
-                sx={{ fontSize: { xs: 12, sm: 14, md: 16 }, fontWeight: 600 }}
+                sx={{ fontSize: { xs: 11, md: 13 }, fontWeight: 700 }}
               >
                 {patient.ptName}
               </Typography>
@@ -55,7 +55,7 @@ const PatientsCardView = ({ patients }) => {
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
-                fontSize: { xs: 14, md: 16 },
+                fontSize: { xs: 9, sm: 10, md: 11 },
               }}
             >
               {patient.status === "Sent" ? (
@@ -81,11 +81,11 @@ const PatientsCardView = ({ patients }) => {
               }}
             >
               <Typography
-                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
+                sx={{ fontWeight: 600, fontSize: { xs: 9, sm: 10, md: 11 } }}
               >
                 DOS
               </Typography>
-              <Typography sx={{ fontSize: { xs: 10, sm: 12, md: 14 } }}>
+              <Typography sx={{ fontSize: { xs: 9, sm: 10, md: 11 } }}>
                 {patient.dos}
               </Typography>
             </Box>
@@ -97,11 +97,11 @@ const PatientsCardView = ({ patients }) => {
               }}
             >
               <Typography
-                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
+                sx={{ fontWeight: 600, fontSize: { xs: 9, sm: 10, md: 11 } }}
               >
                 Payer
               </Typography>
-              <Typography sx={{ fontSize: { xs: 10, sm: 12, md: 14 } }}>
+              <Typography sx={{ fontSize: { xs: 9, sm: 10, md: 11 } }}>
                 {patient.payer}
               </Typography>
             </Box>
@@ -113,11 +113,11 @@ const PatientsCardView = ({ patients }) => {
               }}
             >
               <Typography
-                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
+                sx={{ fontWeight: 600, fontSize: { xs: 9, sm: 10, md: 11 } }}
               >
                 Provider
               </Typography>
-              <Typography sx={{ fontSize: { xs: 10, sm: 12, md: 14 } }}>
+              <Typography sx={{ fontSize: { xs: 9, sm: 10, md: 11 } }}>
                 {patient.provider}
               </Typography>
             </Box>
@@ -129,11 +129,11 @@ const PatientsCardView = ({ patients }) => {
               }}
             >
               <Typography
-                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
-              >
+                sx={{ fontWeight: 600, fontSize: { xs: 9, sm: 10, md: 11 } }}
+                >
                 Claim ID
               </Typography>
-              <Typography sx={{ fontSize: { xs: 10, sm: 12, md: 14 } }}>
+              <Typography sx={{ fontSize: { xs: 9, sm: 10, md: 11 } }}>
                 {patient.claimId}
               </Typography>
             </Box>
@@ -145,11 +145,11 @@ const PatientsCardView = ({ patients }) => {
               }}
             >
               <Typography
-                sx={{ fontWeight: 600, fontSize: { xs: 10, sm: 12, md: 14 } }}
-              >
+                sx={{ fontWeight: 600, fontSize: { xs: 9, sm: 10, md: 11 } }}
+                >
                 Charges
               </Typography>
-              <Typography sx={{ fontSize: { xs: 10, sm: 12, md: 14 } }}>
+              <Typography sx={{ fontSize: { xs: 9, sm: 10, md: 11 } }}>
                 {patient.charges}
               </Typography>
             </Box>

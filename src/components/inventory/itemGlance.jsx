@@ -118,7 +118,7 @@ const ItemGlance = ({ item, onClose }) => {
     <Box
       sx={{
         height: "fit-content",
-        width: "30%",
+        width: "35%",
         border: "1px solid #dedede",
         borderRadius: 0,
         left: visible ? "0%" : "30%",

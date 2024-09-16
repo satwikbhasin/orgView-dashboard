@@ -110,7 +110,7 @@ const Inventory = () => {
                 </Box>
             </Box>
 
-            <Box sx={{ transition: "opacity 0.5s ease" }}>
+            <Box sx={{ transition: "opacity 0.5s ease", height: "100vh" }}>
                 {selectedTab === "inventoryItems" && <InventoryItemsTab />}
                 {selectedTab === "pendingOrders" && <Box>Pending Orders</Box>}
             </Box>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, ButtonGroup, IconButton, Typography } from "@mui/joy";
+import { Box, ButtonGroup, IconButton, Typography, Switch } from "@mui/joy";
 import { useMediaQuery } from "@mui/material";
 import {
   House,
@@ -15,6 +15,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Sun,
+  Moon,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,6 +26,7 @@ export default function Navbar() {
   const pathName = usePathname();
   const router = useRouter();
   const [collapsedNav, setCollapsedNav] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const isMediumScreen = useMediaQuery(
@@ -146,8 +149,11 @@ export default function Navbar() {
           display: "flex",
           width: "100%",
           flexDirection: "column",
-          padding: 2,
-          gap: 2,
+          padding: {
+            xs: 2,
+            md: 3,
+          },
+          gap: 1,
         }}
       >
         <Typography
@@ -165,7 +171,7 @@ export default function Navbar() {
           size="sm"
           variant="plain"
           orientation="vertical"
-          spacing={2}
+          spacing={1.5}
         >
           {menuLinks.map((link) => (
             <Link key={link.href} href={link.href}>
@@ -229,7 +235,7 @@ export default function Navbar() {
         sx={{
           width: "100%",
           borderBottom: "1px solid #dedede",
-          marginY: 2,
+          marginY: 0,
         }}
       />
       <Box
@@ -237,9 +243,11 @@ export default function Navbar() {
           display: "flex",
           width: "100%",
           flexDirection: "column",
-          padding: 2,
-          marginTop: 2,
-          gap: 2,
+          padding: {
+            xs: 2,
+            md: 3,
+          },
+          gap: 1,
         }}
       >
         <Typography
@@ -257,7 +265,7 @@ export default function Navbar() {
           size="sm"
           variant="plain"
           orientation="vertical"
-          spacing={2}
+          spacing={1.5}
         >
           {supportLinks.map((link) => (
             <Link key={link.href} href={link.href}>
@@ -310,6 +318,58 @@ export default function Navbar() {
               </IconButton>
             </Link>
           ))}
+          <IconButton
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: {
+                xs: "center",
+                md: collapsedNav ? "center" : "flex-start",
+              },
+              width: "100%",
+              paddingLeft: 1.6,
+              paddingRight: 1,
+              gap: 2,
+              transition: "all 1s ease",
+              backgroundColor: darkMode ? "#252525" : "#EDEDED",
+              "&:hover": {
+                backgroundColor: darkMode ? "#1c1c1c" : "#EDEDED",
+              },
+            }}
+            onClick={() => setDarkMode(!darkMode)}
+          >
+            <Box
+              sx={{
+                opacity: darkMode ? 1 : 0,
+                transition: "opacity 1s ease",
+                position: darkMode ? "relative" : "absolute",
+              }}
+            >
+              <Moon color="#1c69fb" strokeWidth={3} size={iconSize} />
+            </Box>
+
+            <Box
+              sx={{
+                opacity: darkMode ? 0 : 1,
+                transition: "opacity 1s ease",
+                position: darkMode ? "absolute" : "relative",
+              }}
+            >
+              <Sun color="#1c69fb" strokeWidth={3} size={iconSize} />
+            </Box>
+
+            <Typography
+              sx={{
+                fontSize: { xs: 8, md: 10, lg: 12 },
+                display: { xs: "none", md: collapsedNav ? "none" : "block" },
+                color: darkMode ? "#ffffff" : "#1c69fb",
+                fontWeight: 600,
+                transition: "all 1s ease",
+              }}
+            >
+              {darkMode ? "Dark Mode" : "Light Mode"}
+            </Typography>
+          </IconButton>
         </ButtonGroup>
       </Box>
       <Box

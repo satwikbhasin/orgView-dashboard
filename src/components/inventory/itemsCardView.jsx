@@ -81,7 +81,7 @@ export default function ItemsCardView() {
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography
-                sx={{ fontSize: { xs: 10, sm: 11, md: 13 }, fontWeight: 700 }}
+                sx={{ fontSize: { xs: 11, sm: 12, md: 13 }, fontWeight: 700 }}
               >
                 {item.itemName}
               </Typography>

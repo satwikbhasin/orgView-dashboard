@@ -102,8 +102,6 @@ export default function InventoryItemsTable({ searchFilter }) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [usageModalOpen, setUsageModalOpen] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
-  const isExtraSmallScreen = useMediaQuery("(max-width:650px)");
-  const isMediumScreen = useMediaQuery("(max-width:1050px)");
   const menuRef = useRef(null);
 
   const handleSort = (key) => {
@@ -225,26 +223,26 @@ export default function InventoryItemsTable({ searchFilter }) {
   }, [menuRef]);
 
   return (
-    <Box sx={{ display: "flex", marginRight: selectedItem ? 1 : 0 }}>
+    <Box sx={{ display: "flex", marginRight: selectedItem ? 1 : 0, width: "100%" }}>
       <Box
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           gap: 5,
           height: "100%",
-          width: selectedItem && !isMediumScreen ? "70%" : "100%",
+          width: selectedItem && !isSmallScreen ? "70%" : "100%",
           transition: "width 0.2s ease-in-out",
-          padding: 1,
+          paddingBottom: 1,
           paddingLeft: 0,
           paddingTop: 0,
-          paddingRight: { xs: 0, sm: 2 },
+          paddingRight: 2,
         }}
       >
         <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
           <Box
             sx={{
               border: { xs: "transparent", sm: "1px solid #dedede" },
-              overflow: "hidden",
+              overflow: "scroll",
               height: "100%",
               width: "100%",
               display: "flex",
@@ -252,7 +250,7 @@ export default function InventoryItemsTable({ searchFilter }) {
               flexDirection: "column",
             }}
           >
-            {!isExtraSmallScreen ? (
+            {!isSmallScreen ? (
               <>
                 <Table>
                   <thead>
@@ -320,7 +318,7 @@ export default function InventoryItemsTable({ searchFilter }) {
                             }
                           }}
                           onClick={(event) =>
-                            isMediumScreen
+                            isSmallScreen
                               ? handleMenuOpen(event, item)
                               : setSelectedItem(item)
                           }
@@ -486,7 +484,7 @@ export default function InventoryItemsTable({ searchFilter }) {
           </Box>
         </Box>
       </Box>
-      {selectedItem && !isMediumScreen && (
+      {selectedItem && !isSmallScreen && (
         <ItemGlance item={selectedItem} onClose={closeItemGlanceView} />
       )}
       <Menu
