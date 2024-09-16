@@ -41,7 +41,7 @@ const Patients = () => {
                         onPayerChange={(value) => handleStateChange('selectedPayer', value)}
                     />
                 </Box>
-                <Box sx={{ display: "flex", flex: 10 }}>
+                <Box sx={{ display: "flex", flex: 4 }}>
                     <PatientsTable
                         searchFilter={state}
                     />

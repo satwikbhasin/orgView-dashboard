@@ -58,7 +58,7 @@ export default function InventoryTab() {
         />
         <ActionBar />
       </Box>
-      <Box sx={{ display: "flex", flex: 10, height: "100%" }}>
+      <Box sx={{ display: "flex", flex: 4, height: "100%" }}>
         <InventoryTable searchFilter={state} />
       </Box>
     </Box>

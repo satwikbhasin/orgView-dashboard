@@ -14,7 +14,6 @@ import {
 import {
   ChartSpline,
   ShoppingBasket,
-  Ellipsis,
   Dot,
   ArrowUpDown,
   ChevronRight,
@@ -23,6 +22,7 @@ import {
 import inventoryData from "@/data/inventory";
 import { useMediaQuery } from "@mui/material";
 import ItemsCardView from "./itemsCardView";
+import ItemGlance from "./itemGlance";
 
 const headerStyle = {
   height: "5vh",
@@ -166,299 +166,292 @@ export default function InventoryItemsTable({ searchFilter }) {
     return [...new Set(pages)];
   };
 
-  const handleMenuOpen = (event, item) => {
-    setAnchorEl(event.currentTarget);
-    setMenuOpen(true);
-    setSelectedItem(item);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setMenuOpen(false);
+  const closeItemGlanceView = () => {
     setSelectedItem(null);
-  };
-
-  const handleMenuItemClick = (action) => {
-    handleMenuClose();
   };
 
   const getStatus = (status) => {
     switch (status) {
       case "green":
-        return ["Green", "#019992"];
+        return { label: "Green", color: "#03625E", backgroundColor: "#E0F3F1" };
       case "yellow":
-        return ["Yellow", "#FFB001"];
+        return {
+          label: "Yellow",
+          color: "#BB900A",
+          backgroundColor: "#FFF4E5",
+        };
       case "red":
-        return ["Red", "#E13D00"];
+        return { label: "Red", color: "#AD3206", backgroundColor: "#FDECEA" };
       default:
-        return ["Unknown", "#000000"];
+        return {
+          label: "Unknown",
+          color: "#000000",
+          backgroundColor: "#F0F0F0",
+        };
     }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        handleMenuClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuRef]);
-
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
-        gap: 5,
-        height: "100%",
-        width: "100%",
-        padding: 1,
-        paddingLeft: 0,
-        paddingTop: 0,
-        paddingRight: { xs: 0, sm: 2 },
-      }}
-    >
-      <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
-        <Box
-          sx={{
-            border: { xs: "transparent", sm: "1.5px solid #dedede" },
-            borderRadius: 10,
-            overflow: "hidden",
-            height: "100%",
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
-          {!isSmallScreen ? (
-            <>
-              <Table>
-                <thead>
-                  <tr>
-                    <SortableHeader
-                      label="SKU"
-                      onClick={() => handleSort("sku")}
-                    />
-                    <SortableHeader
-                      label="Item Name"
-                      onClick={() => handleSort("itemName")}
-                    />
-                    <SortableHeader
-                      label="Category"
-                      onClick={() => handleSort("category")}
-                    />
-                    <SortableHeader
-                      label="Price"
-                      onClick={() => handleSort("price")}
-                    />
-                    <SortableHeader
-                      label="Current Stock"
-                      onClick={() => handleSort("currentStock")}
-                    />
-                    <SortableHeader
-                      label="Min. Threshold"
-                      onClick={() => handleSort("minThreshold")}
-                    />
-                    <SortableHeader
-                      label="Status"
-                      onClick={() => handleSort("status")}
-                    />
-                  </tr>
-                </thead>
-              </Table>
-
-              <Box sx={{ overflow: "auto", flex: 1 }}>
+    <Box sx={{ display: "flex", marginRight: selectedItem ? 1 : 0 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 5,
+          height: "100%",
+          width: selectedItem ? "70%" : "100%",
+          transition: "width 0.2s ease-in-out",
+          padding: 1,
+          paddingLeft: 0,
+          paddingTop: 0,
+          paddingRight: { xs: 0, sm: 2 },
+        }}
+      >
+        <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <Box
+            sx={{
+              border: { xs: "transparent", sm: "1px solid #dedede" },
+              overflow: "hidden",
+              height: "100%",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            {!isSmallScreen ? (
+              <>
                 <Table>
-                  <tbody>
-                    {currentItems.map((item) => (
-                      <tr
-                        key={item.sku}
-                        style={{
-                          textAlign: "center",
-                          backgroundColor: "#fbfcfe",
-                          transition: "background-color 0.3s",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = "#f0f4f8";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = "#fbfcfe";
-                        }}
-                        onClick={(event) => handleMenuOpen(event, item)}
-                      >
-                        <td style={cellStyle}>
-                          <ResponsiveCellTypography>
-                            {item.sku}
-                          </ResponsiveCellTypography>
-                        </td>
-                        <td style={cellStyle}>
-                          <ResponsiveCellTypography>
-                            {item.itemName}
-                          </ResponsiveCellTypography>
-                        </td>
-                        <td style={cellStyle}>
-                          <ResponsiveCellTypography>
-                            {item.category}
-                          </ResponsiveCellTypography>
-                        </td>
-                        <td style={cellStyle}>
-                          <ResponsiveCellTypography>
-                            {item.price}
-                          </ResponsiveCellTypography>
-                        </td>
-                        <td
+                  <thead>
+                    <tr>
+                      <SortableHeader
+                        label="SKU"
+                        onClick={() => handleSort("sku")}
+                      />
+                      <SortableHeader
+                        label="Item Name"
+                        onClick={() => handleSort("itemName")}
+                      />
+                      <SortableHeader
+                        label="Category"
+                        onClick={() => handleSort("category")}
+                      />
+                      <SortableHeader
+                        label="Price"
+                        onClick={() => handleSort("price")}
+                      />
+                      <SortableHeader
+                        label="Current Stock"
+                        onClick={() => handleSort("currentStock")}
+                      />
+                      <SortableHeader
+                        label="Min. Threshold"
+                        onClick={() => handleSort("minThreshold")}
+                      />
+                      <SortableHeader
+                        label="Status"
+                        onClick={() => handleSort("status")}
+                      />
+                    </tr>
+                  </thead>
+                </Table>
+
+                <Box sx={{ overflow: "auto", flex: 1 }}>
+                  <Table>
+                    <tbody>
+                      {currentItems.map((item) => (
+                        <tr
+                          key={item.sku}
                           style={{
-                            ...cellStyle,
-                            color:
-                              item.currentStock < item.minThreshold
-                                ? "#E13D00"
-                                : "inherit",
-                            fontWeight:
-                              item.currentStock < item.minThreshold
-                                ? "800"
-                                : "400",
+                            textAlign: "center",
+                            backgroundColor:
+                              selectedItem && selectedItem.sku === item.sku
+                                ? "#f0f4f8"
+                                : "#fbfcfe",
+                            transition: "background-color 0.3s",
                           }}
+                          onMouseEnter={(e) => {
+                            if (
+                              !selectedItem ||
+                              selectedItem.sku !== item.sku
+                            ) {
+                              e.currentTarget.style.backgroundColor = "#f0f4f8";
+                            }
+                          }}
+                          onMouseLeave={(e) => {
+                            if (
+                              !selectedItem ||
+                              selectedItem.sku !== item.sku
+                            ) {
+                              e.currentTarget.style.backgroundColor = "#fbfcfe";
+                            }
+                          }}
+                          onClick={() => setSelectedItem(item)}
                         >
-                          <ResponsiveCellTypography>
-                            {item.currentStock}
-                          </ResponsiveCellTypography>
-                        </td>
-                        <td style={cellStyle}>
-                          <ResponsiveCellTypography>
-                            {item.minThreshold}
-                          </ResponsiveCellTypography>
-                        </td>
-                        <td style={cellStyle}>
-                          <Box
-                            sx={{
-                              alignItems: "center",
-                              justifyContent: "left",
+                          <td style={cellStyle}>
+                            <ResponsiveCellTypography>
+                              {item.sku}
+                            </ResponsiveCellTypography>
+                          </td>
+                          <td style={cellStyle}>
+                            <ResponsiveCellTypography>
+                              {item.itemName}
+                            </ResponsiveCellTypography>
+                          </td>
+                          <td style={cellStyle}>
+                            <ResponsiveCellTypography>
+                              {item.category}
+                            </ResponsiveCellTypography>
+                          </td>
+                          <td style={cellStyle}>
+                            <ResponsiveCellTypography>
+                              {item.price}
+                            </ResponsiveCellTypography>
+                          </td>
+                          <td
+                            style={{
+                              ...cellStyle,
+                              color:
+                                item.status == "red"
+                                  ? getStatus(item.status).color
+                                  : "inherit",
+                              fontWeight: item.status == "red" ? "800" : "400",
                             }}
                           >
                             <ResponsiveCellTypography>
-                              <Dot
-                                strokeWidth={3}
-                                size={20}
-                                color={getStatus(item.status)[1]}
-                              />
-                              {getStatus(item.status)[0]}
+                              {item.currentStock}
                             </ResponsiveCellTypography>
-                          </Box>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-                <Menu
-                  anchorEl={anchorEl}
-                  open={menuOpen}
-                  onClose={handleMenuClose}
-                  ref={menuRef}
-                >
-                  <MenuList>
-                    <MenuItem onClick={() => handleMenuItemClick("View Usage")}>
-                      <ChartSpline />
-                      Usage
-                    </MenuItem>
-                    <MenuItem onClick={() => handleMenuItemClick("Order")}>
-                      <ShoppingBasket />
-                      Order
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-              </Box>
-            </>
-          ) : (
-            <ItemsCardView />
-          )}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            mt: 2,
-            gap: 5,
-          }}
-        >
-          <Button
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-            size="small"
-            sx={{
-              fontSize: {
-                xs: 10,
-                md: 12,
-              },
-              padding: 0.8,
-              color: "#1c69fb",
-              backgroundColor: "transparent",
-              "&:hover": {
-                backgroundColor: "transparent",
-              },
-              "&:disabled": {
-                backgroundColor: "transparent",
-                color: "#707070",
-              },
-            }}
-            startDecorator={<ChevronLeft size={16} />}
-          >
-            Previous
-          </Button>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-            {generatePageNumbers().map((page, index) => (
-              <IconButton
-                key={index}
-                size="small"
-                sx={{
-                  backgroundColor: "transparent",
-                  color: page === currentPage ? "#1c69fb" : "black",
-                  cursor: page !== "..." ? "pointer" : "default",
-                  fontWeight: page === currentPage ? "800" : "600",
-                  "&:hover": {
-                    color: page === currentPage ? "#1c69fb" : "#1c69fb",
-                    backgroundColor:
-                      page === currentPage ? "transparent" : "transparent",
-                  },
-                }}
-                onClick={() => page !== "..." && setCurrentPage(page)}
-                disabled={page === "..."}
-              >
-                {page}
-              </IconButton>
-            ))}
+                          </td>
+                          <td style={cellStyle}>
+                            <ResponsiveCellTypography>
+                              {item.minThreshold}
+                            </ResponsiveCellTypography>
+                          </td>
+                          <td style={cellStyle}>
+                            <Box
+                              sx={{
+                                alignItems: "center",
+                                justifyContent: "left",
+                              }}
+                            >
+                              <Typography
+                                sx={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  width: "100%",
+                                  fontSize: {
+                                    xs: "8px",
+                                    lg: "10px",
+                                    xl: "12px",
+                                  },
+                                  color: getStatus(item.status).color,
+                                }}
+                              >
+                                <Dot
+                                  strokeWidth={3}
+                                  size={26}
+                                  color={getStatus(item.status).color}
+                                />
+                                {getStatus(item.status).label}
+                              </Typography>
+                            </Box>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Box>
+              </>
+            ) : (
+              <ItemsCardView />
+            )}
           </Box>
-          <Button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            size="small"
+          <Box
             sx={{
-              fontSize: {
-                xs: 10,
-                md: 12,
-              },
-              padding: 0.8,
-              color: "#1c69fb",
-              backgroundColor: "transparent",
-              "&:hover": {
-                backgroundColor: "transparent",
-              },
-              "&:disabled": {
-                backgroundColor: "transparent",
-                color: "#707070",
-              },
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              mt: 2,
+              gap: 5,
             }}
-            endDecorator={<ChevronRight size={16} />}
           >
-            Next
-          </Button>
+            <Button
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+              size="small"
+              sx={{
+                fontSize: {
+                  xs: 10,
+                  md: 12,
+                },
+                padding: 0.8,
+                color: "#1c69fb",
+                backgroundColor: "transparent",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+                "&:disabled": {
+                  backgroundColor: "transparent",
+                  color: "#707070",
+                },
+              }}
+              startDecorator={<ChevronLeft size={16} />}
+            >
+              Previous
+            </Button>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+              {generatePageNumbers().map((page, index) => (
+                <IconButton
+                  key={index}
+                  size="small"
+                  sx={{
+                    backgroundColor: "transparent",
+                    color: page === currentPage ? "#1c69fb" : "black",
+                    cursor: page !== "..." ? "pointer" : "default",
+                    fontWeight: page === currentPage ? "800" : "600",
+                    "&:hover": {
+                      color: page === currentPage ? "#1c69fb" : "#1c69fb",
+                      backgroundColor:
+                        page === currentPage ? "transparent" : "transparent",
+                    },
+                  }}
+                  onClick={() => page !== "..." && setCurrentPage(page)}
+                  disabled={page === "..."}
+                >
+                  {page}
+                </IconButton>
+              ))}
+            </Box>
+            <Button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              size="small"
+              sx={{
+                fontSize: {
+                  xs: 10,
+                  md: 12,
+                },
+                padding: 0.8,
+                color: "#1c69fb",
+                backgroundColor: "transparent",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+                "&:disabled": {
+                  backgroundColor: "transparent",
+                  color: "#707070",
+                },
+              }}
+              endDecorator={<ChevronRight size={16} />}
+            >
+              Next
+            </Button>
+          </Box>
         </Box>
       </Box>
+      {selectedItem && (
+        <ItemGlance item={selectedItem} onClose={closeItemGlanceView} />
+      )}
     </Box>
   );
 }

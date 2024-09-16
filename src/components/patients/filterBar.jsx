@@ -14,7 +14,7 @@ import { useMediaQuery } from "@mui/material";
 import { getPayerTypes } from "@/data/patients";
 import { Search, Filter, ToggleLeft, ToggleRight } from "lucide-react";
 
-const FilterItem = ({ label, children, isEnabled, onToggle }) => (
+const FilterItem = ({ label, children, isEnabled, onToggle, iconSize }) => (
   <Box
     sx={{
       flex: 1,
@@ -37,11 +37,8 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
       <Typography
         sx={{
           fontWeight: 500,
-          fontSize: {
-            xs: 9,
-            md: 11,
-            lg: 12,
-          },
+          fontSize: { xs: 6, md: 8, lg: 10 },
+
           cursor: "pointer",
           color: isEnabled ? "black" : "grey",
         }}
@@ -49,7 +46,7 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
       >
         {label}
       </Typography>
-      <Tooltip title={isEnabled ? "Disable filter" : "Enable filter"}>
+      <Tooltip size="sm" title={isEnabled ? "Disable filter" : "Enable filter"}>
         <IconButton
           onClick={onToggle}
           className="toggle-button"
@@ -62,7 +59,11 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
             },
           }}
         >
-          {isEnabled ? <ToggleRight size={20} /> : <ToggleLeft size={20} />}
+          {isEnabled ? (
+            <ToggleRight size={iconSize} strokeWidth={2.5} />
+          ) : (
+            <ToggleLeft size={iconSize} strokeWidth={2.5} />
+          )}
         </IconButton>
       </Tooltip>
     </Box>
@@ -159,7 +160,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
     "(min-width:601px) and (max-width:960px)"
   );
 
-  const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 13;
+  const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 14;
 
   return (
     <Box
@@ -179,29 +180,27 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
     >
       <Box
         sx={{
+          display: "flex",
+          alignItems: "center",
           textAlign: "left",
+          color: "#1c69fb",
+          gap: 0.5,
+          cursor: "default",
         }}
       >
-        <IconButton
+        <Filter strokeWidth={3} size={iconSize} />
+        <Typography
           sx={{
             fontSize: {
-              xs: 10,
-              sm: 12,
-              md: 14,
+              xs: 7,
+              sm: 9,
+              md: 11,
             },
-            fontWeight: 700,
-            gap: 0.5,
-            color: "#1c69fb",
-            "&:hover": {
-              color: "#1c69fb",
-              backgroundColor: "transparent",
-            },
-            cursor: "default",
+            fontWeight: 800,
           }}
         >
-          <Filter strokeWidth={3} size={iconSize} />
           Filters
-        </IconButton>
+        </Typography>
       </Box>
       <Box
         sx={{
@@ -221,11 +220,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             sx={{
               fontWeight: 500,
               color: "black",
-              fontSize: {
-                xs: 9,
-                md: 11,
-                lg: 12,
-              },
+              fontSize: { xs: 6, md: 8, lg: 10 },
             }}
           >
             Disable All Filters
@@ -242,9 +237,9 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
             }}
           >
             {allFiltersDisabled ? (
-              <ToggleRight size={20} />
+              <ToggleRight size={iconSize} strokeWidth={2.5} />
             ) : (
-              <ToggleLeft size={20} />
+              <ToggleLeft size={iconSize} strokeWidth={2.5} />
             )}
           </IconButton>
         </Box>
@@ -254,6 +249,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               label="Patient Name"
               isEnabled={filterStates.patientName}
               onToggle={() => toggleFilterEnabled("patientName")}
+              iconSize={iconSize}
             >
               <Input
                 placeholder="Last, First"
@@ -262,11 +258,7 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
                 startDecorator={<Search size={13} />}
                 sx={{
                   width: "100%",
-                  fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
-                  },
+                  fontSize: { xs: 6, md: 8, lg: 10 },
                 }}
                 size="sm"
                 disabled={!filterStates.patientName}
@@ -276,16 +268,13 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               label="Bill Type"
               isEnabled={filterStates.billType}
               onToggle={() => toggleFilterEnabled("billType")}
+              iconSize={iconSize}
             >
               <Select
                 defaultValue="any"
                 sx={{
                   width: "100%",
-                  fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
-                  },
+                  fontSize: { xs: 6, md: 8, lg: 10 },
                 }}
                 size="sm"
                 disabled={!filterStates.billType}
@@ -299,17 +288,14 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               label="Payer"
               isEnabled={filterStates.payer}
               onToggle={() => toggleFilterEnabled("payer")}
+              iconSize={iconSize}
             >
               <Select
                 value={filterValues.payer}
                 onChange={(e, newValue) => handlePayerChange(newValue)}
                 sx={{
                   width: "100%",
-                  fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
-                  },
+                  fontSize: { xs: 6, md: 8, lg: 10 },
                 }}
                 size="sm"
                 disabled={!filterStates.payer}
@@ -326,17 +312,14 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               label="CPT Code"
               isEnabled={filterStates.cptCode}
               onToggle={() => toggleFilterEnabled("cptCode")}
+              iconSize={iconSize}
             >
               <Input
                 placeholder="Enter CPT Code"
                 startDecorator={<Search size={13} />}
                 sx={{
                   width: "100%",
-                  fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
-                  },
+                  fontSize: { xs: 8, lg: 10 },
                 }}
                 size="sm"
                 disabled={!filterStates.cptCode}
@@ -348,16 +331,13 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               label="Aging"
               isEnabled={filterStates.aging}
               onToggle={() => toggleFilterEnabled("aging")}
+              iconSize={iconSize}
             >
               <Select
                 defaultValue="+0 days"
                 sx={{
                   width: "100%",
-                  fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
-                  },
+                  fontSize: { xs: 6, md: 8, lg: 10 },
                 }}
                 size="sm"
                 disabled={!filterStates.aging}
@@ -369,17 +349,14 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
               label="Claim Number"
               isEnabled={filterStates.claimNumber}
               onToggle={() => toggleFilterEnabled("claimNumber")}
+              iconSize={iconSize}
             >
               <Input
                 placeholder="Enter Claim Number"
                 startDecorator={<Search size={13} />}
                 sx={{
                   width: "100%",
-                  fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
-                  },
+                  fontSize: { xs: 6, md: 8, lg: 10 },
                 }}
                 size="sm"
                 disabled={!filterStates.claimNumber}

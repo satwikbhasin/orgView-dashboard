@@ -13,7 +13,7 @@ export default function ConfigurationsBar() {
   const isMediumScreen = useMediaQuery(
     "(min-width:601px) and (max-width:960px)"
   );
-  const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 13;
+  const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 14;
 
   return (
     <Box
@@ -26,23 +26,30 @@ export default function ConfigurationsBar() {
         width: "100%",
       }}
     >
-      <Box sx={{ textAlign: "left" }}>
-        <IconButton
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          textAlign: "left",
+          color: "#1c69fb",
+          gap: 0.5,
+          cursor: "default",
+          marginBottom: 1,
+        }}
+      >
+        <Settings2 strokeWidth={3} size={iconSize} />
+        <Typography
           sx={{
-            fontSize: { xs: 10, sm: 12, md: 14 },
-            fontWeight: 700,
-            gap: 0.5,
-            color: "#1c69fb",
-            "&:hover": {
-              color: "#1c69fb",
-              backgroundColor: "transparent",
+            fontSize: {
+              xs: 7,
+              sm: 9,
+              md: 11,
             },
-            cursor: "default",
+            fontWeight: 800,
           }}
         >
-          <Settings2 strokeWidth={3} size={iconSize} />
           Configure
-        </IconButton>
+        </Typography>
       </Box>
       <Box
         sx={{
@@ -51,9 +58,12 @@ export default function ConfigurationsBar() {
           width: "100%",
         }}
       >
-        <Tooltip title="When enabled, auto-orders items at minimum threshold">
+        <Tooltip
+          size="sm"
+          title="When enabled, auto-orders items at minimum threshold"
+        >
           <IconButton
-          size="small"
+            size="small"
             sx={{
               backgroundColor: isIntelligentOrderingEnabled
                 ? "#E0F3F1"
@@ -72,8 +82,7 @@ export default function ConfigurationsBar() {
               display: "flex",
               alignItems: "center",
               gap: 1,
-              paddingTop: 0.5,
-              paddingBottom: 0.5,
+              padding: 0.5,
               height: "fit-content",
               width: {
                 xs: "40%",
@@ -94,7 +103,7 @@ export default function ConfigurationsBar() {
               sx={{
                 color: isIntelligentOrderingEnabled ? "#019992" : "#C04000",
                 transition: "color 1s ease",
-                fontSize: { xs: 8, md: 10, lg: 12 },
+                fontSize: { xs: 6, md: 8, lg: 10 },
               }}
             >
               Intelligent Ordering

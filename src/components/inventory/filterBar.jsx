@@ -14,7 +14,7 @@ import { Search, Filter, ToggleLeft, ToggleRight } from "lucide-react";
 import { getItemCategories, getStockStatusTypes } from "@/data/inventory";
 import { useMediaQuery } from "@mui/material";
 
-const FilterItem = ({ label, children, isEnabled, onToggle }) => (
+const FilterItem = ({ label, children, isEnabled, onToggle, iconSize }) => (
   <Box
     sx={{
       flex: 1,
@@ -38,9 +38,9 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
         sx={{
           fontWeight: 500,
           fontSize: {
-            xs: 9,
-            md: 11,
-            lg: 12,
+            xs: 6,
+            md: 8,
+            lg: 10,
           },
           cursor: "pointer",
           color: isEnabled ? "black" : "grey",
@@ -62,7 +62,11 @@ const FilterItem = ({ label, children, isEnabled, onToggle }) => (
             },
           }}
         >
-          {isEnabled ? <ToggleRight size={20} /> : <ToggleLeft size={20} />}
+          {isEnabled ? (
+            <ToggleRight size={iconSize} strokeWidth={2.5} />
+          ) : (
+            <ToggleLeft size={iconSize} strokeWidth={2.5} />
+          )}
         </IconButton>
       </Tooltip>
     </Box>
@@ -183,7 +187,7 @@ export default function FilterBar({
     "(min-width:601px) and (max-width:960px)"
   );
 
-  const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 13;
+  const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 14;
 
   return (
     <Box
@@ -200,29 +204,27 @@ export default function FilterBar({
     >
       <Box
         sx={{
+          display: "flex",
+          alignItems: "center",
           textAlign: "left",
+          color: "#1c69fb",
+          gap: 0.5,
+          cursor: "default",
         }}
       >
-        <IconButton
+        <Filter strokeWidth={3} size={iconSize} />
+        <Typography
           sx={{
             fontSize: {
-              xs: 10,
-              sm: 12,
-              md: 14,
+              xs: 7,
+              sm: 9,
+              md: 11,
             },
-            fontWeight: 700,
-            gap: 0.5,
-            color: "#1c69fb",
-            "&:hover": {
-              color: "#1c69fb",
-              backgroundColor: "transparent",
-            },
-            cursor: "default",
+            fontWeight: 800,
           }}
         >
-          <Filter strokeWidth={3} size={iconSize} />
           Filters
-        </IconButton>
+        </Typography>
       </Box>
       <Box
         sx={{
@@ -242,9 +244,9 @@ export default function FilterBar({
             sx={{
               fontWeight: 500,
               fontSize: {
-                xs: 9,
-                md: 11,
-                lg: 12,
+                xs: 6,
+                md: 8,
+                lg: 10,
               },
               color: "black",
             }}
@@ -263,9 +265,9 @@ export default function FilterBar({
             }}
           >
             {allFiltersDisabled ? (
-              <ToggleRight size={20} />
+              <ToggleRight size={iconSize} strokeWidth={2.5} />
             ) : (
-              <ToggleLeft size={20} />
+              <ToggleLeft size={iconSize} strokeWidth={2.5} />
             )}
           </IconButton>
         </Box>
@@ -275,6 +277,7 @@ export default function FilterBar({
               label="Item Name"
               isEnabled={filterStates.itemName}
               onToggle={() => toggleFilterEnabled("itemName")}
+              iconSize={iconSize}
             >
               <Input
                 placeholder="Enter item name"
@@ -284,9 +287,9 @@ export default function FilterBar({
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
+                    xs: 6,
+                    md: 8,
+                    lg: 10,
                   },
                 }}
                 size="sm"
@@ -297,6 +300,7 @@ export default function FilterBar({
               label="Stock Status"
               isEnabled={filterStates.status}
               onToggle={() => toggleFilterEnabled("status")}
+              iconSize={iconSize}
             >
               <Select
                 defaultValue="any"
@@ -304,9 +308,9 @@ export default function FilterBar({
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
+                    xs: 6,
+                    md: 8,
+                    lg: 10,
                   },
                 }}
                 size="sm"
@@ -326,6 +330,7 @@ export default function FilterBar({
               label="Category"
               isEnabled={filterStates.category}
               onToggle={() => toggleFilterEnabled("category")}
+              iconSize={iconSize}
             >
               <Select
                 defaultValue="any"
@@ -333,9 +338,9 @@ export default function FilterBar({
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
+                    xs: 6,
+                    md: 8,
+                    lg: 10,
                   },
                 }}
                 size="sm"
@@ -353,6 +358,7 @@ export default function FilterBar({
               label="SKU"
               isEnabled={filterStates.sku}
               onToggle={() => toggleFilterEnabled("sku")}
+              iconSize={iconSize}
             >
               <Input
                 placeholder="Enter SKU"
@@ -361,9 +367,9 @@ export default function FilterBar({
                 sx={{
                   width: "100%",
                   fontSize: {
-                    xs: 9,
-                    md: 11,
-                    lg: 12,
+                    xs: 6,
+                    md: 8,
+                    lg: 10,
                   },
                 }}
                 size="sm"
