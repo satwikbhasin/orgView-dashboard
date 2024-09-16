@@ -61,15 +61,13 @@ const ItemGlance = ({ item, onClose }) => {
     }
   }, [orderPlaced]);
 
-  if (!item) return null;
-
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const isMediumScreen = useMediaQuery(
     "(min-width:601px) and (max-width:960px)"
   );
 
   const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 14;
-  
+
   const status = getStatus(item.status);
 
   const chartOptions = {
