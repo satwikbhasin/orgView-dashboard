@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Table, Box, Button, IconButton, Typography } from "@mui/joy";
 import patientsData from "@/data/patients";
 import {
@@ -163,7 +163,13 @@ export default function PatientsTable({ searchFilter }) {
         paddingRight: { xs: 0, sm: 2 },
       }}
     >
-      <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+        }}
+      >
         <Box
           sx={{
             border: { xs: "transparent", sm: "1px solid #dedede" },
@@ -172,6 +178,7 @@ export default function PatientsTable({ searchFilter }) {
             width: "100%",
             display: "flex",
             flexDirection: "column",
+            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
           }}
         >
           {!isSmallScreen ? (

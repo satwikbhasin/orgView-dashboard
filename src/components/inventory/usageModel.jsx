@@ -13,6 +13,37 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 const UsageModal = ({ layout, onClose, item, chartOptions }) => {
+  const pieChartOptions = {
+    chart: {
+      type: "pie",
+      backgroundColor: "#fafafa",
+      height: "80%",
+    },
+    title: {
+      text: null,
+    },
+    series: [
+      {
+        name: "Usage",
+        colorByPoint: true,
+        data: item.usage.data.map((value, index) => ({
+          name: item.usage.months[index],
+          y: value,
+        })),
+      },
+    ],
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: "pointer",
+        dataLabels: {
+          enabled: true,
+          format: "<b>{point.name}</b>: {point.percentage:.1f} %",
+        },
+      },
+    },
+  };
+
   return (
     <Modal open={!!layout} onClose={onClose}>
       <ModalDialog
@@ -20,6 +51,7 @@ const UsageModal = ({ layout, onClose, item, chartOptions }) => {
         sx={{
           border: "none",
           boxShadow: "none",
+          backgroundColor: "#fafafa",
         }}
       >
         <DialogTitle
@@ -38,14 +70,42 @@ const UsageModal = ({ layout, onClose, item, chartOptions }) => {
         <DialogContent>
           <Box
             sx={{
-              height: "80vh",
-              width: "50vw",
+              height: "100%",
+              width: "100%",
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "space-between",
+              flexDirection:{
+                xs: "column",
+                md: "row",
+              },
               alignItems: "center",
             }}
           >
-            <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+            <Box
+              sx={{
+                height: "50%",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+            </Box>
+            <Box
+              sx={{
+                height: "50%",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={pieChartOptions}
+              />
+            </Box>
           </Box>
         </DialogContent>
       </ModalDialog>

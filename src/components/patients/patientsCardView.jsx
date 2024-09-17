@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
-import { Send, ClipboardPlus, CircleEllipsis } from "lucide-react";
+import React from "react";
+import { Box, Typography } from "@mui/joy";
+import { Send, ClipboardPlus } from "lucide-react";
 
 const PatientsCardView = ({ patients }) => {
   return (
@@ -130,7 +130,7 @@ const PatientsCardView = ({ patients }) => {
             >
               <Typography
                 sx={{ fontWeight: 600, fontSize: { xs: 9, sm: 10, md: 11 } }}
-                >
+              >
                 Claim ID
               </Typography>
               <Typography sx={{ fontSize: { xs: 9, sm: 10, md: 11 } }}>
@@ -146,7 +146,7 @@ const PatientsCardView = ({ patients }) => {
             >
               <Typography
                 sx={{ fontWeight: 600, fontSize: { xs: 9, sm: 10, md: 11 } }}
-                >
+              >
                 Charges
               </Typography>
               <Typography sx={{ fontSize: { xs: 9, sm: 10, md: 11 } }}>

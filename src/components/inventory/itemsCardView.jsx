@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
+import { Box, Typography, Menu, MenuItem } from "@mui/joy";
 import { ShoppingBasket, Dot, TrendingUp } from "lucide-react";
 import inventoryData from "@/data/inventory";
 import UsageModal from "./usageModel";

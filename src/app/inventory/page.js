@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Typography, IconButton, Menu, MenuItem } from "@mui/joy";
-import { ArrowDownToLine } from "lucide-react";
+import { Box, Typography } from "@mui/joy";
 import InventoryItemsTab from "@/components/inventory/inventoryItemsTab";
+import PendingOrdersTab from "@/components/inventory/pendingOrdersTab";
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Titlebar from "@/components/common/titlebar";
@@ -112,7 +112,7 @@ const Inventory = () => {
 
             <Box sx={{ transition: "opacity 0.5s ease", height: "100vh" }}>
                 {selectedTab === "inventoryItems" && <InventoryItemsTab />}
-                {selectedTab === "pendingOrders" && <Box>Pending Orders</Box>}
+                {selectedTab === "pendingOrders" && <PendingOrdersTab />}
             </Box>
         </Box >
     );
