@@ -21,7 +21,7 @@ const headerStyle = {
   backgroundColor: "#f0f4f8",
   position: "sticky",
   cursor: "pointer",
-  whiteSpace: "normal",
+  whiteSpace: "wrap",
   overflow: "hidden",
 };
 
@@ -29,6 +29,7 @@ const cellStyle = {
   fontWeight: "500",
   height: "6vh",
   textAlign: "left",
+  whiteSpace: "wrap",
 };
 
 const ResponsiveCellTypography = ({ children }) => (

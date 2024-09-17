@@ -27,8 +27,7 @@ const PendingOrdersTab = () => {
       sx={{
         display: "flex",
         width: "100%",
-        height: "85vh",
-        alignItems: "center",
+        height: "85vh",        
         padding: 3,
         gap: 2,
       }}

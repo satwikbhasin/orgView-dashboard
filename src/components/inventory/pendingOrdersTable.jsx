@@ -50,6 +50,7 @@ const ResponsiveCellTypography = ({ children }) => (
       display: "flex",
       alignItems: "center",
       width: "100%",
+      whiteSpace: "wrap",
       fontSize: {
         xs: "8px",
         lg: "10px",
@@ -147,11 +148,9 @@ const PendingOrdersTable = ({ selectedOrder, setSelectedOrder }) => {
         />
         <Box
           sx={{
-            display: "flex",
             boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
             border: { xs: "transparent", sm: "1px solid #dedede" },
             overflow: "auto",
-            // height: "80vh",
           }}
         >
           <Table>
