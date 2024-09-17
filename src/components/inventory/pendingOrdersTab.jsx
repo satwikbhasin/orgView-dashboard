@@ -28,7 +28,6 @@ const PendingOrdersTab = () => {
         display: "flex",
         width: "100%",
         height: "85vh",
-        justifyContent: "center",
         alignItems: "center",
         padding: 3,
         gap: 2,

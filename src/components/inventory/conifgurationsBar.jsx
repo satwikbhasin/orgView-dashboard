@@ -83,12 +83,9 @@ export default function ConfigurationsBar() {
               display: "flex",
               alignItems: "center",
               gap: 1,
-              padding: 0.5,
+              padding: 1,
               height: "fit-content",
-              width: {
-                xs: "40%",
-                sm: "100%",
-              },
+              width: "fit-content",
             }}
             onClick={() =>
               setIsIntelligentOrderingEnabled(!isIntelligentOrderingEnabled)

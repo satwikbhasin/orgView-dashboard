@@ -282,7 +282,7 @@ const ItemGlance = ({ item, onClose }) => {
               color: "#1c69fb",
               padding: 1,
               alignItems: "center",
-              width: "35%",
+              width: "fit-content",
               gap: 1,
               "&:hover": {
                 backgroundColor: "#E4E3E3",
@@ -335,7 +335,7 @@ const ItemGlance = ({ item, onClose }) => {
               },
               alignItems: "center",
               gap: 1,
-              width: "65%",
+              width: "fit-content",
               padding: 1,
             }}
             onClick={() =>
