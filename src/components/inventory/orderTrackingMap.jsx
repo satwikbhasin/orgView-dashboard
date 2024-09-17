@@ -1,12 +1,17 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import tt from "@tomtom-international/web-sdk-maps";
-import "@tomtom-international/web-sdk-maps/dist/maps.css";
+import dynamic from "next/dynamic";
 import { Truck } from "lucide-react";
 import { renderToString } from "react-dom/server";
 import { Box, Typography, Chip } from "@mui/joy";
 import { useMediaQuery } from "@mui/material";
+
+const tt = dynamic(() => import("@tomtom-international/web-sdk-maps"), {
+  ssr: false,
+});
+
+import "@tomtom-international/web-sdk-maps/dist/maps.css";
 
 const OrderTrackingMap = ({ selectedOrder }) => {
   const mapRef = useRef(null);
@@ -36,40 +41,52 @@ const OrderTrackingMap = ({ selectedOrder }) => {
   const inventoryStatus = getInventoryStatus(selectedOrder?.status);
 
   useEffect(() => {
-    if (mapRef.current) {
-      const map = tt.map({
-        key: "cqdAo4VtS9HcyZTBIK4oOmy3dCGlm01Y",
-        container: mapRef.current,
-        center: [-122.4194, 37.7749],
-        zoom: 16,
-        style:
-          "https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBAV0diMkFRMUE2T3R1T3NydjthZDAzYTAxYS0wNjU0LTQ5NTYtODExOS1hY2VmYzA2OGRhOGY=.json?key=cqdAo4VtS9HcyZTBIK4oOmy3dCGlm01Y",
-      });
+    let map;
+    const loadMap = async () => {
+      const tt = await import("@tomtom-international/web-sdk-maps");
+      if (mapRef.current) {
+        map = tt.map({
+          key: "cqdAo4VtS9HcyZTBIK4oOmy3dCGlm01Y",
+          container: mapRef.current,
+          center: [-122.4194, 37.7749],
+          zoom: 16,
+          style:
+            "https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBAV0diMkFRMUE2T3R1T3NydjthZDAzYTAxYS0wNjU0LTQ5NTYtODExOS1hY2VmYzA2OGRhOGY=.json?key=cqdAo4VtS9HcyZTBIK4oOmy3dCGlm01Y",
+        });
 
-      map.on("load", () => {
-        setMapLoaded(true);
-      });
+        map.on("load", () => {
+          setMapLoaded(true);
+        });
 
-      const markerElement = document.createElement("div");
-      markerElement.style.width = "30px";
-      markerElement.style.height = "30px";
-      markerElement.style.display = "flex";
-      markerElement.style.alignItems = "center";
-      markerElement.style.justifyContent = "center";
-      markerElement.style.backgroundColor = "#1c69fb";
-      markerElement.style.borderRadius = "50%";
-      markerElement.style.boxShadow = "0 0 5px rgba(0,0,0,0.3)";
-      markerElement.style.zIndex = "0";
+        const markerElement = document.createElement("div");
+        markerElement.style.width = "30px";
+        markerElement.style.height = "30px";
+        markerElement.style.display = "flex";
+        markerElement.style.alignItems = "center";
+        markerElement.style.justifyContent = "center";
+        markerElement.style.backgroundColor = "#1c69fb";
+        markerElement.style.borderRadius = "50%";
+        markerElement.style.boxShadow = "0 0 5px rgba(0,0,0,0.3)";
+        markerElement.style.zIndex = "0";
 
-      const truckIconHTML = renderToString(<Truck color="white" size={20} />);
-      markerElement.innerHTML = truckIconHTML;
+        const truckIconHTML = renderToString(<Truck color="white" size={20} />);
+        markerElement.innerHTML = truckIconHTML;
 
-      const marker = new tt.Marker({ element: markerElement })
-        .setLngLat([-122.4194, 37.7749])
-        .addTo(map);
+        const marker = new tt.Marker({ element: markerElement })
+          .setLngLat([-122.4194, 37.7749])
+          .addTo(map);
+      }
+    };
 
-      return () => map.remove();
+    if (typeof window !== "undefined") {
+      loadMap();
     }
+
+    return () => {
+      if (map) {
+        map.remove();
+      }
+    };
   }, [selectedOrder]);
 
   return (

@@ -104,8 +104,6 @@ export default function InventoryItemsTable({ searchFilter }) {
   const isSmallScreen = useMediaQuery("(max-width:960px)");
   const menuRef = useRef(null);
 
-  console.log("Search Filter:", searchFilter);
-
   const handleSort = (key) => {
     const direction =
       sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
