@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/joy";
-import InventoryItemsTab from "@/components/inventory/inventoryItemsTab";
-import PendingOrdersTab from "@/components/inventory/pendingOrdersTab";
+import InventoryItemsTab from "@/components/inventory/inventoryItemsTab/inventoryItemsTab";
+import PendingOrdersTab from "@/components/inventory/pendingOrdersTab/pendingOrdersTab";
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Titlebar from "@/components/common/titlebar";
