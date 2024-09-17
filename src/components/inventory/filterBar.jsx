@@ -49,7 +49,7 @@ const FilterItem = ({ label, children, isEnabled, onToggle, iconSize }) => (
       >
         {label}
       </Typography>
-      <Tooltip title={isEnabled ? "Disable filter" : "Enable filter"}>
+      <Tooltip size="sm" title={isEnabled ? "Disable filter" : "Enable filter"}>
         <IconButton
           onClick={onToggle}
           className="toggle-button"
