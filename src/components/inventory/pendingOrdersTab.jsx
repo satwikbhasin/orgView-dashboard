@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box } from "@mui/joy";
+import { Box, Modal } from "@mui/joy";
 import PendingOrdersTable from "./PendingOrdersTable";
 import OrderTrackingMap from "@/components/inventory/orderTrackingMap";
 import { useMediaQuery } from "@mui/material";
@@ -28,6 +28,8 @@ const PendingOrdersTab = () => {
         display: "flex",
         width: "100%",
         height: "85vh",
+        justifyContent: "center",
+        alignItems: "center",
         padding: 3,
         gap: 2,
       }}
@@ -36,13 +38,26 @@ const PendingOrdersTab = () => {
         selectedOrder={selectedOrder}
         setSelectedOrder={handleOrderSelect}
       />
-      {selectedOrder && !isSmallScreen && <OrderTrackingMap selectedOrder={selectedOrder} />}
+      {selectedOrder && !isSmallScreen && (
+        <OrderTrackingMap selectedOrder={selectedOrder} />
+      )}
       {isSmallScreen && (
-        <OrderTrackingMap
-          selectedOrder={selectedOrder}
+        <Modal
           open={isModalOpen}
           onClose={handleCloseModal}
-        />
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "90%",
+            width: "90%",
+            position: "absolute",
+            top: "5%",
+            left: "5%",
+          }}
+        >
+          <OrderTrackingMap selectedOrder={selectedOrder} />
+        </Modal>
       )}
     </Box>
   );

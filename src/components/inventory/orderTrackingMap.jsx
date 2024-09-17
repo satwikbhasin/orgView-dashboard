@@ -5,17 +5,10 @@ import tt from "@tomtom-international/web-sdk-maps";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { Truck } from "lucide-react";
 import { renderToString } from "react-dom/server";
-import {
-  Box,
-  Typography,
-  Chip,
-  Modal,
-  ModalDialog,
-  ModalClose,
-} from "@mui/joy";
+import { Box, Typography, Chip } from "@mui/joy";
 import { useMediaQuery } from "@mui/material";
 
-const OrderTrackingMap = ({ selectedOrder, open, onClose }) => {
+const OrderTrackingMap = ({ selectedOrder }) => {
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
@@ -66,6 +59,7 @@ const OrderTrackingMap = ({ selectedOrder, open, onClose }) => {
       markerElement.style.backgroundColor = "#1c69fb";
       markerElement.style.borderRadius = "50%";
       markerElement.style.boxShadow = "0 0 5px rgba(0,0,0,0.3)";
+      markerElement.style.zIndex = "0";
 
       const truckIconHTML = renderToString(<Truck color="white" size={20} />);
       markerElement.innerHTML = truckIconHTML;
@@ -78,8 +72,18 @@ const OrderTrackingMap = ({ selectedOrder, open, onClose }) => {
     }
   }, [selectedOrder]);
 
-  const mapContent = (
-    <Box sx={{ position: "relative", height: "100%", width: "100%" }}>
+  return (
+    <Box
+      sx={{
+        position: "relative",
+        height: "100%",
+        boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
+        border: "1px solid #e0e0e0",
+        width: "75%",
+        overflow: "hidden",
+        visible: !isSmallScreen,
+      }}
+    >
       <div
         ref={mapRef}
         className={`smooth-render-element ${mapLoaded ? "visible" : ""}`}
@@ -90,16 +94,17 @@ const OrderTrackingMap = ({ selectedOrder, open, onClose }) => {
           className={`smooth-render-element ${mapLoaded ? "visible" : ""}`}
           sx={{
             position: "absolute",
-            top: 16,
-            left: 16,
+            top: isSmallScreen ? 16 : 16,
+            left: isSmallScreen ? "50%" : 16,
+            transform: isSmallScreen ? "translateX(-50%)" : "none",
             backgroundColor: "#f5f5f5",
             padding: 2,
             borderRadius: 10,
             border: "1px solid #1c69fb",
             boxShadow: "0 0 10px rgba(0,0,0,0.3)",
             zIndex: 1,
-            width: "30%",
-            height: "51%",
+            width: isSmallScreen ? "93%" : "30%",
+            height: "fit-content",
             overflow: "scroll",
           }}
         >
@@ -136,164 +141,163 @@ const OrderTrackingMap = ({ selectedOrder, open, onClose }) => {
           >
             {selectedOrder.orderStatus}
           </Typography>
-          <Typography
+          <Box
             sx={{
-              color: "grey",
-              fontWeight: 400,
-              fontSize: {
-                xs: 7,
-                md: 9,
-                lg: 11,
-                xl: 13,
-              },
-            }}
-          >
-            SKU
-          </Typography>
-          <Typography
-            sx={{
-              color: "black",
-              fontWeight: 600,
-              fontSize: {
-                xs: 8,
-                md: 10,
-                lg: 12,
-                xl: 14,
-              },
-              marginBottom: 1.5,
-            }}
-          >
-            {selectedOrder.sku}
-          </Typography>
-          <Typography
-            sx={{
-              color: "grey",
-              fontWeight: 400,
-              fontSize: {
-                xs: 7,
-                md: 9,
-                lg: 11,
-                xl: 13,
-              },
-            }}
-          >
-            CURRENT STOCK
-          </Typography>
-          <Typography
-            sx={{
-              color: "black",
-              fontWeight: 600,
-              fontSize: {
-                xs: 8,
-                md: 10,
-                lg: 12,
-                xl: 14,
-              },
-              marginBottom: 1.5,
-            }}
-          >
-            {selectedOrder.currentStock}
-          </Typography>
-          <Typography
-            sx={{
-              color: "grey",
-              fontWeight: 400,
-              fontSize: {
-                xs: 7,
-                md: 9,
-                lg: 11,
-                xl: 13,
-              },
-            }}
-          >
-            MIN THRESHOLD
-          </Typography>
-          <Typography
-            sx={{
-              color: "black",
-              fontWeight: 600,
-              fontSize: {
-                xs: 8,
-                md: 10,
-                lg: 12,
-                xl: 14,
-              },
-              marginBottom: 1.5,
-            }}
-          >
-            {selectedOrder.minThreshold}
-          </Typography>
-          <Typography
-            sx={{
-              color: "grey",
-              fontWeight: 400,
-              fontSize: {
-                xs: 7,
-                md: 9,
-                lg: 11,
-                xl: 13,
-              },
-              marginBottom: 0.5,
-            }}
-          >
-            INVENTORY STATUS
-          </Typography>
-          <Chip
-            size="small"
-            sx={{
-              backgroundColor: inventoryStatus.backgroundColor,
-              fontWeight: "bold",
               display: "flex",
-              alignItems: "center",
-              color: inventoryStatus.color,
-              justifyContent: "center",
-              height: "fit-content",
-              width: "fit-content",
-              paddingLeft: 1,
-              paddingRight: 1,
-              marginBottom: 1.5,
+              justifyContent: "space-between",
+              flexDirection: { xs: "row", md: "row" },
             }}
           >
-            <Typography
+            <Box
               sx={{
-                fontSize: {
-                  xs: 7,
-                  md: 9,
-                  lg: 11,
-                  xl: 13,
-                },
+                display: "flex",
+                flexDirection: "column",
               }}
-              color={inventoryStatus.color}
             >
-              {inventoryStatus.label}
-            </Typography>
-          </Chip>
+              <Typography
+                sx={{
+                  color: "grey",
+                  fontWeight: 400,
+                  fontSize: {
+                    xs: 7,
+                    md: 9,
+                    lg: 11,
+                    xl: 13,
+                  },
+                }}
+              >
+                SKU
+              </Typography>
+              <Typography
+                sx={{
+                  color: "black",
+                  fontWeight: 600,
+                  fontSize: {
+                    xs: 8,
+                    md: 10,
+                    lg: 12,
+                    xl: 14,
+                  },
+                  marginBottom: 1.5,
+                }}
+              >
+                {selectedOrder.sku}
+              </Typography>
+              <Typography
+                sx={{
+                  color: "grey",
+                  fontWeight: 400,
+                  fontSize: {
+                    xs: 7,
+                    md: 9,
+                    lg: 11,
+                    xl: 13,
+                  },
+                }}
+              >
+                CURRENT STOCK
+              </Typography>
+              <Typography
+                sx={{
+                  color: "black",
+                  fontWeight: 600,
+                  fontSize: {
+                    xs: 8,
+                    md: 10,
+                    lg: 12,
+                    xl: 14,
+                  },
+                  marginBottom: 1.5,
+                }}
+              >
+                {selectedOrder.currentStock}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Typography
+                sx={{
+                  color: "grey",
+                  fontWeight: 400,
+                  fontSize: {
+                    xs: 7,
+                    md: 9,
+                    lg: 11,
+                    xl: 13,
+                  },
+                }}
+              >
+                MIN THRESHOLD
+              </Typography>
+              <Typography
+                sx={{
+                  color: "black",
+                  fontWeight: 600,
+                  fontSize: {
+                    xs: 8,
+                    md: 10,
+                    lg: 12,
+                    xl: 14,
+                  },
+                  marginBottom: 1.5,
+                }}
+              >
+                {selectedOrder.minThreshold}
+              </Typography>
+              <Typography
+                sx={{
+                  color: "grey",
+                  fontWeight: 400,
+                  fontSize: {
+                    xs: 7,
+                    md: 9,
+                    lg: 11,
+                    xl: 13,
+                  },
+                  marginBottom: 0.5,
+                }}
+              >
+                INVENTORY STATUS
+              </Typography>
+              <Chip
+                size="small"
+                sx={{
+                  backgroundColor: inventoryStatus.backgroundColor,
+                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                  color: inventoryStatus.color,
+                  justifyContent: "center",
+                  height: "fit-content",
+                  width: "fit-content",
+                  paddingLeft: 1,
+                  paddingRight: 1,
+                  marginBottom: 1.5,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: 7,
+                      md: 9,
+                      lg: 11,
+                      xl: 13,
+                    },
+                  }}
+                  color={inventoryStatus.color}
+                >
+                  {inventoryStatus.label}
+                </Typography>
+              </Chip>
+            </Box>
+          </Box>
         </Box>
       )}
     </Box>
-  );
-
-  return isSmallScreen ? (
-    <Modal open={open} onClose={onClose}>
-      <ModalDialog
-        sx={{
-          width: "90%",
-          maxWidth: "none",
-          height: "90%",
-          display: "flex",
-          position: "relative",
-        }}
-      >
-        <ModalClose />
-        <Box sx={{ flex: 1, position: "relative" }}>
-          {mapContent}
-
-          {mapLoaded ? "true" : "false"}
-        </Box>
-      </ModalDialog>
-    </Modal>
-  ) : (
-    mapContent
   );
 };
 

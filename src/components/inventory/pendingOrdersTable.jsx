@@ -24,6 +24,9 @@ const cellStyle = {
   fontWeight: "500",
   height: "5vh",
   textAlign: "left",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
 };
 
 const ResponsiveTypography = ({ children }) => (
@@ -120,91 +123,104 @@ const PendingOrdersTable = ({ selectedOrder, setSelectedOrder }) => {
         width: isSmallScreen ? "100%" : "25%",
       }}
     >
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Input
           startDecorator={<Search size={16} />}
           size="sm"
           placeholder="Search by item name"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          sx={{ marginBottom: 2 }}
+          sx={{
+            marginBottom: 1,
+            fontSize: {
+              xs: 8,
+              lg: 10,
+              xl: 12,
+            },
+            height: "5%"
+          }}
         />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
-          border: { xs: "transparent", sm: "1px solid #dedede" },
-          overflow: "auto",
-          height: "100%",   
-        }}
-      >
-        <Table>
-          <thead>
-            <tr>
-              <SortableHeader label="SKU" onClick={() => handleSort("sku")} />
-              <SortableHeader
-                label="Item Name"
-                onClick={() => handleSort("itemName")}
-              />
-              <SortableHeader
-                label="Order Status"
-                onClick={() => handleSort("orderStatus")}
-              />
-            </tr>
-          </thead>
-          <tbody>
-            {sortedOrders.map((order) => (
-              <tr
-                key={order.id}
-                style={{
-                  textAlign: "center",
-                  backgroundColor:
-                    selectedOrder?.id === order.id ? "#f0f4f8" : "#fbfcfe",
-                  transition: "background-color 0.3s",
-                }}
-                onClick={() => setSelectedOrder(order)}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#f0f4f8";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    selectedOrder?.id === order.id ? "#f0f4f8" : "#fbfcfe";
-                }}
-              >
-                <td style={cellStyle}>
-                  <ResponsiveCellTypography>
-                    {order.sku}
-                  </ResponsiveCellTypography>
-                </td>
-                <td style={cellStyle}>
-                  <ResponsiveCellTypography>
-                    {order.itemName}
-                  </ResponsiveCellTypography>
-                </td>
-                <td style={cellStyle}>
-                  <Box sx={{ alignItems: "center", justifyContent: "left" }}>
-                    <Typography
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        width: "100%",
-                        fontSize: {
-                          xs: "8px",
-                          lg: "10px",
-                          xl: "12px",
-                        },
-                        color: "black",
-                      }}
-                    >
-                      {order.orderStatus}
-                    </Typography>
-                  </Box>
-                </td>
+        <Box
+          sx={{
+            display: "flex",
+            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
+            border: { xs: "transparent", sm: "1px solid #dedede" },
+            overflow: "auto",
+            // height: "80vh",
+          }}
+        >
+          <Table>
+            <thead>
+              <tr>
+                <SortableHeader label="SKU" onClick={() => handleSort("sku")} />
+                <SortableHeader
+                  label="Item Name"
+                  onClick={() => handleSort("itemName")}
+                />
+                <SortableHeader
+                  label="Order Status"
+                  onClick={() => handleSort("orderStatus")}
+                />
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {sortedOrders.map((order) => (
+                <tr
+                  key={order.id}
+                  style={{
+                    textAlign: "center",
+                    backgroundColor:
+                      selectedOrder?.id === order.id ? "#f0f4f8" : "#fbfcfe",
+                    transition: "background-color 0.3s",
+                  }}
+                  onClick={() => setSelectedOrder(order)}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = "#f0f4f8";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor =
+                      selectedOrder?.id === order.id ? "#f0f4f8" : "#fbfcfe";
+                  }}
+                >
+                  <td style={cellStyle}>
+                    <ResponsiveCellTypography>
+                      {order.sku}
+                    </ResponsiveCellTypography>
+                  </td>
+                  <td style={cellStyle}>
+                    <ResponsiveCellTypography>
+                      {order.itemName}
+                    </ResponsiveCellTypography>
+                  </td>
+                  <td style={cellStyle}>
+                    <Box sx={{ alignItems: "center", justifyContent: "left" }}>
+                      <Typography
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100%",
+                          fontSize: {
+                            xs: "8px",
+                            lg: "10px",
+                            xl: "12px",
+                          },
+                          color: "black",
+                        }}
+                      >
+                        {order.orderStatus}
+                      </Typography>
+                    </Box>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Box>
       </Box>
     </Box>
   );

@@ -104,6 +104,8 @@ export default function InventoryItemsTable({ searchFilter }) {
   const isSmallScreen = useMediaQuery("(max-width:960px)");
   const menuRef = useRef(null);
 
+  console.log("Search Filter:", searchFilter);
+
   const handleSort = (key) => {
     const direction =
       sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
@@ -125,11 +127,11 @@ export default function InventoryItemsTable({ searchFilter }) {
     const matchesItemName = item.itemName
       .toLowerCase()
       .includes(lowerCaseItemName);
-    const matchesStatus = status === "any" || item.status === status;
+    const matchesStatus = status === "any" || item.stockStatus === status;
     const lowerCaseSku = (sku || "").toLowerCase();
     const matchesSku = item.sku.toLowerCase().includes(lowerCaseSku);
     const matchesCategory = category === "any" || item.category === category;
-    return matchesItemName || matchesStatus || matchesSku || matchesCategory;
+    return matchesItemName && matchesStatus && matchesSku && matchesCategory;
   });
 
   const itemsPerPage = 15;
@@ -223,7 +225,9 @@ export default function InventoryItemsTable({ searchFilter }) {
   }, [menuRef]);
 
   return (
-    <Box sx={{ display: "flex", marginRight: selectedItem ? 1 : 0, width: "100%" }}>
+    <Box
+      sx={{ display: "flex", marginRight: selectedItem ? 1 : 0, width: "100%" }}
+    >
       <Box
         sx={{
           display: "flex",
