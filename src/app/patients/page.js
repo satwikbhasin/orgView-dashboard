@@ -14,10 +14,14 @@ const Patients = () => {
     });
 
     const handleStateChange = (key, value) => {
-        setState(prevState => ({
+        setState((prevState) => ({
             ...prevState,
             [key]: value,
-            currentPage: key === 'patientName' || key === 'selectedPayer' ? 1 : prevState.currentPage
+            currentPage:
+                key === "patientName" ||
+                    key === "selectedPayer"
+                    ? 1
+                    : prevState.currentPage,
         }));
     };
 

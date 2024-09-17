@@ -10,7 +10,7 @@ export default function InventoryTab() {
   const [state, setState] = useState({
     currentPage: 1,
     itemName: "",
-    stockStatus: "any",
+    status: "any",
     category: "any",
     sku: "",
   });
@@ -28,6 +28,7 @@ export default function InventoryTab() {
           : prevState.currentPage,
     }));
   };
+
   return (
     <Box
       sx={{

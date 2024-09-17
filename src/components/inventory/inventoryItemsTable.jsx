@@ -126,7 +126,7 @@ export default function InventoryItemsTable({ searchFilter }) {
     const matchesItemName = item.itemName
       .toLowerCase()
       .includes(lowerCaseItemName);
-    const matchesStatus = status === "any" || item.stockStatus === status;
+    const matchesStatus = status === "any" || item.status === status;
     const lowerCaseSku = (sku || "").toLowerCase();
     const matchesSku = item.sku.toLowerCase().includes(lowerCaseSku);
     const matchesCategory = category === "any" || item.category === category;

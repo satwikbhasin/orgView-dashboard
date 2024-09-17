@@ -86,7 +86,8 @@ const SortableHeader = ({ label, onClick }) => (
 );
 
 export default function PatientsTable({ searchFilter }) {
-  const { patientName, selectedPayer, currentPage } = searchFilter;
+  const [currentPage, setCurrentPage] = useState(1);
+  const { patientName, selectedPayer } = searchFilter;
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const isSmallScreen = useMediaQuery("(max-width:960px)");
 
