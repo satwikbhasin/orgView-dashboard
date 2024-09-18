@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import Head from "next/head";
+import { Analytics } from "@vercel/analytics/react"
 
 import "./globals.css";
 
@@ -37,9 +38,10 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Suspense fallback={<div>Loading...</div>}>
-          <Box sx={{display: "flex", flexDirection: "row"}}>
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
             <Navbar />
             {children}
+            <Analytics />
           </Box>
         </Suspense>
       </body>
