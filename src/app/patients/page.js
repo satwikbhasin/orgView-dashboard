@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/joy";
+
 import FilterBar from "@/components/patients/filterBar";
 import PatientsTable from "@/components/patients/patientsTable";
 import Titlebar from "@/components/common/titlebar";

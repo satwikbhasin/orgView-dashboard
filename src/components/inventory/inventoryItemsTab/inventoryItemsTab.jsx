@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Box } from "@mui/joy";
 import FilterBar from "./filterBar";
 import ActionBar from "./conifgurationsBar";
-import InventoryTable from "@/components/inventory/inventoryItemsTable";
+import InventoryTable from "@/components/inventory/inventoryItemsTab/inventoryItemsTable";
 
 export default function InventoryTab() {
   const [state, setState] = useState({

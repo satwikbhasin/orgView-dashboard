@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { Box, Modal } from "@mui/joy";
-import PendingOrdersTable from "@/components/inventory/pendingOrdersTable";
-import OrderTrackingMap from "@/components/inventory/orderTrackingMap";
+import PendingOrdersTable from "@/components/inventory/pendingOrdersTab/pendingOrdersTable";
+import OrderTrackingMap from "@/components/inventory/pendingOrdersTab/orderTrackingMap";
 import { useMediaQuery } from "@mui/material";
 
 const PendingOrdersTab = () => {

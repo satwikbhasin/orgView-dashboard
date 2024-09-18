@@ -18,11 +18,12 @@ import {
   ChevronLeft,
   TrendingUp,
 } from "lucide-react";
-import inventoryData from "@/data/inventory";
 import { useMediaQuery } from "@mui/material";
-import ItemsCardView from "./itemsCardView";
-import ItemGlance from "./itemGlance";
-import UsageModal from "./usageModel";
+
+import inventoryData from "@/data/inventory";
+import ItemsCardView from "@/components/inventory/inventoryItemsTab/itemsCardView";
+import ItemGlance from "@/components/inventory/inventoryItemsTab/itemGlance";
+import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
 
 const headerStyle = {
   height: "5vh",

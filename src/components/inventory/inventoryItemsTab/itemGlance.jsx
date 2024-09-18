@@ -20,7 +20,7 @@ import {
 import { useMediaQuery } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import UsageModal from "@/components/inventory/usageModel";
+import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
 
 const getStatus = (status) => {
   switch (status) {
