@@ -403,7 +403,7 @@ export default function InventoryItemsTable({ searchFilter }) {
                 </Box>
               </>
             ) : (
-              <ItemsCardView />
+              <ItemsCardView items={currentItems} />
             )}
           </Box>
           <Box

@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Box, Typography, Menu, MenuItem } from "@mui/joy";
 import { ShoppingBasket, Dot, TrendingUp } from "lucide-react";
-import inventoryData from "@/data/inventory";
 import UsageModal from "./usageModel";
 import { useMediaQuery } from "@mui/material";
 
@@ -20,7 +19,7 @@ const getStatus = (status) => {
   }
 };
 
-export default function ItemsCardView() {
+export default function ItemsCardView({ items }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [usageModalOpen, setUsageModalOpen] = useState(false);
@@ -57,7 +56,7 @@ export default function ItemsCardView() {
 
   return (
     <Box sx={{ overflow: "scroll", flex: 1 }}>
-      {inventoryData.map((item) => (
+      {items.map((item) => (
         <Box
           key={item.sku}
           sx={{
