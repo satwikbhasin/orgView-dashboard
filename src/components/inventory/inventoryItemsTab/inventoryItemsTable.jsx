@@ -239,7 +239,7 @@ export default function InventoryItemsTable({ searchFilter }) {
           paddingBottom: 1,
           paddingLeft: 0,
           paddingTop: 0,
-          paddingRight: 2,
+          paddingRight: { xs: 0, sm: 2 },
         }}
       >
         <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
