@@ -18,8 +18,7 @@ export default function ConfigurationsBar() {
   return (
     <Box
       sx={{
-        backgroundColor: "#fafafa",
-        boxShadow: 3,
+        backgroundColor: "inherit",
         padding: 1,
         display: "flex",
         flexDirection: "column",
