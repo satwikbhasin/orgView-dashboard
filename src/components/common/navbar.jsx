@@ -105,7 +105,7 @@ export default function Navbar() {
         alignItems: "center",
         width: { xs: "15vw", md: collapsedNav ? "8vw" : "20vw" },
         position: "sticky",
-        borderRight: `1px solid ${theme.palette.navbar.border}`,
+        borderRight: `1px solid ${theme.palette.border}`,
         transition: "width 0.2s ease",
       }}
     >
@@ -257,7 +257,7 @@ export default function Navbar() {
       <Box
         sx={{
           width: "100%",
-          borderBottom: `1px solid ${theme.palette.navbar.border}`,
+          borderBottom: `1px solid ${theme.palette.border}`,
           marginY: 0,
         }}
       />

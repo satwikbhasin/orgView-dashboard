@@ -3,8 +3,10 @@
 import React from "react";
 import { Box, Typography } from "@mui/joy";
 import { Send, ClipboardPlus } from "lucide-react";
+import { useTheme } from "@mui/material/styles";
 
 const PatientsCardView = ({ patients }) => {
+  const theme = useTheme();
   return (
     <Box sx={{ overflow: "scroll", flex: 1 }}>
       {patients.map((patient) => (
@@ -12,11 +14,12 @@ const PatientsCardView = ({ patients }) => {
           key={patient.id}
           sx={{
             padding: 2,
-            borderBottom: "1px solid #e0e0e0",
-            backgroundColor: "#fbfcfe",
+            borderBottom: `1px solid ${theme.palette.border}`,
+            backgroundColor: theme.palette.base,
+            color: theme.palette.text,
             transition: "background-color 0.3s",
             "&:hover": {
-              backgroundColor: "#f0f4f8",
+              backgroundColor: theme.palette.hover,
             },
           }}
         >
@@ -40,15 +43,15 @@ const PatientsCardView = ({ patients }) => {
                 fontWeight: 800,
                 color:
                   patient.status === "Sent"
-                    ? "#104b0f"
+                    ? theme.palette.status.success.text
                     : patient.status === "Created"
-                    ? "#FF8300"
+                    ? theme.palette.status.warning.text
                     : "inherit",
                 backgroundColor:
                   patient.status === "Sent"
-                    ? "#e2fbe3"
+                    ? theme.palette.status.success.background
                     : patient.status === "Created"
-                    ? "#f8f5e7"
+                    ? theme.palette.status.warning.background
                     : "inherit",
                 borderRadius: 10,
                 padding: "5px",

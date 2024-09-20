@@ -5,19 +5,7 @@ import { Box, Typography, Menu, MenuItem } from "@mui/joy";
 import { ShoppingBasket, Dot, TrendingUp } from "lucide-react";
 import UsageModal from "./usageModel";
 import { useMediaQuery } from "@mui/material";
-
-const getStatus = (status) => {
-  switch (status) {
-    case "green":
-      return { label: "Green", color: "#C0F1EF", backgroundColor: "#03625E" };
-    case "yellow":
-      return { label: "Yellow", color: "#F1E7C9", backgroundColor: "#BB900A" };
-    case "red":
-      return { label: "Red", color: "#F7DDD4", backgroundColor: "#AD3206" };
-    default:
-      return { label: "Unknown", color: "#000000", backgroundColor: "#F0F0F0" };
-  }
-};
+import { useTheme } from "@mui/material/styles";
 
 export default function ItemsCardView({ items }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -25,6 +13,7 @@ export default function ItemsCardView({ items }) {
   const [usageModalOpen, setUsageModalOpen] = useState(false);
   const menuRef = useRef(null);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
+  const theme = useTheme();
 
   const handleMenuOpen = (event, item) => {
     setAnchorEl(event.currentTarget);
@@ -54,6 +43,35 @@ export default function ItemsCardView({ items }) {
     };
   }, [menuRef]);
 
+  const getStatus = (status) => {
+    switch (status) {
+      case "green":
+        return {
+          label: "Green",
+          color: theme.palette.inventory.status.green.text,
+          backgroundColor: theme.palette.inventory.status.green.background,
+        };
+      case "yellow":
+        return {
+          label: "Yellow",
+          color: theme.palette.inventory.status.yellow.text,
+          backgroundColor: theme.palette.inventory.status.yellow.background,
+        };
+      case "red":
+        return {
+          label: "Red",
+          color: theme.palette.inventory.status.red.text,
+          backgroundColor: theme.palette.inventory.status.red.background,
+        };
+      default:
+        return {
+          label: "Unknown",
+          color: theme.palette.text,
+          backgroundColor: theme.palette.transparent,
+        };
+    }
+  };
+
   return (
     <Box sx={{ overflow: "scroll", flex: 1 }}>
       {items.map((item) => (
@@ -61,11 +79,12 @@ export default function ItemsCardView({ items }) {
           key={item.sku}
           sx={{
             padding: 2,
-            borderBottom: "1px solid #e0e0e0",
-            backgroundColor: "#fbfcfe",
+            borderBottom: `1px solid ${theme.palette.border}`,
+            color: theme.palette.text,
+            backgroundColor: theme.palette.base,
             transition: "background-color 0.3s",
             "&:hover": {
-              backgroundColor: "#f0f4f8",
+              backgroundColor: theme.palette.hover,
             },
           }}
           onClick={(event) => handleMenuOpen(event, item)}
@@ -171,7 +190,7 @@ export default function ItemsCardView({ items }) {
                   color:
                     item.status == "red"
                       ? getStatus(item.status).backgroundColor
-                      : "black",
+                      : theme.palette.text,
                   fontWeight: item.status == "red" ? 800 : 400,
                 }}
               >
@@ -202,7 +221,7 @@ export default function ItemsCardView({ items }) {
             ref={menuRef}
           >
             <MenuItem onClick={() => handleMenuItemClick("View Usage")}>
-              <TrendingUp color="#1c69fb" size={13} />
+              <TrendingUp color={theme.palette.accent} size={13} />
               <Typography
                 sx={{
                   fontSize: {
@@ -217,7 +236,7 @@ export default function ItemsCardView({ items }) {
               </Typography>
             </MenuItem>
             <MenuItem onClick={() => handleMenuItemClick("Order")}>
-              <ShoppingBasket color="#1c69fb" size={13} />
+              <ShoppingBasket color={theme.palette.accent} size={13} />
               <Typography
                 sx={{
                   fontSize: {
@@ -243,7 +262,7 @@ export default function ItemsCardView({ items }) {
             chart: {
               type: "line",
               zoomType: "xy",
-              backgroundColor: "#fafafa",
+              backgroundColor: theme.palette.base,
               height: "100%",
             },
             title: {
@@ -272,14 +291,14 @@ export default function ItemsCardView({ items }) {
               {
                 name: "Units per Month",
                 data: selectedItem.usage.data,
-                color: "#1c69fb",
+                color: theme.palette.accent,
               },
             ],
             plotOptions: {
               line: {
                 marker: {
                   enabled: true,
-                  fillColor: "#1c69fb",
+                  fillColor: theme.palette.accent,
                 },
               },
             },

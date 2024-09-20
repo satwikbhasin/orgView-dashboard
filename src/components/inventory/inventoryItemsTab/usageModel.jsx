@@ -11,12 +11,14 @@ import {
 } from "@mui/joy";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import { useTheme } from "@mui/material/styles";
 
 const UsageModal = ({ layout, onClose, item, chartOptions }) => {
+  const theme = useTheme();
   const pieChartOptions = {
     chart: {
       type: "pie",
-      backgroundColor: "#fafafa",
+      backgroundColor: theme.palette.base,
       height: "80%",
     },
     title: {
@@ -51,7 +53,7 @@ const UsageModal = ({ layout, onClose, item, chartOptions }) => {
         sx={{
           border: "none",
           boxShadow: "none",
-          backgroundColor: "#fafafa",
+          backgroundColor: theme.palette.base,
         }}
       >
         <DialogTitle
@@ -61,7 +63,7 @@ const UsageModal = ({ layout, onClose, item, chartOptions }) => {
             alignItems: "center",
             width: "100%",
             height: "10%",
-            color: "black",
+            color: theme.palette.text,
           }}
         >
           Usage for {item.itemName}

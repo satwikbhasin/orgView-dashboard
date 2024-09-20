@@ -9,10 +9,59 @@ const lightTheme = createTheme({
         text: "#000000",
         transparent: "transparent",
         base: "#FAFAFA",
+        hover: "#F0F4F8",
         disabled: "grey",
+        border: "#DEDEDE",
+        status: {
+            success: {
+                text: "#104B0F",
+                background: "#E2FBE3",
+            },
+            warning: {
+                text: "#FF8300",
+                background: "#F8F5E7",
+            },
+            error: {
+                text: "#F7DDD4",
+                background: "#AD3206",
+            },
+        },
+        inventory: {
+            status: {
+                green: {
+                    text: "#C0F1EF",
+                    background: "#03625E",
+                },
+                yellow: {
+                    text: "#F1E7C9",
+                    background: "#BB900A",
+                },
+                red: {
+                    text: "#F7DDD4",
+                    background: "#AD3206",
+                },
+            },
+            itemGlance: {
+                header: {
+                    background: "#F0F4F8",
+                    text: "#707070",
+                },
+                orderButton: {
+                    background: "#EDEDED",
+                    hover: {
+                        background: "#E4E3E3",
+                    }
+                }
+            },
+            pendingOrdersTab: {
+                orderMapTrackingCard: {
+                    background: "rgba( 213, 212, 212, 0.15)",
+                    boxShadow: "transparent",
+                },
+            }
+        },
         navbar: {
             base: "#FFFFFF",
-            border: "#DEDEDE",
             tab: {
                 selected: {
                     text: "#1C69FB",
@@ -50,7 +99,20 @@ const lightTheme = createTheme({
                 }
             }
         },
-    },
+        table: {
+            header: {
+                background: "#F0F4F8",
+                text: "#707070",
+            },
+            cell: {
+                background: "#FBFCFE",
+                text: "#000000",
+                hover: {
+                    background: "#F0F4F8",
+                }
+            },
+        },
+    }
 });
 
 const darkTheme = createTheme({
@@ -61,10 +123,59 @@ const darkTheme = createTheme({
         text: "#FFFFFF",
         transparent: "transparent",
         base: "#181818",
+        hover: "#232A2E",
         disabled: "grey",
+        border: "#32383E",
+        status: {
+            success: {
+                text: "#C0F1EF",
+                background: "#03625E",
+            },
+            warning: {
+                text: "#F1E7C9",
+                background: "#BB900A",
+            },
+            error: {
+                text: "#F7DDD4",
+                background: "#AD3206",
+            },
+        },
+        inventory: {
+            status: {
+                green: {
+                    text: "#C0F1EF",
+                    background: "#03625E",
+                },
+                yellow: {
+                    text: "#F1E7C9",
+                    background: "#BB900A",
+                },
+                red: {
+                    text: "#F7DDD4",
+                    background: "#AD3206",
+                },
+            },
+            itemGlance: {
+                header: {
+                    background: "#0B0D0E",
+                    text: "#FFFFFF",
+                },
+                orderButton: {
+                    background: "#0B0D0E",
+                    hover: {
+                        background: "#232A2E",
+                    }
+                }
+            },
+            pendingOrdersTab: {
+                orderMapTrackingCard: {
+                    background: "rgba( 52, 52, 52, 0.30 )",
+                    boxShadow: "transparent",
+                },
+            }
+        },
         navbar: {
-            base: "#1A1A1A",
-            border: "#707070",
+            base: "#0B0D0E",
             tab: {
                 selected: {
                     text: "#FFFFFF",
@@ -101,8 +212,21 @@ const darkTheme = createTheme({
                     background: "#252525",
                 }
             }
+        },
+        table: {
+            header: {
+                background: "#0B0D0E",
+                text: "#FFFFFF",
+            },
+            cell: {
+                background: "#1A1A1A",
+                text: "#FFFFFF",
+                hover: {
+                    background: "#232A2E",
+                }
+            },
         }
     },
-}); 2
+});
 
 export { lightTheme, darkTheme };

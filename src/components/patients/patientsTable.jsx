@@ -12,25 +12,26 @@ import {
 } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
 import PatientsCardView from "@/components/patients/patientsCardView";
+import { useTheme, styled } from "@mui/material/styles";
 
-const headerStyle = {
+const headerStyle = (theme) => ({
   height: "6vh",
   fontWeight: "700",
   textAlign: "center",
   verticalAlign: "middle",
-  backgroundColor: "#f0f4f8",
+  backgroundColor: theme.palette.table.header.background,
   position: "sticky",
   cursor: "pointer",
   whiteSpace: "wrap",
   overflow: "hidden",
-};
+});
 
-const cellStyle = {
+const cellStyle = (theme) => ({
   fontWeight: "500",
   height: "6vh",
   textAlign: "left",
   whiteSpace: "wrap",
-};
+});
 
 const ResponsiveCellTypography = ({ children }) => (
   <Typography
@@ -64,8 +65,8 @@ const ResponsiveTypography = ({ children }) => (
   </Typography>
 );
 
-const SortableHeader = ({ label, onClick }) => (
-  <th style={headerStyle} onClick={onClick}>
+const SortableHeader = ({ label, onClick, theme }) => (
+  <th style={headerStyle(theme)} onClick={onClick}>
     <IconButton
       sx={{
         display: "flex",
@@ -75,21 +76,32 @@ const SortableHeader = ({ label, onClick }) => (
         padding: 0,
         width: "100%",
         "&:hover": {
-          backgroundColor: "transparent",
+          backgroundColor: theme.palette.transparent,
         },
       }}
     >
       {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
-      {label && <ArrowUpDown color="#1c69fb" size={10} strokeWidth={3} />}
+      {label && (
+        <ArrowUpDown color={theme.palette.accent} size={10} strokeWidth={3} />
+      )}
     </IconButton>
   </th>
 );
+
+const StyledTableRow = styled("tr")(({ theme }) => ({
+  backgroundColor: theme.palette.table.cell.background,
+  transition: "background-color 0.3s",
+  "&:hover": {
+    backgroundColor: theme.palette.table.cell.hover.background,
+  },
+}));
 
 export default function PatientsTable({ searchFilter }) {
   const [currentPage, setCurrentPage] = useState(1);
   const { patientName, selectedPayer } = searchFilter;
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const isSmallScreen = useMediaQuery("(max-width:960px)");
+  const theme = useTheme();
 
   const handleSort = (key) => {
     const direction =
@@ -174,7 +186,10 @@ export default function PatientsTable({ searchFilter }) {
       >
         <Box
           sx={{
-            border: { xs: "transparent", sm: "1px solid #dedede" },
+            border: {
+              xs: theme.palette.transparent,
+              sm: `1px solid ${theme.palette.border}`,
+            },
             overflow: "hidden",
             height: "100%",
             width: "100%",
@@ -191,38 +206,47 @@ export default function PatientsTable({ searchFilter }) {
                     <SortableHeader
                       label="DOS"
                       onClick={() => handleSort("dos")}
+                      theme={theme}
                     />
                     <SortableHeader
                       label="Patient Name"
                       onClick={() => handleSort("ptName")}
+                      theme={theme}
                     />
                     <SortableHeader
                       label="Create Date"
                       onClick={() => handleSort("createDate")}
+                      theme={theme}
                     />
                     <SortableHeader
                       label="Payer"
                       onClick={() => handleSort("payer")}
+                      theme={theme}
                     />
                     <SortableHeader
                       label="Provider"
                       onClick={() => handleSort("provider")}
+                      theme={theme}
                     />
                     <SortableHeader
                       label="Claim ID"
                       onClick={() => handleSort("claimId")}
+                      theme={theme}
                     />
                     <SortableHeader
                       label="Procedures"
                       onClick={() => handleSort("procedures")}
+                      theme={theme}
                     />
                     <SortableHeader
                       label="Status"
                       onClick={() => handleSort("status")}
+                      theme={theme}
                     />
                     <SortableHeader
                       label="Charges"
                       onClick={() => handleSort("charges")}
+                      theme={theme}
                     />
                   </tr>
                 </thead>
@@ -231,58 +255,45 @@ export default function PatientsTable({ searchFilter }) {
                 <Table>
                   <tbody>
                     {currentPatients.map((patient) => (
-                      <tr
-                        key={patient.id}
-                        style={{
-                          textAlign: "center",
-                          backgroundColor: "#fbfcfe",
-                          transition: "background-color 0.3s",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = "#f0f4f8";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = "#fbfcfe";
-                        }}
-                      >
-                        <td style={cellStyle}>
+                      <StyledTableRow key={patient.id}>
+                        <td style={cellStyle(theme)}>
                           <ResponsiveCellTypography>
                             {patient.dos}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle}>
+                        <td style={cellStyle(theme)}>
                           <ResponsiveCellTypography>
                             {patient.ptName}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle}>
+                        <td style={cellStyle(theme)}>
                           <ResponsiveCellTypography>
                             {patient.createDate}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle}>
+                        <td style={cellStyle(theme)}>
                           <ResponsiveCellTypography>
                             {patient.payer}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle}>
+                        <td style={cellStyle(theme)}>
                           <ResponsiveCellTypography>
                             {patient.provider}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle}>
+                        <td style={cellStyle(theme)}>
                           <ResponsiveCellTypography>
                             {patient.claimId}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle}>
+                        <td style={cellStyle(theme)}>
                           <ResponsiveCellTypography>
                             {patient.procedures}
                           </ResponsiveCellTypography>
                         </td>
                         <td
                           style={{
-                            ...cellStyle,
+                            ...cellStyle(theme),
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
@@ -290,26 +301,26 @@ export default function PatientsTable({ searchFilter }) {
                         >
                           <Box
                             sx={{
-                              fontWeight: "500",
+                              fontWeight: 600,
                               color:
                                 patient.status === "Sent"
-                                  ? "#104b0f"
+                                  ? theme.palette.status.success.text
                                   : patient.status === "Created"
-                                  ? "#FF8300"
+                                  ? theme.palette.status.warning.text
                                   : "inherit",
                               backgroundColor:
                                 patient.status === "Sent"
-                                  ? "#e2fbe3"
+                                  ? theme.palette.status.success.background
                                   : patient.status === "Created"
-                                  ? "#f8f5e7"
+                                  ? theme.palette.status.warning.background
                                   : "inherit",
                               borderRadius: 10,
                               width: "fit-content",
-                              padding: "5px",
+                              padding: 0.5,
                               alignItems: "center",
                               height: "fit-content",
                               display: "flex",
-                              gap: "6px",
+                              gap: 0.5,
                             }}
                           >
                             {patient.status === "Sent" ? (
@@ -322,12 +333,12 @@ export default function PatientsTable({ searchFilter }) {
                             </ResponsiveCellTypography>
                           </Box>
                         </td>
-                        <td style={cellStyle}>
+                        <td style={cellStyle(theme)}>
                           <ResponsiveCellTypography>
                             {patient.charges}
                           </ResponsiveCellTypography>
                         </td>
-                      </tr>
+                      </StyledTableRow>
                     ))}
                   </tbody>
                 </Table>
@@ -356,14 +367,14 @@ export default function PatientsTable({ searchFilter }) {
                 md: 12,
               },
               padding: 0.8,
-              color: "#1c69fb",
-              backgroundColor: "transparent",
+              color: theme.palette.accent,
+              backgroundColor: theme.palette.transparent,
               "&:hover": {
-                backgroundColor: "transparent",
+                backgroundColor: theme.palette.transparent,
               },
               "&:disabled": {
-                backgroundColor: "transparent",
-                color: "#707070",
+                backgroundColor: theme.palette.transparent,
+                color: theme.palette.disabled,
               },
             }}
             startDecorator={<ChevronLeft size={16} />}
@@ -376,14 +387,19 @@ export default function PatientsTable({ searchFilter }) {
                 key={index}
                 size="small"
                 sx={{
-                  backgroundColor: "transparent",
-                  color: page === currentPage ? "#1c69fb" : "black",
+                  backgroundColor: theme.palette.transparent,
+                  color:
+                    page === currentPage
+                      ? theme.palette.accent
+                      : theme.palette.text,
                   cursor: page !== "..." ? "pointer" : "default",
                   fontWeight: page === currentPage ? "800" : "600",
                   "&:hover": {
-                    color: page === currentPage ? "#1c69fb" : "#1c69fb",
-                    backgroundColor:
-                      page === currentPage ? "transparent" : "transparent",
+                    color:
+                      page === currentPage
+                        ? theme.palette.accent
+                        : theme.palette.text,
+                    backgroundColor: theme.palette.transparent,
                   },
                 }}
                 onClick={() => page !== "..." && setCurrentPage(page)}
@@ -403,14 +419,14 @@ export default function PatientsTable({ searchFilter }) {
                 md: 12,
               },
               padding: 0.8,
-              color: "#1c69fb",
-              backgroundColor: "transparent",
+              color: theme.palette.accent,
+              backgroundColor: theme.palette.transparent,
               "&:hover": {
-                backgroundColor: "transparent",
+                backgroundColor: theme.palette.transparent,
               },
               "&:disabled": {
-                backgroundColor: "transparent",
-                color: "#707070",
+                backgroundColor: theme.palette.transparent,
+                color: theme.palette.disabled,
               },
             }}
             endDecorator={<ChevronRight size={16} />}
