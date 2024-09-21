@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Box, Button, IconButton } from "@mui/joy";
 import patientsData from "@/data/patients";
 import { Send, ClipboardPlus, ChevronRight, ChevronLeft } from "lucide-react";
@@ -20,6 +20,10 @@ export default function PatientsTable({ searchFilter }) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const isSmallScreen = useMediaQuery("(max-width:960px)");
   const theme = useTheme();
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchFilter]);
 
   const handleSort = (key) => {
     const direction =

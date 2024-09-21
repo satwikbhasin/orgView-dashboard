@@ -13,7 +13,6 @@ import {
 import {
   ShoppingBasket,
   Dot,
-  ArrowUpDown,
   ChevronRight,
   ChevronLeft,
   TrendingUp,
@@ -41,6 +40,10 @@ export default function InventoryItemsTable({ searchFilter }) {
   const isSmallScreen = useMediaQuery("(max-width:960px)");
   const menuRef = useRef(null);
   const theme = useTheme();
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchFilter]);
 
   const handleSort = (key) => {
     const direction =
