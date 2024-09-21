@@ -1,6 +1,6 @@
 import React from 'react';
 import { CircleDashed } from 'lucide-react';
-import './loader.css';
+import '@/styling/css/loader.css';
 
 const Loader = () => {
   return (

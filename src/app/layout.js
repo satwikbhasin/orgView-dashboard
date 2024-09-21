@@ -1,14 +1,12 @@
-import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 import Navbar from "@/components/common/navbar";
-import Loader from "@/styling/loader";
+import Loader from "@/components/common/loader";
 import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
 import "./globals.css";
 
-const ThemeProvider = dynamic(() => import("@/styling/themeProvider"), {
+const ThemeProvider = dynamic(() => import("@/styling/theming/themeProvider"), {
   ssr: false,
   loading: () => <Loader />,
 });

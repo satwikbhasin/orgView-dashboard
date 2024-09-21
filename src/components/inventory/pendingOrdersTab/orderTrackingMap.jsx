@@ -7,6 +7,7 @@ import { renderToString } from "react-dom/server";
 import { Box, Typography, Chip } from "@mui/joy";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import "@/styling/css/common.css"
 
 const tt = dynamic(() => import("@tomtom-international/web-sdk-maps"), {
   ssr: false,

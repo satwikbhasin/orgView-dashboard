@@ -82,12 +82,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-.smooth-render-element {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.smooth-render-element.visible {
-  opacity: 1;
-}
