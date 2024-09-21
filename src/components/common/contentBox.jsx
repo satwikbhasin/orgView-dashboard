@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Box } from "@mui/joy";
-import Titlebar from "@/components/common/titlebar";
+import Titlebar from "@/components/common/titlebar/titlebar";
 import { useTheme } from "@mui/material/styles";
 
 const ContentBox = ({ pageName, showExportButton, children }) => {

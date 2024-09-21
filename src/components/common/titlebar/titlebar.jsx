@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Box, Typography } from "@mui/joy";
-import ExportButton from "../titlebar/exportButton";
+import ExportButton from "@/components/common/titlebar/exportButton";
 import { useTheme } from "@mui/material/styles";
 
 
