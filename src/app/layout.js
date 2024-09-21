@@ -1,9 +1,15 @@
 import localFont from "next/font/local";
-import Head from "next/head";
-import { Analytics } from "@vercel/analytics/react"
-import ThemeProvider from "@/styling/themeProvider";
-
+import { Analytics } from "@vercel/analytics/react";
+import dynamic from "next/dynamic";
+import { cookies } from "next/headers";
+import Navbar from "@/components/common/navbar";
+import Loader from "@/styling/loader";
 import "./globals.css";
+
+const ThemeProvider = dynamic(() => import("@/styling/themeProvider"), {
+  ssr: false,
+  loading: () => <Loader />,
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,32 +26,19 @@ export const metadata = {
   title: "Syntra Demo",
 };
 
-import Navbar from "@/components/common/navbar";
-import { Box } from "@mui/joy";
-import { Suspense } from "react";
-
 export default function RootLayout({ children }) {
+  const themeModeCookie = cookies().get("themeMode");
+  const themeMode = themeModeCookie ? themeModeCookie.value : "light";
   return (
-    <html lang="en">
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
-        <ThemeProvider>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Navbar />
-              {children}
-              <Analytics />
-            </Box>
-          </Suspense>
+        <ThemeProvider initialTheme={themeMode}>
+          <Navbar />
+          {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

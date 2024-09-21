@@ -1,25 +1,46 @@
 "use client";
 
-import React from "react";
-import { CssVarsProvider, useColorScheme } from "@mui/joy/styles";
-import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+import React, { useState, useEffect } from "react";
+import { ThemeProvider as MaterialThemeProvider } from "@mui/material/styles";
+import {
+  CssVarsProvider as JoyCssVarsProvider,
+  useColorScheme,
+} from "@mui/joy/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import { lightTheme, darkTheme } from "./themes";
+import Box from "@mui/material/Box";
+import Cookies from "js-cookie";
 
-const InnerThemeProvider = ({ children }) => {
-  const { mode } = useColorScheme();
+const InnerThemeProvider = ({ children, initialTheme }) => {
+  const { mode, setMode } = useColorScheme();
+  const [theme, setTheme] = useState(
+    initialTheme === "dark" ? darkTheme : lightTheme
+  );
 
-  const theme = React.useMemo(() => {
-    return mode === "dark" ? darkTheme : lightTheme;
+  useEffect(() => {
+    setMode(initialTheme);
+  }, [setMode, initialTheme]);
+
+  useEffect(() => {
+    Cookies.set("themeMode", mode);
+    setTheme(mode === "dark" ? darkTheme : lightTheme);
   }, [mode]);
 
-  return <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>;
+  return (
+    <MaterialThemeProvider theme={theme}>
+      <CssBaseline enableColorScheme />
+      <Box sx={{ display: "flex", flexDirection: "row" }}>{children}</Box>
+    </MaterialThemeProvider>
+  );
 };
 
-const ThemeProvider = ({ children }) => {
+const ThemeProvider = ({ children, initialTheme }) => {
   return (
-    <CssVarsProvider>
-      <InnerThemeProvider>{children}</InnerThemeProvider>
-    </CssVarsProvider>
+    <JoyCssVarsProvider>
+      <InnerThemeProvider initialTheme={initialTheme}>
+        {children}
+      </InnerThemeProvider>
+    </JoyCssVarsProvider>
   );
 };
 

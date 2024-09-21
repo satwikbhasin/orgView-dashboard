@@ -35,7 +35,7 @@ export default function Navbar() {
   const pathName = usePathname();
   const router = useRouter();
   const [collapsedNav, setCollapsedNav] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(mode === "dark");
 
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const isMediumScreen = useMediaQuery(

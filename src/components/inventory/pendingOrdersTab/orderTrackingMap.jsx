@@ -8,9 +8,9 @@ import { Box, Typography, Chip } from "@mui/joy";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-// const tt = dynamic(() => import("@tomtom-international/web-sdk-maps"), {
-//   ssr: false,
-// });
+const tt = dynamic(() => import("@tomtom-international/web-sdk-maps"), {
+  ssr: false,
+});
 
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 
@@ -99,7 +99,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
         map.remove();
       }
     };
-  }, [selectedOrder]);
+  }, [selectedOrder, theme.palette.mode]);
 
   return (
     <Box
