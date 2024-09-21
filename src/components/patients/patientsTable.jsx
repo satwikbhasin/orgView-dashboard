@@ -305,15 +305,17 @@ export default function PatientsTable({ searchFilter }) {
                               fontWeight: 600,
                               color:
                                 patient.status === "Sent"
-                                  ? theme.palette.status.success.text
+                                  ? theme.palette.patients.status.sent.text
                                   : patient.status === "Created"
-                                  ? theme.palette.status.warning.text
+                                  ? theme.palette.patients.status.created.text
                                   : "inherit",
                               backgroundColor:
                                 patient.status === "Sent"
-                                  ? theme.palette.status.success.background
+                                  ? theme.palette.patients.status.sent
+                                      .background
                                   : patient.status === "Created"
-                                  ? theme.palette.status.warning.background
+                                  ? theme.palette.patients.status.created
+                                      .background
                                   : "inherit",
                               borderRadius: 10,
                               width: "fit-content",

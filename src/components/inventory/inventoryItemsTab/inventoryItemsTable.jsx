@@ -24,7 +24,7 @@ import inventoryData from "@/data/inventory";
 import ItemsCardView from "@/components/inventory/inventoryItemsTab/itemsCardView";
 import ItemGlance from "@/components/inventory/inventoryItemsTab/itemGlance";
 import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
-import { getLineChartOptions } from "./chartOptions";
+import { getLineChartOptions } from "@/services/getChartOptions";
 
 const headerStyle = (theme) => ({
   height: "6vh",
@@ -187,35 +187,6 @@ export default function InventoryItemsTable({ searchFilter }) {
     setSelectedItem(null);
   };
 
-  const getStatus = (status) => {
-    switch (status) {
-      case "green":
-        return {
-          label: "Green",
-          color: theme.palette.inventory.status.green.text,
-          backgroundColor: theme.palette.inventory.status.green.background,
-        };
-      case "yellow":
-        return {
-          label: "Yellow",
-          color: theme.palette.inventory.status.yellow.text,
-          backgroundColor: theme.palette.inventory.status.yellow.background,
-        };
-      case "red":
-        return {
-          label: "Red",
-          color: theme.palette.inventory.status.red.text,
-          backgroundColor: theme.palette.inventory.status.red.background,
-        };
-      default:
-        return {
-          label: "Unknown",
-          color: theme.palette.text,
-          backgroundColor: theme.palette.transparent,
-        };
-    }
-  };
-
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event, item) => {
@@ -366,7 +337,8 @@ export default function InventoryItemsTable({ searchFilter }) {
                               ...cellStyle,
                               color:
                                 item.status == "red"
-                                  ? getStatus(item.status).backgroundColor
+                                  ? theme.palette.inventory.status[item.status]
+                                      .background
                                   : "inherit",
                               fontWeight: item.status == "red" ? "800" : "400",
                             }}
@@ -398,15 +370,21 @@ export default function InventoryItemsTable({ searchFilter }) {
                                     xl: "12px",
                                   },
                                   fontWeight: 600,
-                                  color: getStatus(item.status).backgroundColor,
+                                  color:
+                                    theme.palette.inventory.status[item.status]
+                                      .background,
                                 }}
                               >
                                 <Dot
                                   strokeWidth={3}
                                   size={26}
-                                  color={getStatus(item.status).backgroundColor}
+                                  color={
+                                    theme.palette.inventory.status[item.status]
+                                      .background
+                                  }
                                 />
-                                {getStatus(item.status).label}
+                                {item.status.charAt(0).toUpperCase() +
+                                  item.status.slice(1)}
                               </Typography>
                             </Box>
                           </td>

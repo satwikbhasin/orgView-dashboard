@@ -43,15 +43,15 @@ const PatientsCardView = ({ patients }) => {
                 fontWeight: 800,
                 color:
                   patient.status === "Sent"
-                    ? theme.palette.status.success.text
+                    ? theme.palette.patients.status.sent.text
                     : patient.status === "Created"
-                    ? theme.palette.status.warning.text
+                    ? theme.palette.patients.status.created.text
                     : "inherit",
                 backgroundColor:
                   patient.status === "Sent"
-                    ? theme.palette.status.success.background
+                    ? theme.palette.patients.status.sent.background
                     : patient.status === "Created"
-                    ? theme.palette.status.warning.background
+                    ? theme.palette.patients.status.created.background
                     : "inherit",
                 borderRadius: 10,
                 padding: "5px",

@@ -43,35 +43,6 @@ export default function ItemsCardView({ items }) {
     };
   }, [menuRef]);
 
-  const getStatus = (status) => {
-    switch (status) {
-      case "green":
-        return {
-          label: "Green",
-          color: theme.palette.inventory.status.green.text,
-          backgroundColor: theme.palette.inventory.status.green.background,
-        };
-      case "yellow":
-        return {
-          label: "Yellow",
-          color: theme.palette.inventory.status.yellow.text,
-          backgroundColor: theme.palette.inventory.status.yellow.background,
-        };
-      case "red":
-        return {
-          label: "Red",
-          color: theme.palette.inventory.status.red.text,
-          backgroundColor: theme.palette.inventory.status.red.background,
-        };
-      default:
-        return {
-          label: "Unknown",
-          color: theme.palette.text,
-          backgroundColor: theme.palette.transparent,
-        };
-    }
-  };
-
   return (
     <Box sx={{ overflow: "scroll", flex: 1 }}>
       {items.map((item) => (
@@ -107,14 +78,14 @@ export default function ItemsCardView({ items }) {
             <Box
               sx={{
                 fontWeight: 800,
-                color: getStatus(item.status).backgroundColor,
+                color: theme.palette.inventory.status[item.status].background,
                 display: "flex",
                 alignItems: "center",
                 fontSize: { xs: 9, sm: 10, md: 11 },
               }}
             >
               <Dot size={30} strokeWidth={3} />
-              {getStatus(item.status).label}
+              {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
             </Box>
           </Box>
           <Box
@@ -189,7 +160,7 @@ export default function ItemsCardView({ items }) {
                   fontSize: { xs: 9, sm: 10, md: 11 },
                   color:
                     item.status == "red"
-                      ? getStatus(item.status).backgroundColor
+                      ? theme.palette.inventory.status[item.status].background
                       : theme.palette.text,
                   fontWeight: item.status == "red" ? 800 : 400,
                 }}

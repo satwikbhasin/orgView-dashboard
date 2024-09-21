@@ -12,18 +12,20 @@ const lightTheme = createTheme({
         hover: "#F0F4F8",
         disabled: "grey",
         border: "#DEDEDE",
-        status: {
-            success: {
-                text: "#104B0F",
-                background: "#E2FBE3",
-            },
-            warning: {
-                text: "#FF8300",
-                background: "#F8F5E7",
-            },
-            error: {
-                text: "#F7DDD4",
-                background: "#AD3206",
+        patients: {
+            status: {
+                sent: {
+                    text: "#104B0F",
+                    background: "#E2FBE3",
+                },
+                created: {
+                    text: "#FF8300",
+                    background: "#F8F5E7",
+                },
+                error: {
+                    text: "#F7DDD4",
+                    background: "#AD3206",
+                },
             },
         },
         inventory: {
@@ -126,18 +128,20 @@ const darkTheme = createTheme({
         hover: "#232A2E",
         disabled: "grey",
         border: "#32383E",
-        status: {
-            success: {
-                text: "#C0F1EF",
-                background: "#03625E",
-            },
-            warning: {
-                text: "#F1E7C9",
-                background: "#BB900A",
-            },
-            error: {
-                text: "#F7DDD4",
-                background: "#AD3206",
+        patients: {
+            status: {
+                sent: {
+                    text: "#C0F1EF",
+                    background: "#03625E",
+                },
+                created: {
+                    text: "#F1E7C9",
+                    background: "#BB900A",
+                },
+                error: {
+                    text: "#F7DDD4",
+                    background: "#AD3206",
+                },
             },
         },
         inventory: {

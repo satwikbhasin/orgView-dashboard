@@ -12,8 +12,8 @@ import {
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useTheme } from "@mui/material/styles";
-import { getPieChartOptions } from "./chartOptions";
-import { getLineChartOptions } from "./chartOptions";
+import { getPieChartOptions } from "@/services/getChartOptions";
+import { getLineChartOptions } from "@/services/getChartOptions";
 
 const UsageModal = ({ layout, onClose, item }) => {
   const theme = useTheme();

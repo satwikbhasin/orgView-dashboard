@@ -20,36 +20,6 @@ const OrderTrackingMap = ({ selectedOrder }) => {
   const isSmallScreen = useMediaQuery("(max-width:960px)");
   const theme = useTheme();
 
-  const getInventoryStatus = (status) => {
-    switch (status) {
-      case "green":
-        return {
-          label: "Green",
-          color: theme.palette.inventory.status.green.text,
-          backgroundColor: theme.palette.inventory.status.green.background,
-        };
-      case "yellow":
-        return {
-          label: "Yellow",
-          color: theme.palette.inventory.status.yellow.text,
-          backgroundColor: theme.palette.inventory.status.yellow.background,
-        };
-      case "red":
-        return {
-          label: "Red",
-          color: theme.palette.inventory.status.red.text,
-          backgroundColor: theme.palette.inventory.status.red.background,
-        };
-      default:
-        return {
-          label: "Unknown",
-          color: theme.palette.text,
-          backgroundColor: theme.palette.transparent,
-        };
-    }
-  };
-  const inventoryStatus = getInventoryStatus(selectedOrder?.status);
-
   useEffect(() => {
     let map;
     const loadMap = async () => {
@@ -126,11 +96,15 @@ const OrderTrackingMap = ({ selectedOrder }) => {
             top: isSmallScreen ? 16 : 16,
             left: isSmallScreen ? "50%" : 16,
             transform: isSmallScreen ? "translateX(-50%)" : "none",
-            background: theme.palette.inventory.pendingOrdersTab.orderMapTrackingCard.background,
+            background:
+              theme.palette.inventory.pendingOrdersTab.orderMapTrackingCard
+                .background,
             padding: 2,
             borderRadius: 10,
             border: `1px solid ${theme.palette.border}`,
-            boxShadow: theme.palette.inventory.pendingOrdersTab.orderMapTrackingCard.boxShadow,
+            boxShadow:
+              theme.palette.inventory.pendingOrdersTab.orderMapTrackingCard
+                .boxShadow,
             backdropFilter: "blur( 7px )",
             WebkitBackdropFilter: "blur( 7px )",
             zIndex: 1,
@@ -297,11 +271,14 @@ const OrderTrackingMap = ({ selectedOrder }) => {
               <Chip
                 size="small"
                 sx={{
-                  backgroundColor: inventoryStatus.backgroundColor,
+                  backgroundColor:
+                    theme.palette.inventory.status[selectedOrder.status]
+                      .background,
                   fontWeight: "bold",
                   display: "flex",
                   alignItems: "center",
-                  color: inventoryStatus.color,
+                  color:
+                    theme.palette.inventory.status[selectedOrder.status].text,
                   justifyContent: "center",
                   height: "fit-content",
                   width: "fit-content",
@@ -319,9 +296,12 @@ const OrderTrackingMap = ({ selectedOrder }) => {
                       xl: 13,
                     },
                   }}
-                  color={inventoryStatus.color}
+                  color={
+                    theme.palette.inventory.status[selectedOrder.status].text
+                  }
                 >
-                  {inventoryStatus.label}
+                  {selectedOrder.status.charAt(0).toUpperCase() +
+                    selectedOrder.status.slice(1)}
                 </Typography>
               </Chip>
             </Box>

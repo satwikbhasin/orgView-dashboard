@@ -16,7 +16,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
 import { useTheme } from "@mui/material/styles";
-import { getLineChartOptions } from "./chartOptions";
+import { getLineChartOptions } from "@/services/getChartOptions";
 
 const ItemGlance = ({ item, onClose }) => {
   const [visible, setVisible] = useState(false);
@@ -49,37 +49,6 @@ const ItemGlance = ({ item, onClose }) => {
   const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 14;
 
   const handleExpandUsage = () => setLayout("center");
-
-  const getStatus = (status) => {
-    switch (status) {
-      case "green":
-        return {
-          label: "Green",
-          color: theme.palette.inventory.status.green.text,
-          backgroundColor: theme.palette.inventory.status.green.background,
-        };
-      case "yellow":
-        return {
-          label: "Yellow",
-          color: theme.palette.inventory.status.yellow.text,
-          backgroundColor: theme.palette.inventory.status.yellow.background,
-        };
-      case "red":
-        return {
-          label: "Red",
-          color: theme.palette.inventory.status.red.text,
-          backgroundColor: theme.palette.inventory.status.red.background,
-        };
-      default:
-        return {
-          label: "Unknown",
-          color: theme.palette.text,
-          backgroundColor: theme.palette.transparent,
-        };
-    }
-  };
-
-  const status = getStatus(item.status);
 
   return (
     <Box
@@ -125,11 +94,12 @@ const ItemGlance = ({ item, onClose }) => {
           <Chip
             size="small"
             sx={{
-              backgroundColor: status.backgroundColor,
+              backgroundColor:
+                theme.palette.inventory.status[item.status].background,
               fontWeight: "bold",
               display: "flex",
               alignItems: "center",
-              color: status.color,
+              color: theme.palette.inventory.status[item.status].text,
               justifyContent: "center",
               height: "fit-content",
               width: "fit-content",
@@ -137,8 +107,11 @@ const ItemGlance = ({ item, onClose }) => {
               paddingRight: 1,
             }}
           >
-            <Typography fontSize={{ xs: 6, md: 7, lg: 9 }} color={status.color}>
-              {status.label}
+            <Typography
+              fontSize={{ xs: 6, md: 7, lg: 9 }}
+              color={theme.palette.inventory.status[item.status].text}
+            >
+              {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
             </Typography>
           </Chip>
         </Box>
