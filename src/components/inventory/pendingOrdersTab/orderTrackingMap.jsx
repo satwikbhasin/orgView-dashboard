@@ -6,6 +6,7 @@ import { Truck } from "lucide-react";
 import { renderToString } from "react-dom/server";
 import { Box, Typography, Chip } from "@mui/joy";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const tt = dynamic(() => import("@tomtom-international/web-sdk-maps"), {
   ssr: false,
@@ -17,24 +18,33 @@ const OrderTrackingMap = ({ selectedOrder }) => {
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
+  const theme = useTheme();
 
   const getInventoryStatus = (status) => {
     switch (status) {
       case "green":
-        return { label: "Green", color: "#C0F1EF", backgroundColor: "#03625E" };
+        return {
+          label: "Green",
+          color: theme.palette.inventory.status.green.text,
+          backgroundColor: theme.palette.inventory.status.green.background,
+        };
       case "yellow":
         return {
           label: "Yellow",
-          color: "#F1E7C9",
-          backgroundColor: "#BB900A",
+          color: theme.palette.inventory.status.yellow.text,
+          backgroundColor: theme.palette.inventory.status.yellow.background,
         };
       case "red":
-        return { label: "Red", color: "#F7DDD4", backgroundColor: "#AD3206" };
+        return {
+          label: "Red",
+          color: theme.palette.inventory.status.red.text,
+          backgroundColor: theme.palette.inventory.status.red.background,
+        };
       default:
         return {
           label: "Unknown",
-          color: "#000000",
-          backgroundColor: "#F0F0F0",
+          color: theme.palette.text,
+          backgroundColor: theme.palette.transparent,
         };
     }
   };
@@ -51,7 +61,9 @@ const OrderTrackingMap = ({ selectedOrder }) => {
           center: [-122.4194, 37.7749],
           zoom: 16,
           style:
-            "https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBAV0diMkFRMUE2T3R1T3NydjthZDAzYTAxYS0wNjU0LTQ5NTYtODExOS1hY2VmYzA2OGRhOGY=.json?key=cqdAo4VtS9HcyZTBIK4oOmy3dCGlm01Y",
+            theme.palette.mode === "dark"
+              ? "https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBAV0diMkFRMUE2T3R1T3NydjtiZWFkNDIwMS00NWI3LTQ2ZWItOWY2MS02MjcyMmQzNTBhMGM=/drafts/0.json?key=cqdAo4VtS9HcyZTBIK4oOmy3dCGlm01Y"
+              : "https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBAV0diMkFRMUE2T3R1T3NydjthZDAzYTAxYS0wNjU0LTQ5NTYtODExOS1hY2VmYzA2OGRhOGY=.json?key=cqdAo4VtS9HcyZTBIK4oOmy3dCGlm01Y",
         });
 
         map.on("load", () => {
@@ -64,7 +76,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
         markerElement.style.display = "flex";
         markerElement.style.alignItems = "center";
         markerElement.style.justifyContent = "center";
-        markerElement.style.backgroundColor = "#1c69fb";
+        markerElement.style.backgroundColor = theme.palette.accent;
         markerElement.style.borderRadius = "50%";
         markerElement.style.boxShadow = "0 0 5px rgba(0,0,0,0.3)";
         markerElement.style.zIndex = "0";
@@ -87,15 +99,15 @@ const OrderTrackingMap = ({ selectedOrder }) => {
         map.remove();
       }
     };
-  }, [selectedOrder]);
+  }, [selectedOrder, theme.palette.mode]);
 
   return (
     <Box
       sx={{
         position: "relative",
         height: "100%",
-        boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
-        border: "1px solid #e0e0e0",
+        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.25)",
+        border: `1px solid ${theme.palette.border}`,
         width: "75%",
         overflow: "hidden",
         visible: !isSmallScreen,
@@ -114,11 +126,11 @@ const OrderTrackingMap = ({ selectedOrder }) => {
             top: isSmallScreen ? 16 : 16,
             left: isSmallScreen ? "50%" : 16,
             transform: isSmallScreen ? "translateX(-50%)" : "none",
-            background: "rgba( 213, 212, 212, 0.15 )",
+            background: theme.palette.inventory.pendingOrdersTab.orderMapTrackingCard.background,
             padding: 2,
             borderRadius: 10,
-            border: "1px solid rgba( 255, 255, 255, 0.18 )",
-            boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.2 )",
+            border: `1px solid ${theme.palette.border}`,
+            boxShadow: theme.palette.inventory.pendingOrdersTab.orderMapTrackingCard.boxShadow,
             backdropFilter: "blur( 7px )",
             WebkitBackdropFilter: "blur( 7px )",
             zIndex: 1,
@@ -137,7 +149,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
           >
             <Typography
               sx={{
-                color: "black",
+                color: theme.palette.text,
                 fontSize: {
                   xs: 12,
                   md: 14,
@@ -152,7 +164,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
           </Box>
           <Typography
             sx={{
-              color: "#1c69fb",
+              color: theme.palette.accent,
               marginBottom: 2,
             }}
             fontSize={{ xs: 12, md: 14, lg: 16, xl: 18 }}
@@ -175,7 +187,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
             >
               <Typography
                 sx={{
-                  color: "grey",
+                  color: theme.palette.disabled,
                   fontWeight: 400,
                   fontSize: {
                     xs: 7,
@@ -189,7 +201,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
               </Typography>
               <Typography
                 sx={{
-                  color: "black",
+                  color: theme.palette.text,
                   fontWeight: 600,
                   fontSize: {
                     xs: 8,
@@ -204,7 +216,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
               </Typography>
               <Typography
                 sx={{
-                  color: "grey",
+                  color: theme.palette.disabled,
                   fontWeight: 400,
                   fontSize: {
                     xs: 7,
@@ -218,7 +230,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
               </Typography>
               <Typography
                 sx={{
-                  color: "black",
+                  color: theme.palette.text,
                   fontWeight: 600,
                   fontSize: {
                     xs: 8,
@@ -240,7 +252,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
             >
               <Typography
                 sx={{
-                  color: "grey",
+                  color: theme.palette.disabled,
                   fontWeight: 400,
                   fontSize: {
                     xs: 7,
@@ -254,7 +266,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
               </Typography>
               <Typography
                 sx={{
-                  color: "black",
+                  color: theme.palette.text,
                   fontWeight: 600,
                   fontSize: {
                     xs: 8,
@@ -269,7 +281,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
               </Typography>
               <Typography
                 sx={{
-                  color: "grey",
+                  color: theme.palette.disabled,
                   fontWeight: 400,
                   fontSize: {
                     xs: 7,

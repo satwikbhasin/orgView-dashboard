@@ -3,10 +3,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Box, IconButton, Menu, MenuItem } from "@mui/joy";
 import { ArrowDownToLine } from "lucide-react";
+import { useTheme } from "@mui/material/styles";
 
 const ExportButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const menuRef = useRef(null);
+  const theme = useTheme();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,16 +41,17 @@ const ExportButton = () => {
           height: "100%",
           width: "100%",
           padding: 1,
-          backgroundColor: "transparent",
+          backgroundColor: theme.palette.transparent,
+          color: theme.palette.accent,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           "&:hover": {
-            backgroundColor: "#EDEDED",
-            color: "#1c69fb",
+            backgroundColor:
+              theme.palette.titlebar.exportButton.hover.background,
+            color: theme.palette.accent,
           },
           fontWeight: 700,
-          color: "#1c69fb",
           fontSize: {
             xs: 10,
             sm: 12,
@@ -56,7 +59,11 @@ const ExportButton = () => {
           },
         }}
       >
-        <ArrowDownToLine strokeWidth={2.5} color="#1c69fb" size={"2.5vh"} />
+        <ArrowDownToLine
+          strokeWidth={2.5}
+          color={theme.palette.accent}
+          size={"2.5vh"}
+        />
         <Box
           sx={{
             display: {
@@ -76,20 +83,16 @@ const ExportButton = () => {
         size="sm"
         ref={menuRef}
         sx={{
-          "& .MuiPaper-root": {
-            backgroundColor: "#ffffff",
-            color: "black",
-            borderRadius: "5px",
-          },
+          backgroundColor: theme.palette.titlebar.exportButton.menu.background,
+          color: theme.palette.text,
         }}
       >
         <MenuItem
           onClick={handleMenuClose}
           sx={{
             "&:hover": {
-              color: "#1c69fb",
+              color: theme.palette.accent,
               fontWeight: 600,
-              backgroundColor: "#f1f5ff",
             },
           }}
         >
@@ -99,12 +102,8 @@ const ExportButton = () => {
           onClick={handleMenuClose}
           sx={{
             "&:hover": {
-              color: "#1c69fb",
+              color: theme.palette.accent,
               fontWeight: 600,
-              backgroundColor: "#f1f5ff",
-              "& .icon": {
-                color: "#1c69fb",
-              },
             },
           }}
         >
@@ -114,12 +113,8 @@ const ExportButton = () => {
           onClick={handleMenuClose}
           sx={{
             "&:hover": {
-              color: "#1c69fb",
+              color: theme.palette.accent,
               fontWeight: 600,
-              backgroundColor: "#f1f5ff",
-              "& .icon": {
-                color: "#1c69fb",
-              },
             },
           }}
         >

@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  IconButton,
-  Tooltip,
-  Chip,
-} from "@mui/joy";
+import { Box, Typography, IconButton, Tooltip, Chip } from "@mui/joy";
 import {
   X,
   CircleCheck,
@@ -21,19 +15,8 @@ import { useMediaQuery } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
-
-const getStatus = (status) => {
-  switch (status) {
-    case "green":
-      return { label: "Green", color: "#C0F1EF", backgroundColor: "#03625E" };
-    case "yellow":
-      return { label: "Yellow", color: "#F1E7C9", backgroundColor: "#BB900A" };
-    case "red":
-      return { label: "Red", color: "#F7DDD4", backgroundColor: "#AD3206" };
-    default:
-      return { label: "Unknown", color: "#000000", backgroundColor: "#F0F0F0" };
-  }
-};
+import { useTheme } from "@mui/material/styles";
+import { getLineChartOptions } from "./chartOptions";
 
 const ItemGlance = ({ item, onClose }) => {
   const [visible, setVisible] = useState(false);
@@ -41,6 +24,7 @@ const ItemGlance = ({ item, onClose }) => {
     useState(true);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [layout, setLayout] = useState(undefined);
+  const theme = useTheme();
 
   useEffect(() => {
     if (item) {
@@ -64,68 +48,51 @@ const ItemGlance = ({ item, onClose }) => {
 
   const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 14;
 
-  const status = getStatus(item.status);
+  const handleExpandUsage = () => setLayout("center");
 
-  const chartOptions = {
-    chart: {
-      type: "line",
-      zoomType: "xy",
-      backgroundColor: "#fafafa",
-      height: "100%",
-    },
-    title: {
-      text: null,
-    },
-    xAxis: {
-      categories: item.usage.months,
-      labels: {
-        style: {
-          fontSize: isSmallScreen ? "8px" : "10px",
-        },
-      },
-    },
-    yAxis: {
-      title: {
-        text: null,
-      },
-      labels: {
-        style: {
-          fontSize: isSmallScreen ? "8px" : "10px",
-        },
-      },
-      tickInterval: 2000,
-    },
-    series: [
-      {
-        name: "Units per Month",
-        data: item.usage.data,
-        color: "#1c69fb",
-      },
-    ],
-    plotOptions: {
-      line: {
-        marker: {
-          enabled: true,
-          fillColor: "#1c69fb",
-        },
-      },
-    },
+  const getStatus = (status) => {
+    switch (status) {
+      case "green":
+        return {
+          label: "Green",
+          color: theme.palette.inventory.status.green.text,
+          backgroundColor: theme.palette.inventory.status.green.background,
+        };
+      case "yellow":
+        return {
+          label: "Yellow",
+          color: theme.palette.inventory.status.yellow.text,
+          backgroundColor: theme.palette.inventory.status.yellow.background,
+        };
+      case "red":
+        return {
+          label: "Red",
+          color: theme.palette.inventory.status.red.text,
+          backgroundColor: theme.palette.inventory.status.red.background,
+        };
+      default:
+        return {
+          label: "Unknown",
+          color: theme.palette.text,
+          backgroundColor: theme.palette.transparent,
+        };
+    }
   };
 
-  const handleExpandUsage = () => setLayout("center");
+  const status = getStatus(item.status);
 
   return (
     <Box
       sx={{
         height: "fit-content",
         width: "35%",
-        border: "1px solid #dedede",
+        border: `1px solid ${theme.palette.border}`,
         borderRadius: 0,
         left: visible ? "0%" : "30%",
         transition: "left 0.3s ease-in-out",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#fafafa",
+        backgroundColor: theme.palette.base,
         position: "relative",
         gap: 2,
       }}
@@ -136,15 +103,15 @@ const ItemGlance = ({ item, onClose }) => {
           justifyContent: "space-between",
           alignItems: "center",
           paddingLeft: 1,
-          backgroundColor: "#f0f4f8",
-          borderBottom: "1px solid #dedede",
+          backgroundColor: theme.palette.inventory.itemGlance.header,
+          borderBottom: `1px solid ${theme.palette.border}`,
           height: "10%",
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Typography
             sx={{
-              color: "black",
+              color: theme.palette.text,
               fontSize: {
                 xs: "8px",
                 md: "10px",
@@ -181,13 +148,13 @@ const ItemGlance = ({ item, onClose }) => {
             setTimeout(onClose, 300);
           }}
         >
-          <X color="#1c69fb" strokeWidth={3} size={iconSize} />
+          <X color={theme.palette.accent} strokeWidth={3} size={iconSize} />
         </IconButton>
       </Box>
       <Box
         sx={{
           display: "flex",
-          backgroundColor: "#fafafa",
+          backgroundColor: theme.palette.base,
           height: "45%",
           flexDirection: "column",
           gap: 2,
@@ -202,7 +169,7 @@ const ItemGlance = ({ item, onClose }) => {
             alignItems: "center",
             justifyContent: "space-between",
             flex: 1,
-            backgroundColor: "#fafafa",
+            backgroundColor: theme.palette.base,
             position: "relative",
           }}
         >
@@ -217,10 +184,14 @@ const ItemGlance = ({ item, onClose }) => {
               transform: "translateX(-50%)",
             }}
           >
-            <TrendingUp color="#1c69fb" strokeWidth={2.8} size={iconSize} />
+            <TrendingUp
+              color={theme.palette.accent}
+              strokeWidth={2.8}
+              size={iconSize}
+            />
             <Typography
               sx={{
-                color: "black",
+                color: theme.palette.text,
                 fontSize: {
                   xs: 7,
                   sm: 9,
@@ -242,22 +213,29 @@ const ItemGlance = ({ item, onClose }) => {
             }}
           >
             <IconButton onClick={handleExpandUsage}>
-              <Expand color="#1c69fb" strokeWidth={2.8} size={iconSize} />
+              <Expand
+                color={theme.palette.accent}
+                strokeWidth={2.8}
+                size={iconSize}
+              />
             </IconButton>
           </Box>
         </Box>
         <Box
           sx={{
-            backgroundColor: "#fafafa",
+            backgroundColor: theme.palette.base,
             height: "100%",
           }}
         >
-          <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={getLineChartOptions(item, false, theme)}
+          />
         </Box>
       </Box>
       <Box
         sx={{
-          borderBottom: "1px solid #dedede",
+          borderBottom: `1px solid ${theme.palette.border}`,
           paddingLeft: 2,
           paddingRight: 2,
         }}
@@ -265,7 +243,7 @@ const ItemGlance = ({ item, onClose }) => {
       <Box
         sx={{
           display: "flex",
-          backgroundColor: "#fafafa",
+          backgroundColor: theme.palette.base,
           flexDirection: "column",
           paddingLeft: 2,
           paddingRight: 2,
@@ -278,23 +256,35 @@ const ItemGlance = ({ item, onClose }) => {
             onClick={() => setOrderPlaced(true)}
             size="small"
             sx={{
-              backgroundColor: "#EDEDED",
-              color: "#1c69fb",
+              backgroundColor:
+                theme.palette.inventory.itemGlance.orderButton.background,
+              border: `1px solid ${theme.palette.border}`,
+              color: theme.palette.accent,
               padding: 1,
               alignItems: "center",
               width: "fit-content",
               gap: 1,
               "&:hover": {
-                backgroundColor: "#E4E3E3",
-                color: "#1c69fb",
+                backgroundColor:
+                  theme.palette.inventory.itemGlance.orderButton.hover
+                    .background,
+                color: theme.palette.accent,
               },
               transition: "background-color 0.3s ease, color 0.3s",
             }}
           >
             {orderPlaced ? (
-              <CircleCheck color="#1c69fb" strokeWidth={3} size={iconSize} />
+              <CircleCheck
+                color={theme.palette.accent}
+                strokeWidth={3}
+                size={iconSize}
+              />
             ) : (
-              <ShoppingBasket color="#1c69fb" strokeWidth={3} size={iconSize} />
+              <ShoppingBasket
+                color={theme.palette.accent}
+                strokeWidth={3}
+                size={iconSize}
+              />
             )}
             {orderPlaced ? (
               <Typography fontWeight={700} fontSize={{ xs: 6, md: 8, lg: 10 }}>
@@ -307,7 +297,11 @@ const ItemGlance = ({ item, onClose }) => {
             )}
           </IconButton>
           <Typography
-            sx={{ color: "gray", fontSize: { xs: 6, md: 8, lg: 10 }, mt: 0 }}
+            sx={{
+              color: theme.palette.disabled,
+              fontSize: { xs: 6, md: 8, lg: 10 },
+              mt: 0,
+            }}
           >
             {orderPlaced ? "Ordered a few seconds ago" : "Ordered 17 days ago"}
           </Typography>
@@ -364,7 +358,6 @@ const ItemGlance = ({ item, onClose }) => {
         layout={layout}
         onClose={() => setLayout(undefined)}
         item={item}
-        chartOptions={chartOptions}
       />
     </Box>
   );

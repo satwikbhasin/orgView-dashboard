@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { Box } from "@mui/joy";
 
+import ContentBox from "@/components/common/contentBox";
 import FilterBar from "@/components/patients/filterBar";
 import PatientsTable from "@/components/patients/patientsTable";
-import Titlebar from "@/components/common/titlebar";
 
 const Patients = () => {
     const [state, setState] = useState({
@@ -27,8 +27,7 @@ const Patients = () => {
     };
 
     return (
-        <Box sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
-            <Titlebar title="Patients" />
+        <ContentBox pageName="Patients">
             <Box
                 sx={{
                     display: "flex",
@@ -37,7 +36,7 @@ const Patients = () => {
                     padding: { xs: 0, sm: 1 },
                     height: "90vh",
                     overflow: "scroll",
-                    backgroundColor: "#fafafa",
+                    backgroundColor: "inherit",
                 }}
             >
                 <Box sx={{ display: "flex", flex: 1 }}>
@@ -52,7 +51,7 @@ const Patients = () => {
                     />
                 </Box>
             </Box>
-        </Box>
+        </ContentBox>
     );
 };
 

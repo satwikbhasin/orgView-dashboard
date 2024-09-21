@@ -3,8 +3,11 @@
 import React from "react";
 import { Box, Typography } from "@mui/joy";
 import ExportButton from "../titlebar/exportButton";
+import { useTheme } from "@mui/material/styles";
+
 
 export default function Titlebar({ title, showExportButton = true }) {
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -15,6 +18,7 @@ export default function Titlebar({ title, showExportButton = true }) {
         height: "10vh",
         justifyContent: "space-between",
         padding: 2,
+        backgroundColor: theme.palette.base,
       }}
     >
       <Box
@@ -32,7 +36,7 @@ export default function Titlebar({ title, showExportButton = true }) {
               sm: 24,
               md: 28,
             },
-            color: "black",
+            color: theme.palette.text,
           }}
         >
           {title}

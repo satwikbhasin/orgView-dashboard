@@ -21,12 +21,21 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useColorScheme } from "@mui/joy/styles";
+import { useTheme } from "@mui/material/styles";
 
 export default function Navbar() {
+  const { mode, setMode } = useColorScheme();
+  const theme = useTheme();
+
+  const handleThemeSwitch = () => {
+    setMode(mode === "dark" ? "light" : "dark");
+  };
+
   const pathName = usePathname();
   const router = useRouter();
   const [collapsedNav, setCollapsedNav] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(mode === "dark");
 
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const isMediumScreen = useMediaQuery(
@@ -89,14 +98,14 @@ export default function Navbar() {
   return (
     <Box
       sx={{
-        background: "#ffffff",
+        background: theme.palette.navbar.base,
         display: "flex",
         flexDirection: "column",
         height: "100vh",
         alignItems: "center",
         width: { xs: "15vw", md: collapsedNav ? "8vw" : "20vw" },
         position: "sticky",
-        borderRight: "1px solid #dedede",
+        borderRight: `1px solid ${theme.palette.border}`,
         transition: "width 0.2s ease",
       }}
     >
@@ -114,7 +123,7 @@ export default function Navbar() {
           onClick={() => router.replace("/")}
           sx={{
             "&:hover": {
-              backgroundColor: "transparent",
+              backgroundColor: theme.palette.transparent,
             },
             gap: 1,
           }}
@@ -129,7 +138,7 @@ export default function Navbar() {
             <Typography
               className="nav-label"
               sx={{
-                color: "black",
+                color: theme.palette.logo,
                 fontSize: {
                   xs: 12,
                   md: 16,
@@ -158,11 +167,12 @@ export default function Navbar() {
       >
         <Typography
           sx={{
-            fontWeight: 50,
+            fontWeight: 10,
             paddingLeft: 1,
             fontSize: { xs: 8, md: 10, lg: 12 },
             display: { xs: "none", md: collapsedNav ? "none" : "block" },
             cursor: "default",
+            color: theme.palette.navbar.tab.regular.text,
           }}
         >
           MENU
@@ -179,9 +189,6 @@ export default function Navbar() {
                 key={link.href}
                 sx={{
                   width: "100%",
-                  color: pathName.includes(link.href.split("?")[0])
-                    ? "#1c69fb"
-                    : "#707070",
                   gap: 2,
                   display: "flex",
                   justifyContent: {
@@ -190,29 +197,45 @@ export default function Navbar() {
                   },
                   padding: 1,
                   borderLeft: pathName.includes(link.href.split("?")[0])
-                    ? "2.5px solid #1c69fb"
+                    ? `2.5px solid ${theme.palette.accent}`
                     : "2.5px solid transparent",
-
                   backgroundColor: {
-                    xs: "transparent",
+                    xs: theme.palette.transparent,
                     md: pathName.includes(link.href.split("?")[0])
-                      ? "#f1f5ff"
-                      : "transparent",
+                      ? theme.palette.navbar.tab.selected.background
+                      : theme.palette.transparent,
                   },
                   transition: "background-color 0.6s ease, color 0.6s ease",
+                  "& .nav-label": {
+                    color: pathName.includes(link.href.split("?")[0])
+                      ? theme.palette.navbar.tab.selected.text
+                      : theme.palette.navbar.tab.regular.text,
+                  },
+                  "& .nav-icon": {
+                    color: pathName.includes(link.href.split("?")[0])
+                      ? theme.palette.accent
+                      : theme.palette.navbar.tab.regular.text,
+                  },
                   "&:hover": {
                     backgroundColor: pathName.includes(link.href.split("?")[0])
-                      ? "#e3ebf9"
-                      : "transparent",
-                    color: pathName.includes(link.href.split("?")[0])
-                      ? "#1c69fb"
-                      : "black",
+                      ? theme.palette.navbar.tab.selected.hover.background
+                      : theme.palette.transparent,
+                    "& .nav-label": {
+                      color: pathName.includes(link.href.split("?")[0])
+                        ? theme.palette.navbar.tab.selected.hover.text
+                        : theme.palette.navbar.tab.regular.hover.text,
+                    },
+                    "& .nav-icon": {
+                      color: pathName.includes(link.href.split("?")[0])
+                        ? theme.palette.accent
+                        : theme.palette.navbar.tab.regular.hover.text,
+                    },
                   },
-                  borderRadius: 4,
+                  borderRadius: 1,
                   fontSize: { xs: 8, md: 10, lg: 12 },
                 }}
               >
-                {link.icon}
+                <Box className="nav-icon">{link.icon}</Box>
                 {!collapsedNav && (
                   <Box
                     className="nav-label"
@@ -234,7 +257,7 @@ export default function Navbar() {
       <Box
         sx={{
           width: "100%",
-          borderBottom: "1px solid #dedede",
+          borderBottom: `1px solid ${theme.palette.border}`,
           marginY: 0,
         }}
       />
@@ -252,11 +275,12 @@ export default function Navbar() {
       >
         <Typography
           sx={{
-            fontWeight: 50,
+            fontWeight: 10,
             paddingLeft: 1,
             fontSize: { xs: 8, md: 10, lg: 12 },
             display: { xs: "none", md: collapsedNav ? "none" : "block" },
             cursor: "default",
+            color: theme.palette.navbar.tab.regular.text,
           }}
         >
           SUPPORT
@@ -273,9 +297,6 @@ export default function Navbar() {
                 key={link.href}
                 sx={{
                   width: "100%",
-                  color: pathName.includes(link.href.split("?")[0])
-                    ? "#1c69fb"
-                    : "#707070",
                   gap: 2,
                   display: "flex",
                   justifyContent: {
@@ -284,31 +305,52 @@ export default function Navbar() {
                   },
                   padding: 1,
                   borderLeft: pathName.includes(link.href.split("?")[0])
-                    ? "4px solid #1c69fb"
-                    : "4px solid transparent",
-
-                  backgroundColor: pathName.includes(link.href.split("?")[0])
-                    ? "#f1f5ff"
-                    : "transparent",
+                    ? `2.5px solid ${theme.palette.accent}`
+                    : "2.5px solid transparent",
+                  backgroundColor: {
+                    xs: theme.palette.transparent,
+                    md: pathName.includes(link.href.split("?")[0])
+                      ? theme.palette.navbar.tab.selected.background
+                      : theme.palette.transparent,
+                  },
                   transition: "background-color 0.6s ease, color 0.6s ease",
+                  "& .nav-label": {
+                    color: pathName.includes(link.href.split("?")[0])
+                      ? theme.palette.navbar.tab.selected.text
+                      : theme.palette.navbar.tab.regular.text,
+                  },
+                  "& .nav-icon": {
+                    color: pathName.includes(link.href.split("?")[0])
+                      ? theme.palette.accent
+                      : theme.palette.navbar.tab.regular.text,
+                  },
                   "&:hover": {
                     backgroundColor: pathName.includes(link.href.split("?")[0])
-                      ? "#e3ebf9"
-                      : "transparent",
-                    color: pathName.includes(link.href.split("?")[0])
-                      ? "#1c69fb"
-                      : "black",
+                      ? theme.palette.navbar.tab.selected.hover.background
+                      : theme.palette.transparent,
+                    "& .nav-label": {
+                      color: pathName.includes(link.href.split("?")[0])
+                        ? theme.palette.navbar.tab.selected.hover.text
+                        : theme.palette.navbar.tab.regular.hover.text,
+                    },
+                    "& .nav-icon": {
+                      color: pathName.includes(link.href.split("?")[0])
+                        ? theme.palette.accent
+                        : theme.palette.navbar.tab.regular.hover.text,
+                    },
                   },
-                  borderRadius: 4,
+                  borderRadius: 1,
                   fontSize: { xs: 8, md: 10, lg: 12 },
                 }}
               >
-                {link.icon}
+                <Box className="nav-icon">{link.icon}</Box>
                 {!collapsedNav && (
                   <Box
                     className="nav-label"
                     sx={{
-                      fontWeight: 200,
+                      fontWeight: pathName.includes(link.href.split("?")[0])
+                        ? 500
+                        : 200,
                       display: { xs: "none", md: "inline" },
                     }}
                   >
@@ -331,12 +373,15 @@ export default function Navbar() {
               paddingRight: 1,
               gap: 2,
               transition: "all 1s ease",
-              backgroundColor: darkMode ? "#252525" : "#EDEDED",
+              backgroundColor: theme.palette.navbar.themeButton.background,
               "&:hover": {
-                backgroundColor: darkMode ? "#1c1c1c" : "#EDEDED",
+                backgroundColor: theme.palette.navbar.themeButton.background,
               },
             }}
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={() => {
+              setDarkMode(!darkMode);
+              handleThemeSwitch();
+            }}
           >
             <Box
               sx={{
@@ -345,7 +390,11 @@ export default function Navbar() {
                 position: darkMode ? "relative" : "absolute",
               }}
             >
-              <Moon color="#1c69fb" strokeWidth={3} size={iconSize} />
+              <Moon
+                color={theme.palette.accent}
+                strokeWidth={3}
+                size={iconSize}
+              />
             </Box>
 
             <Box
@@ -355,14 +404,18 @@ export default function Navbar() {
                 position: darkMode ? "absolute" : "relative",
               }}
             >
-              <Sun color="#1c69fb" strokeWidth={3} size={iconSize} />
+              <Sun
+                color={theme.palette.accent}
+                strokeWidth={3}
+                size={iconSize}
+              />
             </Box>
 
             <Typography
               sx={{
                 fontSize: { xs: 8, md: 10, lg: 12 },
                 display: { xs: "none", md: collapsedNav ? "none" : "block" },
-                color: darkMode ? "#ffffff" : "#1c69fb",
+                color: theme.palette.navbar.tab.selected.text,
                 fontWeight: 600,
                 transition: "all 1s ease",
               }}
@@ -385,14 +438,22 @@ export default function Navbar() {
           onClick={() => setCollapsedNav(!collapsedNav)}
           sx={{
             "&:hover": {
-              backgroundColor: "transparent",
+              backgroundColor: theme.palette.transparent,
             },
           }}
         >
           {collapsedNav ? (
-            <ChevronRight strokeWidth={2.5} color="#1c69fb" size={24} />
+            <ChevronRight
+              strokeWidth={2.5}
+              color={theme.palette.accent}
+              size={24}
+            />
           ) : (
-            <ChevronLeft strokeWidth={2.5} color="#1c69fb" size={24} />
+            <ChevronLeft
+              strokeWidth={2.5}
+              color={theme.palette.accent}
+              size={24}
+            />
           )}
         </IconButton>
       </Box>

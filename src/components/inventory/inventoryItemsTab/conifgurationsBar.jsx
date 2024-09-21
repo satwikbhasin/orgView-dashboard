@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Box, Typography, IconButton, Tooltip } from "@mui/joy";
 import { Settings2, Power, PowerOff } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 export default function ConfigurationsBar() {
   const [isIntelligentOrderingEnabled, setIsIntelligentOrderingEnabled] =
@@ -15,11 +16,12 @@ export default function ConfigurationsBar() {
   );
   const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 14;
 
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
-        backgroundColor: "#fafafa",
-        boxShadow: 3,
+        backgroundColor: "inherit",
         padding: 1,
         display: "flex",
         flexDirection: "column",
@@ -31,13 +33,12 @@ export default function ConfigurationsBar() {
           display: "flex",
           alignItems: "center",
           textAlign: "left",
-          color: "#1c69fb",
           gap: 0.5,
           cursor: "default",
           marginBottom: 1,
         }}
       >
-        <Settings2 strokeWidth={3} size={iconSize} />
+        <Settings2 color={theme.palette.accent} strokeWidth={3} size={iconSize} />
         <Typography
           sx={{
             fontSize: {
@@ -47,6 +48,7 @@ export default function ConfigurationsBar() {
               xl: 13,
             },
             fontWeight: 800,
+            color: theme.palette.text,
           }}
         >
           Configure

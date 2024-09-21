@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import ContentBox from "@/components/common/contentBox";
 import { Box, Typography } from "@mui/joy";
 import InventoryItemsTab from "@/components/inventory/inventoryItemsTab/inventoryItemsTab";
 import PendingOrdersTab from "@/components/inventory/pendingOrdersTab/pendingOrdersTab";
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
-import Titlebar from "@/components/common/titlebar";
+import { useTheme } from "@mui/material";
 
 const Inventory = () => {
     const searchParams = useSearchParams();
@@ -17,6 +18,7 @@ const Inventory = () => {
     const tabsRef = useRef([]);
     const [isScrolled, setIsScrolled] = useState(false);
     const contentRef = useRef(null);
+    const theme = useTheme();
 
     useEffect(() => {
         if (tab) {
@@ -58,63 +60,64 @@ const Inventory = () => {
     ];
 
     return (
-        <Box ref={contentRef} sx={{ height: "100vh", width: "100vw", display: 'flex', flexDirection: 'column', overflow: "scroll", backgroundColor: "#fafafa" }}>
-            <Box sx={{
-                background: isScrolled
-                    && "rgba( 250, 250, 250, 0.1 )",
-                backdropFilter: isScrolled ? "blur(4.5px)" : "none",
-                borderBottom: isScrolled ? "1px solid #dedede2" : "none",
-                position: "sticky",
-                top: 0,
-                zIndex: 1,
-                transition: "background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease",
-            }}>
-                <Titlebar title="Inventory" />
-                <Box
-                    sx={{
-                        height: "5vh",
-                        display: "flex", alignItems: "center", justifyContent: "flex-start", padding: 2, paddingTop: 0, paddingBottom: 3, paddingLeft: 3, gap: 2, position: 'relative'
-                    }}
-                >
-                    {tabs.map((tab, index) => (
-                        <Link key={tab.value} href={`?tab=${tab.value}`} passHref>
-                            <Typography
-                                ref={el => tabsRef.current[index] = el}
-                                data-value={tab.value}
-                                sx={{
-                                    color: selectedTab === tab.value ? "#1c69fb" : "grey",
-                                    fontWeight: 400,
-                                    fontSize: {
-                                        xs: 12,
-                                        md: 14,
-                                    },
-                                    textDecoration: "none",
-                                    cursor: "pointer",
-                                }}
-                                onClick={() => handleTabChange(tab.value)}
-                            >
-                                {tab.label}
-                            </Typography>
-                        </Link>
-                    ))}
+        <ContentBox pageName="Inventory">
+            <Box ref={contentRef}>
+                <Box sx={{
+                    background: isScrolled
+                        && "rgba( 250, 250, 250, 0.1 )",
+                    backdropFilter: isScrolled ? "blur(4.5px)" : "none",
+                    borderBottom: isScrolled ? `1px solid ${theme.palette.border}` : "none",
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                    transition: "background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease",
+                }}>
                     <Box
                         sx={{
-                            marginTop: 5,
-                            position: 'absolute',
-                            height: '2px',
-                            backgroundColor: '#1c69fb',
-                            transition: 'left 0.3s ease, width 0.3s ease',
-                            ...underlineStyle,
+                            height: "5vh",
+                            display: "flex", alignItems: "center", justifyContent: "flex-start", padding: 2, paddingTop: 0, paddingBottom: 3, paddingLeft: 3, gap: 2, position: 'relative'
                         }}
-                    />
+                    >
+                        {tabs.map((tab, index) => (
+                            <Link key={tab.value} href={`?tab=${tab.value}`} passHref>
+                                <Typography
+                                    ref={el => tabsRef.current[index] = el}
+                                    data-value={tab.value}
+                                    sx={{
+                                        color: selectedTab === tab.value ? theme.palette.accent : theme.palette.disabled,
+                                        fontWeight: 400,
+                                        fontSize: {
+                                            xs: 12,
+                                            md: 14,
+                                        },
+                                        textDecoration: "none",
+                                        cursor: "pointer",
+                                    }}
+                                    onClick={() => handleTabChange(tab.value)}
+                                >
+                                    {tab.label}
+                                </Typography>
+                            </Link>
+                        ))}
+                        <Box
+                            sx={{
+                                marginTop: 5,
+                                position: 'absolute',
+                                height: '2px',
+                                backgroundColor: theme.palette.accent,
+                                transition: 'left 0.3s ease, width 0.3s ease',
+                                ...underlineStyle,
+                            }}
+                        />
+                    </Box>
+                </Box>
+
+                <Box sx={{ transition: "opacity 0.5s ease", height: "100vh" }}>
+                    {selectedTab === "inventoryItems" && <InventoryItemsTab />}
+                    {selectedTab === "pendingOrders" && <PendingOrdersTab />}
                 </Box>
             </Box>
-
-            <Box sx={{ transition: "opacity 0.5s ease", height: "100vh" }}>
-                {selectedTab === "inventoryItems" && <InventoryItemsTab />}
-                {selectedTab === "pendingOrders" && <PendingOrdersTab />}
-            </Box>
-        </Box >
+        </ContentBox >
     );
 };
 

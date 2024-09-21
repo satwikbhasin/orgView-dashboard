@@ -5,20 +5,19 @@ import { Table, Box, Typography, IconButton, Input } from "@mui/joy";
 import { ArrowUpDown, Search } from "lucide-react";
 import ordersData from "@/data/orders";
 import { useMediaQuery } from "@mui/material";
+import { useTheme, styled } from "@mui/material/styles";
 
-const headerStyle = {
-  height: "5vh",
+const headerStyle = (theme) => ({
+  height: "6vh",
   fontWeight: "700",
   textAlign: "center",
   verticalAlign: "middle",
-  backgroundColor: "#f0f4f8",
+  backgroundColor: theme.palette.table.header.background,
   position: "sticky",
-  top: 0,
-  zIndex: 1,
   cursor: "pointer",
-  whiteSpace: "normal",
+  whiteSpace: "wrap",
   overflow: "hidden",
-};
+});
 
 const cellStyle = {
   fontWeight: "500",
@@ -34,10 +33,11 @@ const ResponsiveTypography = ({ children }) => (
     sx={{
       textAlign: "left",
       fontSize: {
-        xs: "8px",
-        md: "10px",
-        lg: "12px",
+        xs: "9px",
+        md: "11px",
+        lg: "13px",
       },
+      fontWeight: 800,
     }}
   >
     {children}
@@ -50,7 +50,7 @@ const ResponsiveCellTypography = ({ children }) => (
       display: "flex",
       alignItems: "center",
       width: "100%",
-      whiteSpace: "wrap",
+      fontWeight: 500,
       fontSize: {
         xs: "8px",
         lg: "10px",
@@ -62,8 +62,8 @@ const ResponsiveCellTypography = ({ children }) => (
   </Typography>
 );
 
-const SortableHeader = ({ label, onClick }) => (
-  <th style={headerStyle} onClick={onClick}>
+const SortableHeader = ({ label, onClick, theme }) => (
+  <th style={headerStyle(theme)} onClick={onClick}>
     <IconButton
       sx={{
         display: "flex",
@@ -79,15 +79,28 @@ const SortableHeader = ({ label, onClick }) => (
       }}
     >
       {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
-      {label && <ArrowUpDown color="#1c69fb" size={10} strokeWidth={3} />}
+      {label && (
+        <ArrowUpDown color={theme.palette.accent} size={10} strokeWidth={3} />
+      )}
     </IconButton>
   </th>
 );
+
+const StyledTableRow = styled("tr")(({ theme, selected }) => ({
+  backgroundColor: selected
+    ? theme.palette.table.cell.hover.background
+    : theme.palette.table.cell.background,
+  transition: "background-color 0.3s",
+  "&:hover": {
+    backgroundColor: theme.palette.table.cell.hover.background,
+  },
+}));
 
 const PendingOrdersTable = ({ selectedOrder, setSelectedOrder }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [searchQuery, setSearchQuery] = useState("");
   const isSmallScreen = useMediaQuery("(max-width:960px)");
+  const theme = useTheme();
 
   useEffect(() => {
     if (!selectedOrder && ordersData.length > 0 && !isSmallScreen) {
@@ -143,48 +156,45 @@ const PendingOrdersTable = ({ selectedOrder, setSelectedOrder }) => {
               lg: 10,
               xl: 12,
             },
-            height: "5%"
+            height: "5%",
           }}
         />
         <Box
           sx={{
-            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
-            border: { xs: "transparent", sm: "1px solid #dedede" },
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.25)",
+            border: {
+              xs: theme.palette.transparent,
+              sm: `1px solid ${theme.palette.border}`,
+            },
             overflow: "auto",
           }}
         >
           <Table>
             <thead>
               <tr>
-                <SortableHeader label="SKU" onClick={() => handleSort("sku")} />
+                <SortableHeader
+                  label="SKU"
+                  onClick={() => handleSort("sku")}
+                  theme={theme}
+                />
                 <SortableHeader
                   label="Item Name"
                   onClick={() => handleSort("itemName")}
+                  theme={theme}
                 />
                 <SortableHeader
                   label="Order Status"
                   onClick={() => handleSort("orderStatus")}
+                  theme={theme}
                 />
               </tr>
             </thead>
             <tbody>
               {sortedOrders.map((order) => (
-                <tr
+                <StyledTableRow
                   key={order.id}
-                  style={{
-                    textAlign: "center",
-                    backgroundColor:
-                      selectedOrder?.id === order.id ? "#f0f4f8" : "#fbfcfe",
-                    transition: "background-color 0.3s",
-                  }}
+                  selected={selectedOrder && selectedOrder.id === order.id}
                   onClick={() => setSelectedOrder(order)}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "#f0f4f8";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor =
-                      selectedOrder?.id === order.id ? "#f0f4f8" : "#fbfcfe";
-                  }}
                 >
                   <td style={cellStyle}>
                     <ResponsiveCellTypography>
@@ -197,25 +207,11 @@ const PendingOrdersTable = ({ selectedOrder, setSelectedOrder }) => {
                     </ResponsiveCellTypography>
                   </td>
                   <td style={cellStyle}>
-                    <Box sx={{ alignItems: "center", justifyContent: "left" }}>
-                      <Typography
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          width: "100%",
-                          fontSize: {
-                            xs: "8px",
-                            lg: "10px",
-                            xl: "12px",
-                          },
-                          color: "black",
-                        }}
-                      >
-                        {order.orderStatus}
-                      </Typography>
-                    </Box>
+                    <ResponsiveCellTypography>
+                      {order.orderStatus}
+                    </ResponsiveCellTypography>
                   </td>
-                </tr>
+                </StyledTableRow>
               ))}
             </tbody>
           </Table>

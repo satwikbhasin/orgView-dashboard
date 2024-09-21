@@ -13,8 +13,16 @@ import {
 import { Search, Filter, ToggleLeft, ToggleRight } from "lucide-react";
 import { getItemCategories, getStockStatusTypes } from "@/data/inventory";
 import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
-const FilterItem = ({ label, children, isEnabled, onToggle, iconSize }) => (
+const FilterItem = ({
+  label,
+  children,
+  isEnabled,
+  onToggle,
+  iconSize,
+  theme,
+}) => (
   <Box
     sx={{
       flex: 1,
@@ -43,7 +51,7 @@ const FilterItem = ({ label, children, isEnabled, onToggle, iconSize }) => (
             xl: 12,
           },
           cursor: "pointer",
-          color: isEnabled ? "black" : "grey",
+          color: isEnabled ? theme.palette.text : theme.palette.disabled,
         }}
         onClick={onToggle}
       >
@@ -55,10 +63,10 @@ const FilterItem = ({ label, children, isEnabled, onToggle, iconSize }) => (
           className="toggle-button"
           sx={{
             visibility: "hidden",
-            color: isEnabled ? "#1c69fb" : "black",
+            color: isEnabled ? theme.palette.accent : theme.palette.text,
             "&:hover": {
-              color: isEnabled ? "#1c69fb" : "black",
-              backgroundColor: "transparent",
+              color: isEnabled ? theme.palette.accent : theme.palette.text,
+              backgroundColor: theme.palette.transparent,
             },
           }}
         >
@@ -189,11 +197,12 @@ export default function FilterBar({
 
   const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 14;
 
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
-        backgroundColor: "#fafafa",
-        boxShadow: 3,
+        backgroundColor: "inherit",
         padding: 1,
         paddingRight: 0,
         paddingBottom: 0,
@@ -207,12 +216,11 @@ export default function FilterBar({
           display: "flex",
           alignItems: "center",
           textAlign: "left",
-          color: "#1c69fb",
           gap: 0.5,
           cursor: "default",
         }}
       >
-        <Filter strokeWidth={3} size={iconSize} />
+        <Filter color={theme.palette.accent} strokeWidth={3} size={iconSize} />
         <Typography
           sx={{
             fontSize: {
@@ -222,6 +230,7 @@ export default function FilterBar({
               xl: 13,
             },
             fontWeight: 800,
+            color: theme.palette.text,
           }}
         >
           Filters
@@ -249,7 +258,7 @@ export default function FilterBar({
                 lg: 10,
                 xl: 12,
               },
-              color: "black",
+              color: theme.palette.text,
             }}
           >
             Disable All Filters
@@ -257,10 +266,14 @@ export default function FilterBar({
           <IconButton
             onClick={toggleAllFilters}
             sx={{
-              color: allFiltersDisabled ? "#1c69fb" : "black",
+              color: allFiltersDisabled
+                ? theme.palette.accent
+                : theme.palette.text,
               transition: "color 0.3s ease",
               "&:hover": {
-                color: allFiltersDisabled ? "#1c69fb" : "black",
+                color: allFiltersDisabled
+                  ? theme.palette.accent
+                  : theme.palette.text,
                 backgroundColor: "transparent",
               },
             }}
@@ -279,6 +292,7 @@ export default function FilterBar({
               isEnabled={filterStates.itemName}
               onToggle={() => toggleFilterEnabled("itemName")}
               iconSize={iconSize}
+              theme={theme}
             >
               <Input
                 placeholder="Enter item name"
@@ -302,6 +316,7 @@ export default function FilterBar({
               isEnabled={filterStates.status}
               onToggle={() => toggleFilterEnabled("status")}
               iconSize={iconSize}
+              theme={theme}
             >
               <Select
                 defaultValue="any"
@@ -332,6 +347,7 @@ export default function FilterBar({
               isEnabled={filterStates.category}
               onToggle={() => toggleFilterEnabled("category")}
               iconSize={iconSize}
+              theme={theme}
             >
               <Select
                 defaultValue="any"
@@ -360,6 +376,7 @@ export default function FilterBar({
               isEnabled={filterStates.sku}
               onToggle={() => toggleFilterEnabled("sku")}
               iconSize={iconSize}
+              theme={theme}
             >
               <Input
                 placeholder="Enter SKU"

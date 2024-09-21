@@ -19,23 +19,24 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
-
+import { useTheme, styled } from "@mui/material/styles";
 import inventoryData from "@/data/inventory";
 import ItemsCardView from "@/components/inventory/inventoryItemsTab/itemsCardView";
 import ItemGlance from "@/components/inventory/inventoryItemsTab/itemGlance";
 import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
+import { getLineChartOptions } from "./chartOptions";
 
-const headerStyle = {
-  height: "5vh",
-  fontWeight: "700",
+const headerStyle = (theme) => ({
+  height: "6vh",
+  fontWeight: 800,
   textAlign: "center",
   verticalAlign: "middle",
-  backgroundColor: "#f0f4f8",
+  backgroundColor: theme.palette.table.header.background,
   position: "sticky",
   cursor: "pointer",
   whiteSpace: "wrap",
   overflow: "hidden",
-};
+});
 
 const cellStyle = {
   fontWeight: "500",
@@ -49,10 +50,11 @@ const ResponsiveTypography = ({ children }) => (
     sx={{
       textAlign: "left",
       fontSize: {
-        xs: "8px",
-        md: "10px",
-        lg: "12px",
+        xs: "9px",
+        md: "11px",
+        lg: "13px",
       },
+      fontWeight: 800,
     }}
   >
     {children}
@@ -65,6 +67,7 @@ const ResponsiveCellTypography = ({ children }) => (
       display: "flex",
       alignItems: "center",
       width: "100%",
+      fontWeight: 500,
       fontSize: {
         xs: "8px",
         lg: "10px",
@@ -76,8 +79,8 @@ const ResponsiveCellTypography = ({ children }) => (
   </Typography>
 );
 
-const SortableHeader = ({ label, onClick }) => (
-  <th style={headerStyle} onClick={onClick}>
+const SortableHeader = ({ label, onClick, theme }) => (
+  <th style={headerStyle(theme)} onClick={onClick}>
     <IconButton
       sx={{
         display: "flex",
@@ -87,15 +90,27 @@ const SortableHeader = ({ label, onClick }) => (
         padding: 0,
         width: "100%",
         "&:hover": {
-          backgroundColor: "transparent",
+          backgroundColor: theme.palette.transparent,
         },
       }}
     >
       {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
-      {label && <ArrowUpDown color="#1c69fb" size={10} strokeWidth={3} />}
+      {label && (
+        <ArrowUpDown color={theme.palette.accent} size={10} strokeWidth={3} />
+      )}
     </IconButton>
   </th>
 );
+
+const StyledTableRow = styled("tr")(({ theme, selected }) => ({
+  backgroundColor: selected
+    ? theme.palette.table.cell.hover.background
+    : theme.palette.table.cell.background,
+  transition: "background-color 0.3s",
+  "&:hover": {
+    backgroundColor: theme.palette.table.cell.hover.background,
+  },
+}));
 
 export default function InventoryItemsTable({ searchFilter }) {
   const { itemName, status, category, sku } = searchFilter;
@@ -105,6 +120,7 @@ export default function InventoryItemsTable({ searchFilter }) {
   const [usageModalOpen, setUsageModalOpen] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width:960px)");
   const menuRef = useRef(null);
+  const theme = useTheme();
 
   const handleSort = (key) => {
     const direction =
@@ -174,20 +190,28 @@ export default function InventoryItemsTable({ searchFilter }) {
   const getStatus = (status) => {
     switch (status) {
       case "green":
-        return { label: "Green", color: "#03625E", backgroundColor: "#E0F3F1" };
+        return {
+          label: "Green",
+          color: theme.palette.inventory.status.green.text,
+          backgroundColor: theme.palette.inventory.status.green.background,
+        };
       case "yellow":
         return {
           label: "Yellow",
-          color: "#BB900A",
-          backgroundColor: "#FFF4E5",
+          color: theme.palette.inventory.status.yellow.text,
+          backgroundColor: theme.palette.inventory.status.yellow.background,
         };
       case "red":
-        return { label: "Red", color: "#AD3206", backgroundColor: "#FDECEA" };
+        return {
+          label: "Red",
+          color: theme.palette.inventory.status.red.text,
+          backgroundColor: theme.palette.inventory.status.red.background,
+        };
       default:
         return {
           label: "Unknown",
-          color: "#000000",
-          backgroundColor: "#F0F0F0",
+          color: theme.palette.text,
+          backgroundColor: theme.palette.transparent,
         };
     }
   };
@@ -245,14 +269,17 @@ export default function InventoryItemsTable({ searchFilter }) {
         <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
           <Box
             sx={{
-              border: { xs: "transparent", sm: "1px solid #dedede" },
+              border: {
+                xs: theme.palette.transparent,
+                sm: `1px solid ${theme.palette.border}`,
+              },
               overflow: "scroll",
               height: "100%",
               width: "100%",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
-              boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.25)",
             }}
           >
             {!isSmallScreen ? (
@@ -263,30 +290,37 @@ export default function InventoryItemsTable({ searchFilter }) {
                       <SortableHeader
                         label="SKU"
                         onClick={() => handleSort("sku")}
+                        theme={theme}
                       />
                       <SortableHeader
                         label="Item Name"
                         onClick={() => handleSort("itemName")}
+                        theme={theme}
                       />
                       <SortableHeader
                         label="Category"
                         onClick={() => handleSort("category")}
+                        theme={theme}
                       />
                       <SortableHeader
                         label="Price"
                         onClick={() => handleSort("price")}
+                        theme={theme}
                       />
                       <SortableHeader
                         label="Current Stock"
                         onClick={() => handleSort("currentStock")}
+                        theme={theme}
                       />
                       <SortableHeader
                         label="Min. Threshold"
                         onClick={() => handleSort("minThreshold")}
+                        theme={theme}
                       />
                       <SortableHeader
                         label="Status"
                         onClick={() => handleSort("status")}
+                        theme={theme}
                       />
                     </tr>
                   </thead>
@@ -296,32 +330,11 @@ export default function InventoryItemsTable({ searchFilter }) {
                   <Table>
                     <tbody>
                       {currentItems.map((item) => (
-                        <tr
+                        <StyledTableRow
                           key={item.sku}
-                          style={{
-                            textAlign: "center",
-                            backgroundColor:
-                              selectedItem && selectedItem.sku === item.sku
-                                ? "#f0f4f8"
-                                : "#fbfcfe",
-                            transition: "background-color 0.3s",
-                          }}
-                          onMouseEnter={(e) => {
-                            if (
-                              !selectedItem ||
-                              selectedItem.sku !== item.sku
-                            ) {
-                              e.currentTarget.style.backgroundColor = "#f0f4f8";
-                            }
-                          }}
-                          onMouseLeave={(e) => {
-                            if (
-                              !selectedItem ||
-                              selectedItem.sku !== item.sku
-                            ) {
-                              e.currentTarget.style.backgroundColor = "#fbfcfe";
-                            }
-                          }}
+                          selected={
+                            selectedItem && selectedItem.sku === item.sku
+                          }
                           onClick={(event) =>
                             isSmallScreen
                               ? handleMenuOpen(event, item)
@@ -353,7 +366,7 @@ export default function InventoryItemsTable({ searchFilter }) {
                               ...cellStyle,
                               color:
                                 item.status == "red"
-                                  ? getStatus(item.status).color
+                                  ? getStatus(item.status).backgroundColor
                                   : "inherit",
                               fontWeight: item.status == "red" ? "800" : "400",
                             }}
@@ -384,19 +397,20 @@ export default function InventoryItemsTable({ searchFilter }) {
                                     lg: "10px",
                                     xl: "12px",
                                   },
-                                  color: getStatus(item.status).color,
+                                  fontWeight: 600,
+                                  color: getStatus(item.status).backgroundColor,
                                 }}
                               >
                                 <Dot
                                   strokeWidth={3}
                                   size={26}
-                                  color={getStatus(item.status).color}
+                                  color={getStatus(item.status).backgroundColor}
                                 />
                                 {getStatus(item.status).label}
                               </Typography>
                             </Box>
                           </td>
-                        </tr>
+                        </StyledTableRow>
                       ))}
                     </tbody>
                   </Table>
@@ -425,14 +439,14 @@ export default function InventoryItemsTable({ searchFilter }) {
                   md: 12,
                 },
                 padding: 0.8,
-                color: "#1c69fb",
-                backgroundColor: "transparent",
+                color: theme.palette.accent,
+                backgroundColor: theme.palette.transparent,
                 "&:hover": {
-                  backgroundColor: "transparent",
+                  backgroundColor: theme.palette.transparent,
                 },
                 "&:disabled": {
-                  backgroundColor: "transparent",
-                  color: "#707070",
+                  backgroundColor: theme.palette.transparent,
+                  color: theme.palette.disabled,
                 },
               }}
               startDecorator={<ChevronLeft size={16} />}
@@ -445,14 +459,19 @@ export default function InventoryItemsTable({ searchFilter }) {
                   key={index}
                   size="small"
                   sx={{
-                    backgroundColor: "transparent",
-                    color: page === currentPage ? "#1c69fb" : "black",
+                    backgroundColor: theme.palette.transparent,
+                    color:
+                      page === currentPage
+                        ? theme.palette.accent
+                        : theme.palette.text,
                     cursor: page !== "..." ? "pointer" : "default",
                     fontWeight: page === currentPage ? "800" : "600",
                     "&:hover": {
-                      color: page === currentPage ? "#1c69fb" : "#1c69fb",
-                      backgroundColor:
-                        page === currentPage ? "transparent" : "transparent",
+                      color:
+                        page === currentPage
+                          ? theme.palette.accent
+                          : theme.palette.text,
+                      backgroundColor: theme.palette.transparent,
                     },
                   }}
                   onClick={() => page !== "..." && setCurrentPage(page)}
@@ -472,14 +491,14 @@ export default function InventoryItemsTable({ searchFilter }) {
                   md: 12,
                 },
                 padding: 0.8,
-                color: "#1c69fb",
-                backgroundColor: "transparent",
+                color: theme.palette.accent,
+                backgroundColor: theme.palette.transparent,
                 "&:hover": {
-                  backgroundColor: "transparent",
+                  backgroundColor: theme.palette.transparent,
                 },
                 "&:disabled": {
-                  backgroundColor: "transparent",
-                  color: "#707070",
+                  backgroundColor: theme.palette.transparent,
+                  color: theme.palette.disabled,
                 },
               }}
               endDecorator={<ChevronRight size={16} />}
@@ -499,7 +518,7 @@ export default function InventoryItemsTable({ searchFilter }) {
         ref={menuRef}
       >
         <MenuItem onClick={() => handleMenuItemClick("View Usage")}>
-          <TrendingUp color="#1c69fb" size={13} />
+          <TrendingUp color={theme.palette.accent} size={13} />
           <Typography
             sx={{
               fontSize: {
@@ -514,7 +533,7 @@ export default function InventoryItemsTable({ searchFilter }) {
           </Typography>
         </MenuItem>
         <MenuItem onClick={() => handleMenuItemClick("Order")}>
-          <ShoppingBasket color="#1c69fb" size={13} />
+          <ShoppingBasket color={theme.palette.accent} size={13} />
           <Typography
             sx={{
               fontSize: {
@@ -534,51 +553,7 @@ export default function InventoryItemsTable({ searchFilter }) {
           layout="center"
           onClose={() => setUsageModalOpen(false)}
           item={selectedItem}
-          chartOptions={{
-            chart: {
-              type: "line",
-              zoomType: "xy",
-              backgroundColor: "#fafafa",
-              height: "100%",
-            },
-            title: {
-              text: null,
-            },
-            xAxis: {
-              categories: selectedItem.usage.months,
-              labels: {
-                style: {
-                  fontSize: isSmallScreen ? "8px" : "10px",
-                },
-              },
-            },
-            yAxis: {
-              title: {
-                text: null,
-              },
-              labels: {
-                style: {
-                  fontSize: isSmallScreen ? "8px" : "10px",
-                },
-              },
-              tickInterval: 2000,
-            },
-            series: [
-              {
-                name: "Units per Month",
-                data: selectedItem.usage.data,
-                color: "#1c69fb",
-              },
-            ],
-            plotOptions: {
-              line: {
-                marker: {
-                  enabled: true,
-                  fillColor: "#1c69fb",
-                },
-              },
-            },
-          }}
+          chartOptions={getLineChartOptions(selectedItem, false, theme)}
         />
       )}
     </Box>

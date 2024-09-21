@@ -37,7 +37,7 @@ export default function InventoryTab() {
         gap: 2,
         padding: { xs: 0, sm: 1 },
         overflow: "scroll",
-        backgroundColor: "#fafafa",
+        backgroundColor: "inherit",
         height: "85vh",
       }}
     >
