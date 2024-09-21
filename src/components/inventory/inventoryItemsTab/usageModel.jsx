@@ -12,39 +12,11 @@ import {
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useTheme } from "@mui/material/styles";
+import { getPieChartOptions } from "./chartOptions";
+import { getLineChartOptions } from "./chartOptions";
 
-const UsageModal = ({ layout, onClose, item, chartOptions }) => {
+const UsageModal = ({ layout, onClose, item }) => {
   const theme = useTheme();
-  const pieChartOptions = {
-    chart: {
-      type: "pie",
-      backgroundColor: theme.palette.base,
-      height: "80%",
-    },
-    title: {
-      text: null,
-    },
-    series: [
-      {
-        name: "Usage",
-        colorByPoint: true,
-        data: item.usage.data.map((value, index) => ({
-          name: item.usage.months[index],
-          y: value,
-        })),
-      },
-    ],
-    plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: "pointer",
-        dataLabels: {
-          enabled: true,
-          format: "<b>{point.name}</b>: {point.percentage:.1f} %",
-        },
-      },
-    },
-  };
 
   return (
     <Modal open={!!layout} onClose={onClose}>
@@ -76,7 +48,7 @@ const UsageModal = ({ layout, onClose, item, chartOptions }) => {
               width: "100%",
               display: "flex",
               justifyContent: "space-between",
-              flexDirection:{
+              flexDirection: {
                 xs: "column",
                 md: "row",
               },
@@ -92,7 +64,10 @@ const UsageModal = ({ layout, onClose, item, chartOptions }) => {
                 alignItems: "center",
               }}
             >
-              <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={getLineChartOptions(item, false)}
+              />
             </Box>
             <Box
               sx={{
@@ -105,7 +80,7 @@ const UsageModal = ({ layout, onClose, item, chartOptions }) => {
             >
               <HighchartsReact
                 highcharts={Highcharts}
-                options={pieChartOptions}
+                options={getPieChartOptions(item)}
               />
             </Box>
           </Box>

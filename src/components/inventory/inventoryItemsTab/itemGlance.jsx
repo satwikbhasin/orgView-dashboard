@@ -16,6 +16,8 @@ import Highcharts, { color } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
 import { useTheme } from "@mui/material/styles";
+import { getPieChartOptions } from "./chartOptions";
+import { getLineChartOptions } from "./chartOptions";
 
 const ItemGlance = ({ item, onClose }) => {
   const [visible, setVisible] = useState(false);
@@ -46,63 +48,6 @@ const ItemGlance = ({ item, onClose }) => {
   );
 
   const iconSize = isSmallScreen ? 10 : isMediumScreen ? 12 : 14;
-
-  const chartOptions = {
-    chart: {
-      type: "line",
-      zoomType: "xy",
-      backgroundColor: theme.palette.base,
-      height: "100%",
-      color: theme.palette.text,
-    },
-    title: {
-      text: null,
-    },
-    xAxis: {
-      categories: item.usage.months,
-      labels: {
-        style: {
-          fontSize: isSmallScreen ? "8px" : "10px",
-          color: theme.palette.text,
-        },
-      },
-    },
-    yAxis: {
-      title: {
-        text: null,
-      },
-      labels: {
-        style: {
-          fontSize: isSmallScreen ? "8px" : "10px",
-          color: theme.palette.text,
-        },
-      },
-      tickInterval: 2000,
-    },
-    series: [
-      {
-        name: "Units per Month",
-        data: item.usage.data,
-        color: theme.palette.accent,
-      },
-    ],
-    plotOptions: {
-      line: {
-        marker: {
-          enabled: true,
-          fillColor: theme.palette.accent,
-        },
-      },
-    },
-    legend: {
-      itemStyle: {
-        color: theme.palette.text,
-        "&:hover": {
-          color: theme.palette.accent,
-        },
-      },
-    },
-  };
 
   const handleExpandUsage = () => setLayout("center");
 
@@ -283,7 +228,10 @@ const ItemGlance = ({ item, onClose }) => {
             height: "100%",
           }}
         >
-          <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={getLineChartOptions(item, false)}
+          />
         </Box>
       </Box>
       <Box
@@ -411,7 +359,6 @@ const ItemGlance = ({ item, onClose }) => {
         layout={layout}
         onClose={() => setLayout(undefined)}
         item={item}
-        chartOptions={chartOptions}
       />
     </Box>
   );

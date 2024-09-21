@@ -81,10 +81,10 @@ export default function ItemsCardView({ items }) {
             padding: 2,
             borderBottom: `1px solid ${theme.palette.border}`,
             color: theme.palette.text,
-            backgroundColor: theme.palette.base,
+            backgroundColor: theme.palette.table.cell.background,
             transition: "background-color 0.3s",
             "&:hover": {
-              backgroundColor: theme.palette.hover,
+              backgroundColor: theme.palette.table.cell.hover.background,
             },
           }}
           onClick={(event) => handleMenuOpen(event, item)}
@@ -219,6 +219,12 @@ export default function ItemsCardView({ items }) {
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
             ref={menuRef}
+            sx={{
+              borderRadius: 0,
+              backgroundColor: theme.palette.base,
+              border: "transparent",
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.25)",
+            }}
           >
             <MenuItem onClick={() => handleMenuItemClick("View Usage")}>
               <TrendingUp color={theme.palette.accent} size={13} />
@@ -258,51 +264,6 @@ export default function ItemsCardView({ items }) {
           layout="center"
           onClose={() => setUsageModalOpen(false)}
           item={selectedItem}
-          chartOptions={{
-            chart: {
-              type: "line",
-              zoomType: "xy",
-              backgroundColor: theme.palette.base,
-              height: "100%",
-            },
-            title: {
-              text: null,
-            },
-            xAxis: {
-              categories: selectedItem.usage.months,
-              labels: {
-                style: {
-                  fontSize: isSmallScreen ? "8px" : "10px",
-                },
-              },
-            },
-            yAxis: {
-              title: {
-                text: null,
-              },
-              labels: {
-                style: {
-                  fontSize: isSmallScreen ? "8px" : "10px",
-                },
-              },
-              tickInterval: 2000,
-            },
-            series: [
-              {
-                name: "Units per Month",
-                data: selectedItem.usage.data,
-                color: theme.palette.accent,
-              },
-            ],
-            plotOptions: {
-              line: {
-                marker: {
-                  enabled: true,
-                  fillColor: theme.palette.accent,
-                },
-              },
-            },
-          }}
         />
       )}
     </Box>

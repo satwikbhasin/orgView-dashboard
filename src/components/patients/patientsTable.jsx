@@ -196,7 +196,7 @@ export default function PatientsTable({ searchFilter }) {
             width: "100%",
             display: "flex",
             flexDirection: "column",
-            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.25)",
           }}
         >
           {!isSmallScreen ? (

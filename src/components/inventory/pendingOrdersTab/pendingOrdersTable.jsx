@@ -86,8 +86,10 @@ const SortableHeader = ({ label, onClick, theme }) => (
   </th>
 );
 
-const StyledTableRow = styled("tr")(({ theme }) => ({
-  backgroundColor: theme.palette.table.cell.background,
+const StyledTableRow = styled("tr")(({ theme, selected }) => ({
+  backgroundColor: selected
+    ? theme.palette.table.cell.hover.background
+    : theme.palette.table.cell.background,
   transition: "background-color 0.3s",
   "&:hover": {
     backgroundColor: theme.palette.table.cell.hover.background,
@@ -159,7 +161,7 @@ const PendingOrdersTable = ({ selectedOrder, setSelectedOrder }) => {
         />
         <Box
           sx={{
-            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.25)",
             border: {
               xs: theme.palette.transparent,
               sm: `1px solid ${theme.palette.border}`,
@@ -191,6 +193,7 @@ const PendingOrdersTable = ({ selectedOrder, setSelectedOrder }) => {
               {sortedOrders.map((order) => (
                 <StyledTableRow
                   key={order.id}
+                  selected={selectedOrder && selectedOrder.id === order.id}
                   onClick={() => setSelectedOrder(order)}
                 >
                   <td style={cellStyle}>

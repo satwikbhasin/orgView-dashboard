@@ -20,11 +20,11 @@ import {
 } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
 import { useTheme, styled } from "@mui/material/styles";
-
 import inventoryData from "@/data/inventory";
 import ItemsCardView from "@/components/inventory/inventoryItemsTab/itemsCardView";
 import ItemGlance from "@/components/inventory/inventoryItemsTab/itemGlance";
 import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
+import { getLineChartOptions } from "./chartOptions";
 
 const headerStyle = (theme) => ({
   height: "6vh",
@@ -54,7 +54,7 @@ const ResponsiveTypography = ({ children }) => (
         md: "11px",
         lg: "13px",
       },
-      fontWeight: 800,  
+      fontWeight: 800,
     }}
   >
     {children}
@@ -102,8 +102,10 @@ const SortableHeader = ({ label, onClick, theme }) => (
   </th>
 );
 
-const StyledTableRow = styled("tr")(({ theme }) => ({
-  backgroundColor: theme.palette.table.cell.background,
+const StyledTableRow = styled("tr")(({ theme, selected }) => ({
+  backgroundColor: selected
+    ? theme.palette.table.cell.hover.background
+    : theme.palette.table.cell.background,
   transition: "background-color 0.3s",
   "&:hover": {
     backgroundColor: theme.palette.table.cell.hover.background,
@@ -277,7 +279,7 @@ export default function InventoryItemsTable({ searchFilter }) {
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
-              boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.25)",
             }}
           >
             {!isSmallScreen ? (
@@ -330,6 +332,9 @@ export default function InventoryItemsTable({ searchFilter }) {
                       {currentItems.map((item) => (
                         <StyledTableRow
                           key={item.sku}
+                          selected={
+                            selectedItem && selectedItem.sku === item.sku
+                          }
                           onClick={(event) =>
                             isSmallScreen
                               ? handleMenuOpen(event, item)
@@ -548,51 +553,7 @@ export default function InventoryItemsTable({ searchFilter }) {
           layout="center"
           onClose={() => setUsageModalOpen(false)}
           item={selectedItem}
-          chartOptions={{
-            chart: {
-              type: "line",
-              zoomType: "xy",
-              backgroundColor: theme.palette.base,
-              height: "100%",
-            },
-            title: {
-              text: null,
-            },
-            xAxis: {
-              categories: selectedItem.usage.months,
-              labels: {
-                style: {
-                  fontSize: isSmallScreen ? "8px" : "10px",
-                },
-              },
-            },
-            yAxis: {
-              title: {
-                text: null,
-              },
-              labels: {
-                style: {
-                  fontSize: isSmallScreen ? "8px" : "10px",
-                },
-              },
-              tickInterval: 2000,
-            },
-            series: [
-              {
-                name: "Units per Month",
-                data: selectedItem.usage.data,
-                color: theme.palette.accent,
-              },
-            ],
-            plotOptions: {
-              line: {
-                marker: {
-                  enabled: true,
-                  fillColor: theme.palette.accent,
-                },
-              },
-            },
-          }}
+          chartOptions={getLineChartOptions(selectedItem, false)}
         />
       )}
     </Box>

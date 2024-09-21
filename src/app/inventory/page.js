@@ -7,6 +7,7 @@ import InventoryItemsTab from "@/components/inventory/inventoryItemsTab/inventor
 import PendingOrdersTab from "@/components/inventory/pendingOrdersTab/pendingOrdersTab";
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useTheme } from "@mui/material";
 
 const Inventory = () => {
     const searchParams = useSearchParams();
@@ -17,6 +18,7 @@ const Inventory = () => {
     const tabsRef = useRef([]);
     const [isScrolled, setIsScrolled] = useState(false);
     const contentRef = useRef(null);
+    const theme = useTheme();
 
     useEffect(() => {
         if (tab) {
@@ -64,7 +66,7 @@ const Inventory = () => {
                     background: isScrolled
                         && "rgba( 250, 250, 250, 0.1 )",
                     backdropFilter: isScrolled ? "blur(4.5px)" : "none",
-                    borderBottom: isScrolled ? "1px solid #dedede2" : "none",
+                    borderBottom: isScrolled ? `1px solid ${theme.palette.border}` : "none",
                     position: "sticky",
                     top: 0,
                     zIndex: 1,
@@ -82,7 +84,7 @@ const Inventory = () => {
                                     ref={el => tabsRef.current[index] = el}
                                     data-value={tab.value}
                                     sx={{
-                                        color: selectedTab === tab.value ? "#1c69fb" : "grey",
+                                        color: selectedTab === tab.value ? theme.palette.accent : theme.palette.disabled,
                                         fontWeight: 400,
                                         fontSize: {
                                             xs: 12,
@@ -102,7 +104,7 @@ const Inventory = () => {
                                 marginTop: 5,
                                 position: 'absolute',
                                 height: '2px',
-                                backgroundColor: '#1c69fb',
+                                backgroundColor: theme.palette.accent,
                                 transition: 'left 0.3s ease, width 0.3s ease',
                                 ...underlineStyle,
                             }}

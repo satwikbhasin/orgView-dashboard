@@ -106,7 +106,7 @@ const OrderTrackingMap = ({ selectedOrder }) => {
       sx={{
         position: "relative",
         height: "100%",
-        boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.1)",
+        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.25)",
         border: `1px solid ${theme.palette.border}`,
         width: "75%",
         overflow: "hidden",
