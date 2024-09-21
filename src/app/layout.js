@@ -4,22 +4,13 @@ import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 import Navbar from "@/components/common/navbar";
 import Loader from "@/styling/loader";
+import { GeistSans } from 'geist/font/sans'
+import { GeistMono } from 'geist/font/mono'
 import "./globals.css";
 
 const ThemeProvider = dynamic(() => import("@/styling/themeProvider"), {
   ssr: false,
   loading: () => <Loader />,
-});
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
 });
 
 export const metadata = {
@@ -32,7 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${GeistSans.variable} antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider initialTheme={themeMode}>

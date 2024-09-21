@@ -167,7 +167,7 @@ export default function Navbar() {
       >
         <Typography
           sx={{
-            fontWeight: 50,
+            fontWeight: 10,
             paddingLeft: 1,
             fontSize: { xs: 8, md: 10, lg: 12 },
             display: { xs: "none", md: collapsedNav ? "none" : "block" },
@@ -275,7 +275,7 @@ export default function Navbar() {
       >
         <Typography
           sx={{
-            fontWeight: 50,
+            fontWeight: 10,
             paddingLeft: 1,
             fontSize: { xs: 8, md: 10, lg: 12 },
             display: { xs: "none", md: collapsedNav ? "none" : "block" },
@@ -306,7 +306,7 @@ export default function Navbar() {
                   padding: 1,
                   borderLeft: pathName.includes(link.href.split("?")[0])
                     ? `2.5px solid ${theme.palette.accent}`
-                    : "none",
+                    : "2.5px solid transparent",
                   backgroundColor: {
                     xs: theme.palette.transparent,
                     md: pathName.includes(link.href.split("?")[0])

@@ -46,7 +46,6 @@ const FilterItem = ({
         sx={{
           fontWeight: 500,
           fontSize: { xs: 8, lg: 10, xl: 12 },
-
           cursor: "pointer",
           color: isEnabled ? theme.palette.text : theme.palette.disabled,
         }}
@@ -54,7 +53,10 @@ const FilterItem = ({
       >
         {label}
       </Typography>
-      <Tooltip size="sm" title={isEnabled ? "Disable filter" : "Enable filter"}>
+      <Tooltip
+        size="small"
+        title={isEnabled ? "Disable filter" : "Enable filter"}
+      >
         <IconButton
           onClick={onToggle}
           className="toggle-button"
@@ -201,11 +203,10 @@ export default function FilterBar({ onPatientNameChange, onPayerChange }) {
           sx={{
             fontSize: {
               xs: 9,
-              sm: 10,
               md: 11,
               xl: 13,
             },
-            fontWeight: 800,
+            fontWeight: 900,
             color: theme.palette.text,
           }}
         >
