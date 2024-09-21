@@ -122,7 +122,7 @@ const darkTheme = createTheme({
         accent: "#1C69FB",
         text: "#FFFFFF",
         transparent: "transparent",
-        base: "#181818",
+        base: "#1F1F1F",
         hover: "#232A2E",
         disabled: "grey",
         border: "#32383E",
@@ -175,7 +175,7 @@ const darkTheme = createTheme({
             }
         },
         navbar: {
-            base: "#0B0D0E",
+            base: "#121212",
             tab: {
                 selected: {
                     text: "#FFFFFF",
@@ -215,14 +215,14 @@ const darkTheme = createTheme({
         },
         table: {
             header: {
-                background: "#0B0D0E",
+                background: "#222222",
                 text: "#FFFFFF",
             },
             cell: {
                 background: "#1A1A1A",
                 text: "#FFFFFF",
                 hover: {
-                    background: "#232A2E",
+                    background: "#1e1e1e",
                 }
             },
         }

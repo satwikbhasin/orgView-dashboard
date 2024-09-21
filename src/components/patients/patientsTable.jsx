@@ -33,12 +33,29 @@ const cellStyle = (theme) => ({
   whiteSpace: "wrap",
 });
 
+const ResponsiveTypography = ({ children }) => (
+  <Typography
+    sx={{
+      textAlign: "left",
+      fontSize: {
+        xs: "9px",
+        md: "11px",
+        lg: "13px",
+      },
+      fontWeight: 800,
+    }}
+  >
+    {children}
+  </Typography>
+);
+
 const ResponsiveCellTypography = ({ children }) => (
   <Typography
     sx={{
       display: "flex",
       alignItems: "center",
       width: "100%",
+      fontWeight: 500,
       fontSize: {
         xs: "8px",
         lg: "10px",
@@ -49,22 +66,6 @@ const ResponsiveCellTypography = ({ children }) => (
     {children}
   </Typography>
 );
-
-const ResponsiveTypography = ({ children }) => (
-  <Typography
-    sx={{
-      textAlign: "left",
-      fontSize: {
-        xs: "8px",
-        md: "10px",
-        lg: "12px",
-      },
-    }}
-  >
-    {children}
-  </Typography>
-);
-
 const SortableHeader = ({ label, onClick, theme }) => (
   <th style={headerStyle(theme)} onClick={onClick}>
     <IconButton

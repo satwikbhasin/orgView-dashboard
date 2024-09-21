@@ -33,10 +33,11 @@ const ResponsiveTypography = ({ children }) => (
     sx={{
       textAlign: "left",
       fontSize: {
-        xs: "8px",
-        md: "10px",
-        lg: "12px",
+        xs: "9px",
+        md: "11px",
+        lg: "13px",
       },
+      fontWeight: 800,
     }}
   >
     {children}
@@ -49,7 +50,7 @@ const ResponsiveCellTypography = ({ children }) => (
       display: "flex",
       alignItems: "center",
       width: "100%",
-      whiteSpace: "wrap",
+      fontWeight: 500,
       fontSize: {
         xs: "8px",
         lg: "10px",

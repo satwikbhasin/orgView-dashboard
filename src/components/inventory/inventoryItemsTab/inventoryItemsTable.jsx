@@ -28,7 +28,7 @@ import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
 
 const headerStyle = (theme) => ({
   height: "6vh",
-  fontWeight: "700",
+  fontWeight: 800,
   textAlign: "center",
   verticalAlign: "middle",
   backgroundColor: theme.palette.table.header.background,
@@ -50,10 +50,11 @@ const ResponsiveTypography = ({ children }) => (
     sx={{
       textAlign: "left",
       fontSize: {
-        xs: "8px",
-        md: "10px",
-        lg: "12px",
+        xs: "9px",
+        md: "11px",
+        lg: "13px",
       },
+      fontWeight: 800,  
     }}
   >
     {children}
@@ -66,6 +67,7 @@ const ResponsiveCellTypography = ({ children }) => (
       display: "flex",
       alignItems: "center",
       width: "100%",
+      fontWeight: 500,
       fontSize: {
         xs: "8px",
         lg: "10px",
@@ -390,6 +392,7 @@ export default function InventoryItemsTable({ searchFilter }) {
                                     lg: "10px",
                                     xl: "12px",
                                   },
+                                  fontWeight: 600,
                                   color: getStatus(item.status).backgroundColor,
                                 }}
                               >
