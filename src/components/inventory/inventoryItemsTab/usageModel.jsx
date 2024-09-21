@@ -66,7 +66,7 @@ const UsageModal = ({ layout, onClose, item }) => {
             >
               <HighchartsReact
                 highcharts={Highcharts}
-                options={getLineChartOptions(item, false)}
+                options={getLineChartOptions(item, false, theme)}
               />
             </Box>
             <Box
@@ -80,7 +80,7 @@ const UsageModal = ({ layout, onClose, item }) => {
             >
               <HighchartsReact
                 highcharts={Highcharts}
-                options={getPieChartOptions(item)}
+                options={getPieChartOptions(item, theme)}
               />
             </Box>
           </Box>

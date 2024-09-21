@@ -553,7 +553,7 @@ export default function InventoryItemsTable({ searchFilter }) {
           layout="center"
           onClose={() => setUsageModalOpen(false)}
           item={selectedItem}
-          chartOptions={getLineChartOptions(selectedItem, false)}
+          chartOptions={getLineChartOptions(selectedItem, false, theme)}
         />
       )}
     </Box>

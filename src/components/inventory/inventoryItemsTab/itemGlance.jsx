@@ -12,11 +12,10 @@ import {
   Expand,
 } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
-import Highcharts, { color } from "highcharts";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
 import { useTheme } from "@mui/material/styles";
-import { getPieChartOptions } from "./chartOptions";
 import { getLineChartOptions } from "./chartOptions";
 
 const ItemGlance = ({ item, onClose }) => {
@@ -230,7 +229,7 @@ const ItemGlance = ({ item, onClose }) => {
         >
           <HighchartsReact
             highcharts={Highcharts}
-            options={getLineChartOptions(item, false)}
+            options={getLineChartOptions(item, false, theme)}
           />
         </Box>
       </Box>

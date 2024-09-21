@@ -1,8 +1,4 @@
-import { useTheme } from '@mui/material/styles';
-
-export const getLineChartOptions = (item, isSmallScreen) => {
-    const theme = useTheme();
-
+export const getLineChartOptions = (item, isSmallScreen, theme) => {
     return {
         chart: {
             type: "line",
@@ -61,9 +57,7 @@ export const getLineChartOptions = (item, isSmallScreen) => {
     };
 };
 
-export const getPieChartOptions = (item) => {
-    const theme = useTheme();
-
+export const getPieChartOptions = (item, theme) => {
     return {
         chart: {
             type: "pie",
