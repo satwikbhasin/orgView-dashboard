@@ -1,101 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { Table, Box, Button, IconButton, Typography } from "@mui/joy";
+import { Table, Box, Button, IconButton } from "@mui/joy";
 import patientsData from "@/data/patients";
-import {
-  Send,
-  ClipboardPlus,
-  ArrowUpDown,
-  ChevronRight,
-  ChevronLeft,
-} from "lucide-react";
+import { Send, ClipboardPlus, ChevronRight, ChevronLeft } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
 import PatientsCardView from "@/components/patients/patientsCardView";
-import { useTheme, styled } from "@mui/material/styles";
-
-const headerStyle = (theme) => ({
-  height: "6vh",
-  fontWeight: "700",
-  textAlign: "center",
-  verticalAlign: "middle",
-  backgroundColor: theme.palette.table.header.background,
-  position: "sticky",
-  cursor: "pointer",
-  whiteSpace: "wrap",
-  overflow: "hidden",
-});
-
-const cellStyle = (theme) => ({
-  fontWeight: "500",
-  height: "6vh",
-  textAlign: "left",
-  whiteSpace: "wrap",
-});
-
-const ResponsiveTypography = ({ children }) => (
-  <Typography
-    sx={{
-      textAlign: "left",
-      fontSize: {
-        xs: "9px",
-        md: "11px",
-        lg: "13px",
-      },
-      fontWeight: 800,
-    }}
-  >
-    {children}
-  </Typography>
-);
-
-const ResponsiveCellTypography = ({ children }) => (
-  <Typography
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      fontWeight: 500,
-      fontSize: {
-        xs: "8px",
-        lg: "10px",
-        xl: "12px",
-      },
-    }}
-  >
-    {children}
-  </Typography>
-);
-const SortableHeader = ({ label, onClick, theme }) => (
-  <th style={headerStyle(theme)} onClick={onClick}>
-    <IconButton
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "left",
-        gap: 1,
-        padding: 0,
-        width: "100%",
-        "&:hover": {
-          backgroundColor: theme.palette.transparent,
-        },
-      }}
-    >
-      {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
-      {label && (
-        <ArrowUpDown color={theme.palette.accent} size={10} strokeWidth={3} />
-      )}
-    </IconButton>
-  </th>
-);
-
-const StyledTableRow = styled("tr")(({ theme }) => ({
-  backgroundColor: theme.palette.table.cell.background,
-  transition: "background-color 0.3s",
-  "&:hover": {
-    backgroundColor: theme.palette.table.cell.hover.background,
-  },
-}));
+import { useTheme } from "@mui/material/styles";
+import {
+  cellStyle,
+  ResponsiveCellTypography,
+  SortableHeader,
+  StyledTableRow,
+} from "@/services/getTableStyles";
 
 export default function PatientsTable({ searchFilter }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -257,44 +174,44 @@ export default function PatientsTable({ searchFilter }) {
                   <tbody>
                     {currentPatients.map((patient) => (
                       <StyledTableRow key={patient.id}>
-                        <td style={cellStyle(theme)}>
+                        <td style={cellStyle}>
                           <ResponsiveCellTypography>
                             {patient.dos}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle(theme)}>
+                        <td style={cellStyle}>
                           <ResponsiveCellTypography>
                             {patient.ptName}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle(theme)}>
+                        <td style={cellStyle}>
                           <ResponsiveCellTypography>
                             {patient.createDate}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle(theme)}>
+                        <td style={cellStyle}>
                           <ResponsiveCellTypography>
                             {patient.payer}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle(theme)}>
+                        <td style={cellStyle}>
                           <ResponsiveCellTypography>
                             {patient.provider}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle(theme)}>
+                        <td style={cellStyle}>
                           <ResponsiveCellTypography>
                             {patient.claimId}
                           </ResponsiveCellTypography>
                         </td>
-                        <td style={cellStyle(theme)}>
+                        <td style={cellStyle}>
                           <ResponsiveCellTypography>
                             {patient.procedures}
                           </ResponsiveCellTypography>
                         </td>
                         <td
                           style={{
-                            ...cellStyle(theme),
+                            ...cellStyle,
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
@@ -336,7 +253,7 @@ export default function PatientsTable({ searchFilter }) {
                             </ResponsiveCellTypography>
                           </Box>
                         </td>
-                        <td style={cellStyle(theme)}>
+                        <td style={cellStyle}>
                           <ResponsiveCellTypography>
                             {patient.charges}
                           </ResponsiveCellTypography>

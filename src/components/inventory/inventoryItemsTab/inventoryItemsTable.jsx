@@ -19,98 +19,18 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
-import { useTheme, styled } from "@mui/material/styles";
 import inventoryData from "@/data/inventory";
 import ItemsCardView from "@/components/inventory/inventoryItemsTab/itemsCardView";
 import ItemGlance from "@/components/inventory/inventoryItemsTab/itemGlance";
 import UsageModal from "@/components/inventory/inventoryItemsTab/usageModel";
 import { getLineChartOptions } from "@/services/getChartOptions";
-
-const headerStyle = (theme) => ({
-  height: "6vh",
-  fontWeight: 800,
-  textAlign: "center",
-  verticalAlign: "middle",
-  backgroundColor: theme.palette.table.header.background,
-  position: "sticky",
-  cursor: "pointer",
-  whiteSpace: "wrap",
-  overflow: "hidden",
-});
-
-const cellStyle = {
-  fontWeight: "500",
-  height: "5vh",
-  textAlign: "left",
-  whiteSpace: "wrap",
-};
-
-const ResponsiveTypography = ({ children }) => (
-  <Typography
-    sx={{
-      textAlign: "left",
-      fontSize: {
-        xs: "9px",
-        md: "11px",
-        lg: "13px",
-      },
-      fontWeight: 800,
-    }}
-  >
-    {children}
-  </Typography>
-);
-
-const ResponsiveCellTypography = ({ children }) => (
-  <Typography
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      fontWeight: 500,
-      fontSize: {
-        xs: "8px",
-        lg: "10px",
-        xl: "12px",
-      },
-    }}
-  >
-    {children}
-  </Typography>
-);
-
-const SortableHeader = ({ label, onClick, theme }) => (
-  <th style={headerStyle(theme)} onClick={onClick}>
-    <IconButton
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "left",
-        gap: 1,
-        padding: 0,
-        width: "100%",
-        "&:hover": {
-          backgroundColor: theme.palette.transparent,
-        },
-      }}
-    >
-      {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
-      {label && (
-        <ArrowUpDown color={theme.palette.accent} size={10} strokeWidth={3} />
-      )}
-    </IconButton>
-  </th>
-);
-
-const StyledTableRow = styled("tr")(({ theme, selected }) => ({
-  backgroundColor: selected
-    ? theme.palette.table.cell.hover.background
-    : theme.palette.table.cell.background,
-  transition: "background-color 0.3s",
-  "&:hover": {
-    backgroundColor: theme.palette.table.cell.hover.background,
-  },
-}));
+import { useTheme } from "@mui/material/styles";
+import {
+  cellStyle,
+  ResponsiveCellTypography,
+  SortableHeader,
+  StyledTableRow,
+} from "@/services/getTableStyles";
 
 export default function InventoryItemsTable({ searchFilter }) {
   const { itemName, status, category, sku } = searchFilter;

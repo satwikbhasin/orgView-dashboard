@@ -1,100 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Table, Box, Typography, IconButton, Input } from "@mui/joy";
-import { ArrowUpDown, Search } from "lucide-react";
+import { Table, Box, Input } from "@mui/joy";
+import { Search } from "lucide-react";
 import ordersData from "@/data/orders";
 import { useMediaQuery } from "@mui/material";
-import { useTheme, styled } from "@mui/material/styles";
-
-const headerStyle = (theme) => ({
-  height: "6vh",
-  fontWeight: "700",
-  textAlign: "center",
-  verticalAlign: "middle",
-  backgroundColor: theme.palette.table.header.background,
-  position: "sticky",
-  cursor: "pointer",
-  whiteSpace: "wrap",
-  overflow: "hidden",
-});
-
-const cellStyle = {
-  fontWeight: "500",
-  height: "5vh",
-  textAlign: "left",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
-};
-
-const ResponsiveTypography = ({ children }) => (
-  <Typography
-    sx={{
-      textAlign: "left",
-      fontSize: {
-        xs: "9px",
-        md: "11px",
-        lg: "13px",
-      },
-      fontWeight: 800,
-    }}
-  >
-    {children}
-  </Typography>
-);
-
-const ResponsiveCellTypography = ({ children }) => (
-  <Typography
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      fontWeight: 500,
-      fontSize: {
-        xs: "8px",
-        lg: "10px",
-        xl: "12px",
-      },
-    }}
-  >
-    {children}
-  </Typography>
-);
-
-const SortableHeader = ({ label, onClick, theme }) => (
-  <th style={headerStyle(theme)} onClick={onClick}>
-    <IconButton
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "left",
-        gap: 1,
-        height: "100%",
-        padding: 0,
-        width: "100%",
-        "&:hover": {
-          backgroundColor: "transparent",
-        },
-      }}
-    >
-      {label && <ResponsiveTypography>{label}</ResponsiveTypography>}
-      {label && (
-        <ArrowUpDown color={theme.palette.accent} size={10} strokeWidth={3} />
-      )}
-    </IconButton>
-  </th>
-);
-
-const StyledTableRow = styled("tr")(({ theme, selected }) => ({
-  backgroundColor: selected
-    ? theme.palette.table.cell.hover.background
-    : theme.palette.table.cell.background,
-  transition: "background-color 0.3s",
-  "&:hover": {
-    backgroundColor: theme.palette.table.cell.hover.background,
-  },
-}));
+import { useTheme } from "@mui/material/styles";
+import {
+  cellStyle,
+  ResponsiveCellTypography,
+  SortableHeader,
+  StyledTableRow,
+} from "@/services/getTableStyles";
 
 const PendingOrdersTable = ({ selectedOrder, setSelectedOrder }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
