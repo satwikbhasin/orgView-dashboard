@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { Analytics as BeamAnalytics } from "@/components/analytics";
 import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 import Navbar from "@/components/common/navbar";
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           {children}
           <Analytics />
+          <BeamAnalytics />
         </ThemeProvider>
       </body>
     </html>
