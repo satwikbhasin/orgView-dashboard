@@ -38,11 +38,11 @@ export default function RootLayout({ children }) {
         <ThemeProvider initialTheme={themeMode}>
           <Navbar />
           {children}
-          <div className="cursor-default flex absolute top-3 left-1/2 transform -translate-x-1/2 font-bold text-white bg-zinc-950/50 backdrop-blur-lg px-10 py-1 rounded-full animate-presence z-1000000">
-            Dashboard By
+          <div className="cursor-default text-xs justify-center items-center flex flex-col absolute top-3 left-1/2 transform -translate-x-1/2 font-bold text-white bg-zinc-950/50 backdrop-blur-lg px-10 py-1 rounded-full animate-presence z-1000000">
+            Dashboard Template By
             <Link className="text-green-200 flex flex-row ml-1 gap-1" href="https://satwikbhasin.com">
               Satwik Bhasin
-              <ExternalLink strokeWidth={3} size={18} />
+              <ExternalLink strokeWidth={3} size={14} />
             </Link>
           </div>
           <Analytics />
