@@ -17,7 +17,7 @@ export const metadata = {
   description:
     "Org View is a modern dashboard for your business. It is a powerful and feature-rich dashboard that will help you to monitor your business.",
   image: "/orgView_logo.png",
-  url: "https://orgview-dashboard.vercel.app",
+  url: "https://orgview.vercel.app",
   type: "website",
   siteName: "Org View",
   keywords: ["dashboard template", "business", "modern", "orgview", "ui/ux"],
