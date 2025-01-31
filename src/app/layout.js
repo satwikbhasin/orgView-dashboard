@@ -13,7 +13,7 @@ const ThemeProvider = dynamic(() => import("@/styling/theming/themeProvider"), {
 });
 
 export const metadata = {
-  title: "Syntra Demo",
+  title: "Org View Modern Dashboard for your business",
 };
 
 export default function RootLayout({ children }) {

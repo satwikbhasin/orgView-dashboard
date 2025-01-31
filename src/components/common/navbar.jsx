@@ -129,8 +129,8 @@ export default function Navbar() {
           }}
         >
           <Image
-            src="/syntra_logo.png"
-            alt="Syntra Logo"
+            src="/orgView_logo.png"
+            alt="OrgView Logo"
             width={25}
             height={25}
           />
@@ -148,7 +148,7 @@ export default function Navbar() {
                 display: { xs: "none", md: "inline" },
               }}
             >
-              S Y N T R A
+              OrgView
             </Typography>
           )}
         </IconButton>
