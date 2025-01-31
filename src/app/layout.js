@@ -14,6 +14,14 @@ const ThemeProvider = dynamic(() => import("@/styling/theming/themeProvider"), {
 
 export const metadata = {
   title: "Org View Modern Dashboard for your business",
+  description:
+    "Org View is a modern dashboard for your business. It is a powerful and feature-rich dashboard that will help you to monitor your business.",
+  image: "/orgView_logo.png",
+  url: "https://orgview.vercel.app",
+  type: "website",
+  siteName: "Org View",
+  keywords: ["dashboard template", "business", "modern", "orgview", "ui/ux"],
+  creator: "Satwik Bhasin",
 };
 
 export default function RootLayout({ children }) {
