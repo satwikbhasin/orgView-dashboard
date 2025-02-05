@@ -19,10 +19,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta property="og:title" content="Org View - Modern Dashboard for Your Business" />
+        <meta property="og:title" content="Org View - Modern Dashboard" />
         <meta
           property="og:description"
-          content="Org View is a modern dashboard to help you monitor and grow your business with powerful insights."
+          content="Org View is a modern dashboard template for your business."
         />
         <meta property="og:image" content="https://orgview.vercel.app/orgView_logo.png" />
         <meta property="og:url" content="https://orgview.vercel.app" />
