@@ -136,8 +136,8 @@ export default function Navbar() {
           <Image
             src="/orgView_logo.svg"
             alt="OrgView Logo"
-            width={30}
-            height={30}
+            width={25}
+            height={25}
           />
           {!collapsedNav && (
             <Typography
