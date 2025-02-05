@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
           property="og:description"
           content="Org View is a modern dashboard to help you monitor and grow your business with powerful insights."
         />
-        <meta property="og:image" content="https://orgview.vercel.app/orgView_logo.svg" />
+        <meta property="og:image" content="https://orgview.vercel.app/orgView_logo.png" />
         <meta property="og:url" content="https://orgview.vercel.app" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Org View" />
