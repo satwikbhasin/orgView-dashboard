@@ -134,10 +134,10 @@ export default function Navbar() {
           }}
         >
           <Image
-            src="/orgView_logo.png"
+            src="/orgView_logo.svg"
             alt="OrgView Logo"
-            width={25}
-            height={25}
+            width={30}
+            height={30}
           />
           {!collapsedNav && (
             <Typography
