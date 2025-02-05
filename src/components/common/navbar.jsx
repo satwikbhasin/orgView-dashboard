@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, ButtonGroup, IconButton, Typography, Switch } from "@mui/joy";
+import { Box, ButtonGroup, IconButton, Typography } from "@mui/joy";
 import { useMediaQuery } from "@mui/material";
 import {
   House,
@@ -23,6 +23,11 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useColorScheme } from "@mui/joy/styles";
 import { useTheme } from "@mui/material/styles";
+import {
+  IconBrandGithubFilled,
+  IconWorldWww,
+  IconBrandLinkedinFilled,
+} from "@tabler/icons-react";
 
 export default function Navbar() {
   const { mode, setMode } = useColorScheme();
@@ -101,7 +106,7 @@ export default function Navbar() {
         background: theme.palette.navbar.base,
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        minHeight: "100vh",
         alignItems: "center",
         width: { xs: "15vw", md: collapsedNav ? "8vw" : "20vw" },
         position: "sticky",
@@ -423,6 +428,117 @@ export default function Navbar() {
               {darkMode ? "Dark Mode" : "Light Mode"}
             </Typography>
           </IconButton>
+          <Typography
+            sx={{
+              fontSize: { xs: 8, md: 10, lg: 12 },
+              display: { xs: "none", md: collapsedNav ? "none" : "flex" },
+              color: theme.palette.navbar.tab.regular.text,
+              width: "100%",
+              justifyContent: "start",
+              paddingLeft: 1.6,
+              fontWeight: 600,
+              alignItems: "center",
+              marginTop: 10,
+            }}
+          >
+            Devloped by Satwik Bhasin
+          </Typography>
+          <Link
+            href="https://github.com/satwikbhasin/orgView-dashboard"
+            className="flex flex-row flex-wrap items-center w-full rounded-md cursor-pointer group w-fit"
+            target="_blank"
+          >
+            <IconButton
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: {
+                  xs: "center",
+                  md: collapsedNav ? "center" : "flex-start",
+                },
+                width: "100%",
+                paddingLeft: 1.6,
+                paddingRight: 1,
+                gap: 1,
+              }}
+            >
+              <IconBrandGithubFilled size={iconSize} />
+              <Typography
+                sx={{
+                  fontSize: { xs: 8, md: 10, lg: 12 },
+                  display: { xs: "none", md: collapsedNav ? "none" : "block" },
+                  fontWeight: 600,
+                  transition: "all 1s ease",
+                }}
+              >
+                Source Code
+              </Typography>
+            </IconButton>
+          </Link>
+          <Link
+            href="https://satwikbhasin.com"
+            className="flex flex-row flex-wrap items-center w-full gap-1 rounded-md cursor-pointer group w-fit"
+            target="_blank"
+          >
+            <IconButton
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: {
+                  xs: "center",
+                  md: collapsedNav ? "center" : "flex-start",
+                },
+                width: "100%",
+                paddingLeft: 1.6,
+                paddingRight: 1,
+                gap: 1,
+              }}
+            >
+              <IconWorldWww size={iconSize} />
+              <Typography
+                sx={{
+                  fontSize: { xs: 8, md: 10, lg: 12 },
+                  display: { xs: "none", md: collapsedNav ? "none" : "block" },
+                  fontWeight: 600,
+                  transition: "all 1s ease",
+                }}
+              >
+                satwikbhasin.com
+              </Typography>
+            </IconButton>
+          </Link>
+          <Link
+            href="https://linkedin.com/in/satwikbhasin"
+            className="flex flex-row flex-wrap items-center gap-1 w-full rounded-md cursor-pointer group w-fit justify-center"
+            target="_blank"
+          >
+            <IconButton
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: {
+                  xs: "center",
+                  md: collapsedNav ? "center" : "flex-start",
+                },
+                width: "100%",
+                paddingLeft: 1.6,
+                paddingRight: 1,
+                gap: 1,
+              }}
+            >
+              <IconBrandLinkedinFilled size={iconSize} />
+              <Typography
+                sx={{
+                  fontSize: { xs: 8, md: 10, lg: 12 },
+                  display: { xs: "none", md: collapsedNav ? "none" : "block" },
+                  fontWeight: 600,
+                  transition: "all 1s ease",
+                }}
+              >
+                LinkedIn
+              </Typography>
+            </IconButton>
+          </Link>
         </ButtonGroup>
       </Box>
       <Box
