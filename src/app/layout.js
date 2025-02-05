@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta property="og:title" content="Org View - Modern Dashboard" />
+        <meta property="og:title" content="Org View - Modern Dashboard Template" />
         <meta
           property="og:description"
           content="Org View is a modern dashboard template for your business."
